@@ -1,0 +1,35 @@
+version: '3.5'
+
+networks: 
+  localdev:
+    name: localdev
+    driver: bridge
+
+services:
+  KapaMonitor.Api:
+    image: ${DOCKER_REGISTRY-}kapamonitorapi
+    container_name: api
+    build:
+      context: .
+      dockerfile: KapaMonitor.Api/Dockerfile
+    depends_on: 
+      - db-server
+    networks: 
+      - localdev
+
+  db-server:
+    image: postgres:latest
+    container_name: db-server
+    volumes:
+      - db_volume:/var/lib/postgresql/data
+    environment: 
+      POSTGRES_USER: "sa"
+      POSTGRES_PASSWORD: "Chris123456"
+      POSTGRES_DB: "KapaMonitor"
+    ports:
+      - "5432"
+    restart: always
+    networks: 
+      - localdev
+volumes:
+  db_volume:

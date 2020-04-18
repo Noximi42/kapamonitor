@@ -1,0 +1,8 @@
+version: '3.5'
+
+services:
+  KapaMonitor.Api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "5000:80"
