@@ -1,7 +1,7 @@
 import types from '../types';
 
 const initState = {
-    userNoticeConfirmed:false
+    userNoticeConfirmed: false,
 };
 
 export default function registerLeafletReducer(state = initState, action) {
@@ -9,11 +9,10 @@ export default function registerLeafletReducer(state = initState, action) {
         case types.SET_CONFIRM:
             return {
                 ...state,
-                userNoticeConfirmed: action.conf
+                userNoticeConfirmed: action.conf,
             };
 
         default:
             return state;
     }
 }
-

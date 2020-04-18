@@ -52,26 +52,26 @@ function SignUpPage(props) {
     const classes = useStyles();
     const [email, setEmail] = React.useState('');
     const [pw, setPw] = React.useState('');
-    const [loading, setLoading] = React.useState(false)
-
+    const [loading, setLoading] = React.useState(false);
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        firebase.auth().createUserWithEmailAndPassword(email, pw).then(res => {
-            console.log(res)
-
-        }).catch(e => {
-
-        })
-    }
+        firebase
+            .auth()
+            .createUserWithEmailAndPassword(email, pw)
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((e) => {});
+    };
 
     return (
         <Container component="main" maxWidth="xs">
-            <CssBaseline/>
+            <CssBaseline />
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon/>
+                    <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
                     Sign up
@@ -111,7 +111,7 @@ function SignUpPage(props) {
                                 name="email"
                                 autoComplete="email"
                                 value={email}
-                                onChange={e => setEmail(e.target.value)}
+                                onChange={(e) => setEmail(e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -125,25 +125,30 @@ function SignUpPage(props) {
                                 id="password"
                                 value={pw}
                                 autoComplete="current-password"
-                                onChange={e => setPw(e.target.value)}
+                                onChange={(e) => setPw(e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={12}>
-                            <Typography> Die hier präsentierten Daten sind als Demonstrationsdaten zu verstehen und
-                                stellen keine Abbildung der Realität dar,
-                                sollen keine Auskunft über die Realität geben und haben in keiner Form Bezug zu den
-                                genannten Personen und Einrichtungen. Jegliche Ähnlichkeit ist zufällig und
-                                unbeabsichtigt.
-                                Weiterhin werden keine Personenbezogenen Daten verarbeitet oder gespeichert und die hier
-                                zur Verfügung gestellten Masken sind ausschließlich als Demonstrationsmuster zu
-                                verstehen.
-                                Ich habe die oben dargelegten Informationen und Sachverhalte verstanden und stimme
-                                diesen durch meine Nutzung zu.
+                            <Typography>
+                                {' '}
+                                Die hier präsentierten Daten sind als
+                                Demonstrationsdaten zu verstehen und stellen
+                                keine Abbildung der Realität dar, sollen keine
+                                Auskunft über die Realität geben und haben in
+                                keiner Form Bezug zu den genannten Personen und
+                                Einrichtungen. Jegliche Ähnlichkeit ist zufällig
+                                und unbeabsichtigt. Weiterhin werden keine
+                                Personenbezogenen Daten verarbeitet oder
+                                gespeichert und die hier zur Verfügung
+                                gestellten Masken sind ausschließlich als
+                                Demonstrationsmuster zu verstehen. Ich habe die
+                                oben dargelegten Informationen und Sachverhalte
+                                verstanden und stimme diesen durch meine Nutzung
+                                zu.
                             </Typography>
                         </Grid>
                     </Grid>
                     <Button
-
                         type="submit"
                         fullWidth
                         variant="contained"
@@ -156,27 +161,25 @@ function SignUpPage(props) {
                     <Grid container justify="flex-end">
                         <Grid item>
                             {/*<LinkMat variant="body2">*/}
-                            <Link to="/login">Account schon vorhanden? Login</Link>
+                            <Link to="/login">
+                                Account schon vorhanden? Login
+                            </Link>
                             {/*</LinkMat>*/}
                         </Grid>
                     </Grid>
                 </form>
             </div>
             <Box mt={5}>
-                <Copyright/>
+                <Copyright />
             </Box>
         </Container>
     );
 }
 
-const mapStateToProps = state => ({
-    currentUser: state.user
-
-})
+const mapStateToProps = (state) => ({
+    currentUser: state.user,
+});
 const mapDispatchToProps = {
-    setUser
+    setUser,
 };
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(SignUpPage);
+export default connect(mapStateToProps, mapDispatchToProps)(SignUpPage);
