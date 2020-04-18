@@ -21,8 +21,6 @@ function Copyright() {
         <Typography variant="body2" color="textSecondary" align="center">
             {'Copyright ©    Kapamonitor  '}
 
-
-
             {new Date().getFullYear()}
             {'.'}
         </Typography>
@@ -37,7 +35,9 @@ const useStyles = makeStyles((theme) => ({
         backgroundImage: 'url(https://source.unsplash.com/Pd4lRfKo16U)',
         backgroundRepeat: 'no-repeat',
         backgroundColor:
-            theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
+            theme.palette.type === 'light'
+                ? theme.palette.grey[50]
+                : theme.palette.grey[900],
         backgroundSize: 'cover',
         backgroundPosition: 'center',
     },
@@ -66,25 +66,39 @@ function LoginPage(props) {
     const [email, setEmail] = React.useState('');
     const [pw, setPw] = React.useState('');
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        firebase.auth().signInWithEmailAndPassword(email.trim(), pw).then(res=>{
-            if(res){
-                props.setUser(res)
-            } else {
-                props.setUser(null)
-            }
-        })
 
-    }
+        await firebase
+            .auth()
+            .setPersistence(firebase.auth.Auth.Persistence.SESSION);
+
+        const signInResponse = await firebase
+            .auth()
+            .signInWithEmailAndPassword(email.trim(), pw);
+        if (signInResponse) {
+            props.setUser(signInResponse);
+            return;
+        }
+        props.setUser(null);
+    };
+
     return (
         <Grid container component="main" className={classes.root}>
-            <CssBaseline/>
-            <Grid item xs={false} sm={4} md={7} className={classes.image}/>
-            <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+            <CssBaseline />
+            <Grid item xs={false} sm={4} md={7} className={classes.image} />
+            <Grid
+                item
+                xs={12}
+                sm={8}
+                md={5}
+                component={Paper}
+                elevation={6}
+                square
+            >
                 <div className={classes.paper}>
                     <Avatar className={classes.avatar}>
-                        <LockOutlinedIcon/>
+                        <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
                         Sign in
@@ -100,7 +114,7 @@ function LoginPage(props) {
                             name="email"
                             autoComplete="email"
                             autoFocus
-                            onChange={e => setEmail(e.target.value)}
+                            onChange={(e) => setEmail(e.target.value)}
                         />
                         <TextField
                             variant="outlined"
@@ -111,13 +125,14 @@ function LoginPage(props) {
                             label="Passwort"
                             type="password"
                             id="password"
-                            onChange={e => setPw(e.target.value)}
+                            onChange={(e) => setPw(e.target.value)}
                             autoComplete="current-password"
                         />
                         <div>
                             <h4>Demo user:</h4>
                             <p id="demoUserInfo">
-                                kapamonitor@gmail.com<br />
+                                kapamonitor@gmail.com
+                                <br />
                                 123456
                             </p>
                         </div>
@@ -138,7 +153,10 @@ function LoginPage(props) {
                         <Grid container>
                             <Grid item xs>
                                 <LinkMat variant="body2">
-                                    <Link to="/sign-up"> Passwort vergessen?</Link>
+                                    <Link to="/sign-up">
+                                        {' '}
+                                        Passwort vergessen?
+                                    </Link>
                                 </LinkMat>
                             </Grid>
                             <Grid item>
@@ -146,12 +164,11 @@ function LoginPage(props) {
                                     <Link to="/sign-up">
                                         {'Noch kein Account? Sign Up'}
                                     </Link>
-
                                 </LinkMat>
                             </Grid>
                         </Grid>
                         <Box mt={5}>
-                            <Copyright/>
+                            <Copyright />
                         </Box>
                     </form>
                 </div>
@@ -159,14 +176,10 @@ function LoginPage(props) {
         </Grid>
     );
 }
-const mapStateToProps = state => ({
-    currentUser: state.user
-
-})
+const mapStateToProps = (state) => ({
+    currentUser: state.user,
+});
 const mapDispatchToProps = {
-    setUser
+    setUser,
 };
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(LoginPage);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
