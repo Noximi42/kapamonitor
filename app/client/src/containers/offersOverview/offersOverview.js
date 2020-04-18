@@ -3,7 +3,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
-import { TableCell } from '@material-ui/core';
+import { TableCell, IconButton } from '@material-ui/core';
 import TableRow from '@material-ui/core/TableRow';
 import TableHead from '@material-ui/core/TableHead';
 import makeStyles from '@material-ui/core/styles/makeStyles';
@@ -19,6 +19,10 @@ import PaddingLayout from '../../components/PaddingLayout';
 import { HospitalDetail } from '../../components/HospitalDetail';
 import { setRawLocations } from '../../store/leaflet/actions';
 import { connect } from 'react-redux';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import { Edit, Delete, Info } from '@material-ui/icons';
+import Checkbox from '@material-ui/core/Checkbox';
 
 export const headCells = [
     { id: 'type', label: 'Typ', numberic: false },
@@ -90,7 +94,7 @@ const getCellContent = (row, cellId) => {
     }
 };
 
-const Dashboard = (props) => {
+const OffersOverview = (props) => {
     const classes = useStyles();
 
     const [open, setOpen] = React.useState(false);
@@ -114,69 +118,48 @@ const Dashboard = (props) => {
         fetchRows();
     }, []);
 
-    function handleClickOpen(index) {
-        setOpen(true);
-        setSelectedRow(index);
-    }
-    const handleClose = () => {
-        setOpen(false);
+    const [checked, setChecked] = React.useState(true);
+
+    const handleChange = (event) => {
+        setChecked(event.target.checked);
     };
     return (
-        <PaddingLayout>
-            <TableContainer component={Paper}>
-                <Table className={classes.table}>
-                    <TableHead>
-                        <TableRow>
-                            {headCells.map((cell) => (
-                                <TableCell>
-                                    <strong>{cell.label}</strong>
-                                </TableCell>
-                            ))}
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {props.rawLocations
-                            ? props.rawLocations.map((row, index) => (
-                                  <TableRow
-                                      key={row.id}
-                                      onClick={() => handleClickOpen(index)}
-                                      hover={true}
-                                      className={classes.tableRow}
-                                  >
-                                      {headCells.map((cell) => (
-                                          <TableCell>
-                                              {getCellContent(row, cell.id)}
-                                          </TableCell>
-                                      ))}
-                                  </TableRow>
-                              ))
-                            : null}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            <Dialog
-                open={open}
-                onClose={handleClose}
-                fullWidth={true}
-                maxWidth="md"
-            >
-                {props.rawLocations ? (
-                    <>
-                        <DialogTitle>
-                            {props.rawLocations[selectedRow] &&
-                                props.rawLocations[selectedRow].title}
-                        </DialogTitle>
-                        <HospitalDetail
-                            location={props.rawLocations[selectedRow]}
-                        ></HospitalDetail>
-                        <DialogActions>
-                            <Button onClick={handleClose} color="primary">
-                                Ok
-                            </Button>
-                        </DialogActions>
-                    </>
-                ) : null}
-            </Dialog>
+        <PaddingLayout title="Deine Angebote">
+            <div className={classes.root}>
+                <Paper className={classes.paper} style={{ padding: 20 }}>
+                    <Grid container>
+                        <Grid item xs={12} sm={1}>
+                            <Checkbox
+                                checked={checked}
+                                onChange={handleChange}
+                                inputProps={{ 'aria-label': 'Check Item' }}
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={3}>
+                            <Typography variant="subtitle1">
+                                Artikelname
+                            </Typography>
+                            <IconButton>
+                                <Edit />
+                            </IconButton>
+                            <IconButton>
+                                <Delete />
+                            </IconButton>
+                            <IconButton>
+                                <Info />
+                            </IconButton>
+                        </Grid>
+                        <Grid item xs={12} sm={8}>
+                            <Typography variant="subtitle1">
+                                Zusatzinformationen
+                            </Typography>
+                            <Typography variant="subtitle2">
+                                500 Stück
+                            </Typography>
+                        </Grid>
+                    </Grid>
+                </Paper>
+            </div>
         </PaddingLayout>
     );
 };
@@ -189,4 +172,4 @@ const mapDispatchToProps = {
     setRawLocations,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(OffersOverview);
