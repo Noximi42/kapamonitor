@@ -74,7 +74,7 @@ const BottomNavigationBar = (props) => {
             {/*<Link to={"setting"}><BottomNavigationAction label="Profile" value="profile" icon={<SettingsIcon/>}/></Link>*/}
             <BottomNavigationAction
                 label="Übersicht Angebote"
-                value="offersOverview"
+                value="offerOverview"
                 icon={<DashboardIcon />}
             />
             <BottomNavigationAction
