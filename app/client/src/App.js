@@ -14,7 +14,7 @@ import SignUpPage from './containers/SignUpPage';
 
 import Dashboard from './containers/Dashboard';
 import Leaflet from './containers/Leaflet/Leaflet';
-import OfferOverview from './containers/offerOverview/offerOverview';
+import OffersOverview from './containers/offersOverview/offersOverview';
 import RequirementsOverview from './containers/requirementsOverview/requirementsOverview';
 import AccountInformation from './containers/accountInformation/accountInformation';
 import AdminPanel from './containers/adminPanel/adminPanel';
@@ -84,7 +84,7 @@ function App(props) {
                     <Router>
                         <Switch>
                             <DashboardRoute path="/register" component={Register}/>
-                            <DashboardRoute path="/offerOverview" component={OfferOverview}/>
+                            <DashboardRoute path="/offersOverview" component={OffersOverview}/>
                             <DashboardRoute path="/requirementsOverview" component={RequirementsOverview}/>
                             <DashboardRoute path="/accountInformation" component={AccountInformation}/>
                             <DashboardRoute path="/adminPanel" component={AdminPanel}/>

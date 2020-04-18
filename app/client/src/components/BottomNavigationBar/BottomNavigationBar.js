@@ -69,7 +69,7 @@ const BottomNavigationBar = props => {
             {/*<BottomNavigationAction label="Signin" value="signin-oidc" icon={<LoginIcon/>}/>*/}
             {/*</Link>*/}
             {/*<Link to={"setting"}><BottomNavigationAction label="Profile" value="profile" icon={<SettingsIcon/>}/></Link>*/}
-            <BottomNavigationAction label="Übersicht Angebote" value="offerOverview" icon={<DashboardIcon/>}/>
+            <BottomNavigationAction label="Übersicht Angebote" value="offersOverview" icon={<DashboardIcon/>}/>
             <BottomNavigationAction label="Übersicht Bedarfe" value="requirementsOverview" icon={<DashboardIcon/>}/>
             <BottomNavigationAction label="Account Info" value="accountInformation" icon={<LoginIcon/>}/>
             <BottomNavigationAction label="Admin Panel" value="adminPanel" icon={<LoginIcon/>}/>

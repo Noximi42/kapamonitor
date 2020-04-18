@@ -93,7 +93,7 @@ const getCellContent = (row, cellId) => {
   }
 };
 
-const OfferOverview = (props) => {
+const OffersOverview = (props) => {
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
@@ -165,4 +165,4 @@ const mapDispatchToProps = {
   setRawLocations,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OfferOverview);
+export default connect(mapStateToProps, mapDispatchToProps)(OffersOverview);
