@@ -154,6 +154,7 @@ const Dashboard = props => {
 };
 
 /* Hier ist ein Kommentar */
+/* Hier ist ein zweiter Kommentar */
 
 const mapStateToProps = state => ({
     rawLocations: state.leaflet.rawLocations,
