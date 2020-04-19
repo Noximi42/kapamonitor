@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import PaddingLayout from '../../components/PaddingLayout';
@@ -38,12 +38,25 @@ const OffersOverview = (props) => {
             barrierFree: true,
             locationId: 2,
         },
+        {
+            id: 3,
+        },
+        {
+            id: 4,
+        },
+        {
+            id: 5,
+        },
     ];
+
+    const [state, setState] = useState({
+        apiData: exampleData,
+    });
 
     let rows = [];
 
     for (let item of exampleData) {
-        rows.push(<CustomListItem></CustomListItem>);
+        rows.push(<CustomListItem key={item.id} />);
     }
 
     return (

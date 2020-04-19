@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Paper from "@material-ui/core/Paper";
 import { IconButton } from "@material-ui/core";
 import makeStyles from "@material-ui/core/styles/makeStyles";
@@ -34,9 +34,15 @@ const CustomListItem = (props) => {
     setChecked(event.target.checked);
   };
 
+  console.log('Props', props)
+
+//   const [state, setState] = useState((previousState)=>{
+//       console.log('PreviousState',previousState);
+//   });
+
   return (
     <Paper className={classes.paper} style={{ padding: 20, marginBottom: 20 }}>
-      <Grid container xs={12} alignItems="stretch">
+      <Grid container alignItems="stretch">
         <Grid item xs={12} sm={1}>
           <Checkbox
             checked={checked}
