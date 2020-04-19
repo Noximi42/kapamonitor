@@ -153,6 +153,7 @@ const Dashboard = props => {
     </PaddingLayout>)
 };
 
+/* Hier ist ein Kommentar */
 
 const mapStateToProps = state => ({
     rawLocations: state.leaflet.rawLocations,
