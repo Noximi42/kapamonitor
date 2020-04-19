@@ -7,7 +7,12 @@ import {
 } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { connect } from 'react-redux';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import {
+    MuiThemeProvider,
+    responsiveFontSizes,
+    createMuiTheme,
+} from '@material-ui/core/styles';
+
 import MainLayout from './layouts/MainLayout';
 import EmptyLayout from './layouts/EmptyLayout';
 
@@ -33,7 +38,8 @@ import UserNotice from './components/UserNotice/UserNotice';
 
 firebase.initializeApp(config.firebaseConfig);
 
-const theme = createMuiTheme({});
+let theme = createMuiTheme();
+theme = responsiveFontSizes(theme);
 
 const LOGIN_STATE = {
     SUCCESS: 'SUCCESS',
