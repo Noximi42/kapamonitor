@@ -31,7 +31,6 @@ const styles = theme => ({
 
 const PaddingLayout = (props) => {
         const { classes, children, title, titlePadding } = props;
-        console.log(props);
     return (
         <div className={classes.content}>
             <Paper className={classes.paper} style={{ padding: titlePadding ? titlePadding : null }}>

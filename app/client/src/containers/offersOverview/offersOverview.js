@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import PaddingLayout from '../../components/PaddingLayout';
-import CustomListItem from '../../components/CustomListItem';
+import PaddingLayout from "../../components/PaddingLayout";
+import CustomListItem from "../../components/CustomListItem";
 import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({}));
@@ -18,7 +18,7 @@ const OffersOverview = (props) => {
       bedsWithVentilator: 200,
       bedsWithoutVentilator: 500,
       barrierFree: true,
-      locationId: 0
+      locationId: 0,
     },
     {
       id: 1,
@@ -27,7 +27,7 @@ const OffersOverview = (props) => {
       bedsWithVentilator: 0,
       bedsWithoutVentilator: 0,
       barrierFree: true,
-      locationId: 1
+      locationId: 1,
     },
     {
       id: 2,
@@ -36,23 +36,32 @@ const OffersOverview = (props) => {
       bedsWithVentilator: 0,
       bedsWithoutVentilator: 0,
       barrierFree: true,
-      locationId: 2
+      locationId: 2,
     },
-  ]
+    {
+      id: 3,
+    },
+    {
+      id: 4,
+    },
+    {
+      id: 5,
+    },
+  ];
+
+  const [state, setState] = useState({
+    apiData: exampleData,
+  });
 
   let rows = [];
 
-  for(let item of exampleData) {
-    rows.push(
-      <CustomListItem></CustomListItem>
-    );
+  for (let item of exampleData) {
+    rows.push(<CustomListItem key={item.id} />);
   }
 
   return (
     <PaddingLayout title="Deine Angebote">
-      <div className={classes.root}>
-        {rows}
-      </div>
+      <div className={classes.root}>{rows}</div>
     </PaddingLayout>
   );
 };
