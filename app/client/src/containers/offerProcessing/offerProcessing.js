@@ -23,9 +23,8 @@ const Dashboard = (props) => {
                 })}
             </div>
             <div class="container-fluid">
-                {CustomButton({
-                    /* title: 'pretty title', */
-                })}
+                {CustomButton({type: "save"})}
+                {CustomButton({type: "delete"})}
             </div>
         </PaddingLayout>
     );

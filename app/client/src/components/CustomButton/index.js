@@ -13,34 +13,43 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const onClickSave = (event) => {
+    console.log('Hi! Admin. Du hast Speichern angeklickt');
+};
+
+const onClickDelete = (event) => {
+    console.log('Hi! Admin. Du hast Löschen angeklickt');
+};
+
 const CustomButton = (props) => {
+    const { type } = props;
     const classes = useStyles();
+    var icon = <SaveIcon />;
+    var buttonColor = 'primary';
+    var buttonText = 'Speichern';
+    var functionHandle = onClickSave;
+    if (type == 'save') {
+        icon = <SaveIcon />;
+        buttonColor = 'primary';
+        buttonText = 'Speichern';
+        var functionHandle = onClickSave;
+    } else if (type == 'delete') {
+        icon = <DeleteIcon />;
+        buttonColor = 'secondary';
+        buttonText = 'Löschen';
+        var functionHandle = onClickDelete;
+    }
 
     return (
         <React.Fragment>
             <Button
                 variant="contained"
-                color="secondary"
+                color={buttonColor}
                 className={classes.button}
-                startIcon={<DeleteIcon />}
-                onClick={() =>
-                    console.log('Hi! Admin. Du hast Löschen angeklickt')
-                }
+                startIcon={icon}
+                onClick={functionHandle}
             >
-                Löschen
-            </Button>
-
-            <Button
-                variant="contained"
-                color="primary"
-                /* size="small" */
-                className={classes.button}
-                startIcon={<SaveIcon />}
-                onClick={() =>
-                    console.log('Hi! Admin. Du hast Speichern angeklickt')
-                }
-            >
-                Speichern
+                {buttonText}
             </Button>
         </React.Fragment>
     );
