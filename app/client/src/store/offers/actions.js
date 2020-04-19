@@ -20,7 +20,3 @@ export const setSearchFilter = (searchtext) => ({
         text: searchtext,
     },
 });
-
-// SET_OFFERS: "SET_OFFERS",
-//   RESET_SEARCH_FILTER: "RESET_SEARCH_FILTER",
-//   SET_SEARCH_FILTER: "SET_SEARCH_FILTER",

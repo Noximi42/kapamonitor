@@ -151,48 +151,9 @@ function App(props) {
                 <div style={{ height: '100vh' }}>
                     <Router>
                         <Switch>
-                            <DashboardRoute
-                                path="/register"
-                                component={Register}
-                            />
-                            <DashboardRoute
-                                path="/offersOverview"
-                                component={OffersOverview}
-                            />
-                            <DashboardRoute
-                                path="/requirementsOverview"
-                                component={RequirementsOverview}
-                            />
-                            <DashboardRoute
-                                path="/accountInformation"
-                                component={AccountInformation}
-                            />
-                            <DashboardRoute
-                                path="/adminPanel"
-                                component={AdminPanel}
-                            />
-                            <DashboardRoute
-                                path="/offerProcessing"
-                                component={OfferProcessing}
-                            />
-                            <DashboardRoute
-                                path="/requirementProcessing"
-                                component={RequirementProcessing}
-                            />
-                            <DashboardRoute
-                                path="/yourOffers"
-                                component={YourOffers}
-                            />
-                            <DashboardRoute
-                                path="/yourRequirements"
-                                component={YourRequirements}
-                            />
-                            <DashboardRoute
-                                exact
-                                path="/"
-                                component={Dashboard}
-                            />
-                            <EmptyRoute component={NotFound} />
+                            <Route path="/login" component={LoginPage} />
+                            <Route path="/sign-up" component={SignUpPage} />
+                            <Route exact path="/" component={LoginPage} />
                         </Switch>
                     </Router>
                 </div>

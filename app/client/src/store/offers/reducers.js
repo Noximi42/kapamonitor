@@ -13,8 +13,6 @@ function removeFromArray(original, remove) {
 }
 
 export default function registerUnitReducer(state = initState, action) {
-    console.log(action);
-    console.log(state);
     switch (action.type) {
         case types.SET_OFFERS:
             return {
