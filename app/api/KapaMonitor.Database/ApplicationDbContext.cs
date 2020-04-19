@@ -18,6 +18,7 @@ namespace KapaMonitor.Database
         public DbSet<Requirement> Requirements { get; set; }
         public DbSet<Resource> Resources { get; set; }
         public DbSet<Certificate> Certificates { get; set; }
+        public DbSet<UnitOfMeasure> UnitsOfMeasure { get; set; }
 
 
         public DbSet<ErrorLog> ErrorLogs { get; set; }
@@ -34,11 +35,6 @@ namespace KapaMonitor.Database
                .HasOne(l => l.Address)
                .WithOne(a => a.Location)
                .HasForeignKey<Address>(a => a.LocationId);
-
-            modelBuilder.Entity<Resource>()
-               .HasOne(r => r.UnitOfMeasure)
-               .WithOne(u => u.Resource)
-               .HasForeignKey<UnitOfMeasure>(u => u.ResourceId);
 
             modelBuilder.Entity<ContactInfoLocation>()
                 .HasKey(cl => new { cl.ContactInfoId, cl.LocationId });

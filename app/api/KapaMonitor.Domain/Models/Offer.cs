@@ -16,11 +16,15 @@ namespace KapaMonitor.Domain.Models
         public DateTime? LastChangedDate { get; set; }
 
 
-        [Required]
+        public int ContactInfoId { get; set; }
         public ContactInfo ContactInfo { get; set; }
+
+        public int? LocationId { get; set; }
         public Location Location { get; set; }
-        [Required]
+
+        public int ResourceId { get; set; }
         public Resource Resource { get; set; }
+
         public ICollection<OfferCertificate> OfferCertificates { get; set; }
     }
 }

@@ -214,7 +214,7 @@ namespace KapaMonitor.Database.Migrations
                     b.Property<DateTime?>("LastChangedDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int>("LocationId")
+                    b.Property<int?>("LocationId")
                         .HasColumnType("integer");
 
                     b.Property<float>("Number")
@@ -284,31 +284,25 @@ namespace KapaMonitor.Database.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("UnitOfMeasureName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UnitOfMeasureName");
 
                     b.ToTable("Resources");
                 });
 
             modelBuilder.Entity("KapaMonitor.Domain.Models.UnitOfMeasure", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("ResourceId")
-                        .HasColumnType("integer");
+                    b.HasKey("Name");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("ResourceId")
-                        .IsUnique();
-
-                    b.ToTable("UnitOfMeasure");
+                    b.ToTable("UnitsOfMeasure");
                 });
 
             modelBuilder.Entity("KapaMonitor.Domain.Models.Address", b =>
@@ -325,7 +319,7 @@ namespace KapaMonitor.Database.Migrations
             modelBuilder.Entity("KapaMonitor.Domain.Models.Certificate", b =>
                 {
                     b.HasOne("KapaMonitor.Domain.Models.Resource", "Resource")
-                        .WithMany("Certificate")
+                        .WithMany("Certificates")
                         .HasForeignKey("ResourceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -386,9 +380,7 @@ namespace KapaMonitor.Database.Migrations
 
                     b.HasOne("KapaMonitor.Domain.Models.Location", "Location")
                         .WithMany("Offers")
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LocationId");
 
                     b.HasOne("KapaMonitor.Domain.Models.Resource", "Resource")
                         .WithMany("Offers")
@@ -418,11 +410,11 @@ namespace KapaMonitor.Database.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("KapaMonitor.Domain.Models.UnitOfMeasure", b =>
+            modelBuilder.Entity("KapaMonitor.Domain.Models.Resource", b =>
                 {
-                    b.HasOne("KapaMonitor.Domain.Models.Resource", "Resource")
-                        .WithOne("UnitOfMeasure")
-                        .HasForeignKey("KapaMonitor.Domain.Models.UnitOfMeasure", "ResourceId")
+                    b.HasOne("KapaMonitor.Domain.Models.UnitOfMeasure", "UnitOfMeasure")
+                        .WithMany("Resources")
+                        .HasForeignKey("UnitOfMeasureName")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

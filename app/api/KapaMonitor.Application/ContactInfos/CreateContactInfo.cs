@@ -20,10 +20,10 @@ namespace KapaMonitor.Application.ContactInfos
 
         public async Task<(bool success, ContactInfoViewModel? viewModel, RequestError? error)> Do(CreateContactInfoRequest request)
         {
-            (bool isValid, List<string> errors) requestValidity = request.CheckValidity();
+            (bool isValid, List<string> errors) = request.CheckValidity();
 
-            if (!requestValidity.isValid)
-                return (false, null, new RequestError(HttpStatusCode.BadRequest,  requestValidity.errors));
+            if (!isValid)
+                return (false, null, new RequestError(HttpStatusCode.BadRequest,  errors));
 
             ContactInfo contactInfo = new ContactInfo
             {
@@ -87,7 +87,7 @@ namespace KapaMonitor.Application.ContactInfos
                 if (string.IsNullOrEmpty(Email))
                     errors.Add("email is required.");
                 if (string.IsNullOrEmpty(Address?.ZipCode))
-                    errors.Add("zipCode is required.");
+                    errors.Add("address with zipCode is required.");
 
                 return (errors.Count == 0, errors);
             }

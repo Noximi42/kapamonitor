@@ -7,25 +7,25 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace KapaMonitor.Application.ContactInfos
+namespace KapaMonitor.Application.Offers
 {
-    public class DeleteContactInfo
+    public class DeleteOffer
     {
         private readonly ApplicationDbContext _context;
 
-        public DeleteContactInfo(ApplicationDbContext context)
+        public DeleteOffer(ApplicationDbContext context)
         {
             _context = context;
         }
 
         public async Task<(bool Succeeded, RequestError? error)> Do(int id)
         {
-            var contactInfo = await _context.ContactInfos.FirstOrDefaultAsync(c => c.Id == id);
+            var offer = await _context.Offers.FirstOrDefaultAsync(c => c.Id == id);
 
-            if (contactInfo == null)
-                return (false, new RequestError(HttpStatusCode.BadRequest, "contactInfo not found."));
+            if (offer == null)
+                return (false, new RequestError(HttpStatusCode.BadRequest, "offer not found."));
 
-            _context.Remove(contactInfo);
+            _context.Remove(offer);
 
             try
             {
@@ -33,7 +33,7 @@ namespace KapaMonitor.Application.ContactInfos
             }
             catch (Exception ex)
             {
-                await new ErrorLogging(_context).LogError(ErrorMessages.DeleteContactInfo, ex);
+                await new ErrorLogging(_context).LogError(ErrorMessages.DeleteOffer, ex);
                 return (false, new RequestError(HttpStatusCode.InternalServerError, ErrorMessages.DatabaseOperationFailed));
             }
 

@@ -147,6 +147,8 @@ namespace KapaMonitor.Api
             {
                 endpoints.MapControllers();
             });
+
+            DbInitializer.SeedData(context);
         }
     }
 }

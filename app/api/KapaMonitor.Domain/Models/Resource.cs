@@ -11,9 +11,10 @@ namespace KapaMonitor.Domain.Models
 
 
         [Required]
+        public string UnitOfMeasureName { get; set; }
         public UnitOfMeasure UnitOfMeasure { get; set; }
         public ICollection<Offer> Offers { get; set; }
         public ICollection<Requirement> Requirements { get; set; }
-        public ICollection<Certificate> Certificate { get; set; }
+        public ICollection<Certificate> Certificates { get; set; }
     }
 }

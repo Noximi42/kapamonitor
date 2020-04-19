@@ -9,12 +9,10 @@ namespace KapaMonitor.Domain.Models
 {
     public class UnitOfMeasure
     {
-        public int Id { get; set; }
+        [Key]
         public string Name { get; set; }
 
 
-        public int ResourceId { get; set; }
-        [Required]
-        public Resource Resource { get; set; }
+        public ICollection<Resource> Resources { get; set; }
     }
 }
