@@ -7,27 +7,26 @@ import { TableCell } from '@material-ui/core';
 import TableRow from '@material-ui/core/TableRow';
 import TableHead from '@material-ui/core/TableHead';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import LinearProgress from '@material-ui/core/LinearProgress';
+//import LinearProgress from '@material-ui/core/LinearProgress';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
 import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
 import HotelIcon from '@material-ui/icons/Hotel';
-import { getAllLocations } from '../../services/backend-rest-service';
+//import { getAllLocations } from '../services/backend-rest-service';
+import { getAllRequirements } from '../../__MOCK__/mockRequirements.js';
+import { getAllResources } from '../../__MOCK__/mockRequirements.js';
+import { getAllUom } from '../../__MOCK__/mockRequirements.js';
+import { getAllLocations } from '../../__MOCK__/mockRequirements.js';
 import PaddingLayout from '../../components/PaddingLayout';
-import { HospitalDetail } from '../../components/HospitalDetail';
-import { setRawLocations } from '../../store/leaflet/actions';
+//import { HospitalDetail } from '../components/HospitalDetail';
 import { connect } from 'react-redux';
 
 export const headCells = [
-    { id: 'type', label: 'Typ', numberic: false },
-    { id: 'title', label: 'Name', numberic: false },
-    { id: 'street', label: 'Strasse', numberic: false },
-    { id: 'postCode', label: 'PLZ', numberic: true },
-    { id: 'city', label: 'Stadt', numberic: false },
-    { id: 'numberOfBeds', label: 'Anzahl Betten', numberic: true },
-    { id: 'freeBeds', label: 'Auslastung', numberic: true },
+    { id: 'location', label: 'Einrichtung', numberic: false },
+    { id: 'resourceName', label: 'Resource', numberic: false },
+    { id: 'amount', label: 'Anzahl', numberic: true },
 ];
 
 const useStyles = makeStyles({
@@ -60,25 +59,40 @@ const getNumberOfBedsForType = (row) => {
             break;
     }
 }
+
+
 const getCellContent = (row, cellId) => {
     switch (cellId) {
-        case 'street':
-            return `${row.street} ${row.houseNumber}`;
+        case 'location':
+            var location = Locations.filter(loc => (loc.id == row.locationId));
+            return location[0] ? location[0].locationName : "none";
             break;
-        case 'type':
-            return getIconForType(row.type);
+        case 'resourceName':
+            var resources = Resources.filter(res => (res.id == row.resourceId));
+            return resources[0]? resources[0].resourceName : "none";
             break;
-        case 'numberOfBeds':
-            return getNumberOfBedsForType(row);
+        case 'amount':
+            var resources = Resources.filter(res => (res.id == row.resourceId));
+            var unit = Uom.filter(u => 
+                (u.id == resources[0].uomId)
+            );
+            var numberAndUnit = `${row.number}`
+            return (numberAndUnit &&  unit[0])? numberAndUnit + unit[0].uomName : "none";
             break;
-        case 'freeBeds':
-            return <LinearProgress
-                variant="determinate"
-                value={row.capacity}></LinearProgress>;
         default:
             return row[cellId];
     }
 };
+/*const rawRequirements = [{id: "1", locationId: "1", resourceId: "1", number: 200}, {id: "2", locationId: "1", resourceId: "2", number: 300}, {id: "3", locationId: "0", resourceId: "1", number: 300}];
+const Resources = [{id: "1", resourceName: "Desinfektionsmittel", uomId: "1"}, {id: "2", resourceName: "Lokalität", uomId: "2"}];
+const Uom = [{id: "1", uomName: "l"}, {id: "2", uomName: "m^2"}];
+const Locations = [{id: "0", locationName: "Beispielkrankenhaus0"}, {id: "1", locationName: "Beispielkrankenhaus1"}];
+*/
+
+const rawRequirements = getAllRequirements();
+const Resources = getAllResources();
+const Uom = getAllUom();
+const Locations = getAllLocations();
 
 const Dashboard = props => {
     const classes = useStyles();
@@ -86,7 +100,7 @@ const Dashboard = props => {
     const [open, setOpen] = React.useState(false);
     const [selectedRow, setSelectedRow] = React.useState(null);
 
-    useEffect(() => {
+    /*useEffect(() => {
         async function fetchRows() {
             const res = await getAllLocations();
 
@@ -96,13 +110,13 @@ const Dashboard = props => {
                         ...location,
                         capacity: Math.floor(Math.random() * 100)
                     }));
-                    props.setRawLocations(mockCapacity);
+                    props.setRawLocations(mockCapacity); //in die prps des Dashboardobjekts
                 }
             }
         }
 
         fetchRows();
-    }, []);
+    }, []);*/
 
     function handleClickOpen(index) {
         setOpen(true);
@@ -122,7 +136,7 @@ const Dashboard = props => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {props.rawLocations ? props.rawLocations.map((row, index) => (
+                    {/*props.*/rawRequirements ? /*props.*/rawRequirements.map((row, index) => (
                         <TableRow key={row.id} onClick={() => handleClickOpen(index)} hover={true}
                                   className={classes.tableRow}>
                             {headCells.map(cell => (
@@ -139,10 +153,10 @@ const Dashboard = props => {
             fullWidth={true}
             maxWidth="md"
         >
-            {props.rawLocations ?
+            {/*props.*/rawRequirements ?
                 <>
-                    <DialogTitle>{props.rawLocations[selectedRow] && props.rawLocations[selectedRow].title}</DialogTitle>
-                    <HospitalDetail location={props.rawLocations[selectedRow]}></HospitalDetail>
+                    <DialogTitle>{/*props.*/rawRequirements[selectedRow] && /*props.*/rawRequirements[selectedRow].title}</DialogTitle>
+                    
                     <DialogActions>
                         <Button onClick={handleClose} color="primary">
                             Ok
@@ -153,14 +167,16 @@ const Dashboard = props => {
     </PaddingLayout>)
 };
 
-
-const mapStateToProps = state => ({
-    rawLocations: state.leaflet.rawLocations,
+/*<HospitalDetail location={props.rawRequirements[selectedRow]}></HospitalDetail>*/
+/*const mapStateToProps = state => ({
+    rawRequirements: state.leaflet.rawRequirements,
 })
 
 const mapDispatchToProps = {
-    setRawLocations
+    setRawRequirements
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);*/
+export default connect()(Dashboard);
+
 
