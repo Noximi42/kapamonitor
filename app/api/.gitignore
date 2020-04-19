@@ -3,6 +3,11 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# Ignore Docker files, only for development
+.dockerignore
+docker-compose.dcproj
+docker-compose.yml
+
 # User-specific files
 *.rsuser
 *.suo
