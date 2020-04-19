@@ -1,2 +1,2 @@
-import CustomListItem from "./CustomListItem";
+import CustomListItem from './CustomListItem';
 export default CustomListItem;
