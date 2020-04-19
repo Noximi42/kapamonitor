@@ -20,7 +20,7 @@ import SignUpPage from './containers/SignUpPage';
 import Dashboard from './containers/Dashboard';
 import Leaflet from './containers/Leaflet/Leaflet';
 import OffersOverview from './containers/offersOverview/offersOverview';
-import RequirementsOverview from './containers/requirementsOverview/requirementsOverview';
+import RequirementsOverview from './containers/DashboardRequirements';
 import AccountInformation from './containers/accountInformation/accountInformation';
 import AdminPanel from './containers/adminPanel/adminPanel';
 import OfferProcessing from './containers/offerProcessing/offerProcessing';
