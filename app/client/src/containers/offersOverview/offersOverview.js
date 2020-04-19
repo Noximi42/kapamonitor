@@ -48,6 +48,10 @@ const exampleData = [
         id: 5,
         ikId: 'Ein Ding',
     },
+    {
+        id: 6,
+        ikId: 'Ein Ding',
+    },
 ];
 
 function simulateHTTPRequest() {

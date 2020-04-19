@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     },
     drawerPaper: {
         position: 'fixed',
-        top: theme.spacing.unit * 8,
+        top: theme.spacing(8),
         whiteSpace: 'nowrap',
         width: drawerWidth,
         transition: theme.transitions.create('width', {
@@ -35,9 +35,9 @@ const useStyles = makeStyles((theme) => ({
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
         }),
-        width: theme.spacing.unit * 8,
+        width: theme.spacing(8),
         [theme.breakpoints.up('sm')]: {
-            width: theme.spacing.unit * 9,
+            width: theme.spacing(9),
         },
     },
 }));
