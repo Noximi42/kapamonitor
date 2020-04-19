@@ -1,37 +1,37 @@
-const INCREMENT = "stepCounter/INCREMENT";
-const DECREMENT = "stepCounter/DECREMENT";
+const INCREMENT = 'stepCounter/INCREMENT';
+const DECREMENT = 'stepCounter/DECREMENT';
 
 const initState = {
-  counter: 0
+    counter: 0,
 };
 
 export default function stepCounterReducer(state = initState, action) {
-  switch (action.type) {
-    case INCREMENT:
-      return {
-        ...state,
-        counter: state.counter + 1
-      };
+    switch (action.type) {
+        case INCREMENT:
+            return {
+                ...state,
+                counter: state.counter + 1,
+            };
 
-    case DECREMENT:
-      return {
-        ...state,
-        counter: state.counter - 1
-      };
+        case DECREMENT:
+            return {
+                ...state,
+                counter: state.counter - 1,
+            };
 
-    default:
-      return state;
-  }
+        default:
+            return state;
+    }
 }
 
 export function increment() {
-  return {
-    type: INCREMENT
-  };
+    return {
+        type: INCREMENT,
+    };
 }
 
 export function decrement() {
-  return {
-    type: DECREMENT
-  };
+    return {
+        type: DECREMENT,
+    };
 }

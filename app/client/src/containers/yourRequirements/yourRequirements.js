@@ -36,30 +36,37 @@ const useStyles = makeStyles({
     },
     tableRow: {
         cursor: 'pointer',
-    }
+    },
 });
 
-const getIconForType = type => {
+const getIconForType = (type) => {
     switch (type) {
         case 'Hotel':
-            return (<HotelIcon alt="Hotel"></HotelIcon>);
+            return <HotelIcon alt="Hotel"></HotelIcon>;
             break;
         case 'Hospital':
-            return (<LocalHospitalIcon alt="Krankenhaus"></LocalHospitalIcon>);
+            return <LocalHospitalIcon alt="Krankenhaus"></LocalHospitalIcon>;
             break;
     }
-}
+};
 
 const getNumberOfBedsForType = (row) => {
     switch (row.type) {
         case 'Hotel':
-            return row.hotel.bedsWithVentilatorWithCarpet + row.hotel.bedsWithoutVentilatorWithCarpet + row.hotel.bedsWithVentilatorOtherFLoor;
+            return (
+                row.hotel.bedsWithVentilatorWithCarpet +
+                row.hotel.bedsWithoutVentilatorWithCarpet +
+                row.hotel.bedsWithVentilatorOtherFLoor
+            );
             break;
         case 'Hospital':
-            return row.hospital.bedsWithVentilator + row.hospital.bedsWithoutVentilator;
+            return (
+                row.hospital.bedsWithVentilator +
+                row.hospital.bedsWithoutVentilator
+            );
             break;
     }
-}
+};
 const getCellContent = (row, cellId) => {
     switch (cellId) {
         case 'street':
@@ -72,15 +79,18 @@ const getCellContent = (row, cellId) => {
             return getNumberOfBedsForType(row);
             break;
         case 'freeBeds':
-            return <LinearProgress
-                variant="determinate"
-                value={row.capacity}></LinearProgress>;
+            return (
+                <LinearProgress
+                    variant="determinate"
+                    value={row.capacity}
+                ></LinearProgress>
+            );
         default:
             return row[cellId];
     }
 };
 
-const Dashboard = props => {
+const Dashboard = (props) => {
     const classes = useStyles();
 
     const [open, setOpen] = React.useState(false);
@@ -92,9 +102,9 @@ const Dashboard = props => {
 
             if (res.status === 200) {
                 if (res.data.length > 0) {
-                    const mockCapacity = res.data.map(location => ({
+                    const mockCapacity = res.data.map((location) => ({
                         ...location,
-                        capacity: Math.floor(Math.random() * 100)
+                        capacity: Math.floor(Math.random() * 100),
                     }));
                     props.setRawLocations(mockCapacity);
                 }
@@ -106,61 +116,77 @@ const Dashboard = props => {
 
     function handleClickOpen(index) {
         setOpen(true);
-        setSelectedRow(index)
-    };
+        setSelectedRow(index);
+    }
     const handleClose = () => {
         setOpen(false);
     };
-    return (<PaddingLayout>
-        <TableContainer component={Paper}>
-            <Table className={classes.table}>
-                <TableHead>
-                    <TableRow>
-                        {headCells.map(cell => (
-                            <TableCell><strong>{cell.label}</strong></TableCell>
-                        ))}
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {props.rawLocations ? props.rawLocations.map((row, index) => (
-                        <TableRow key={row.id} onClick={() => handleClickOpen(index)} hover={true}
-                                  className={classes.tableRow}>
-                            {headCells.map(cell => (
-                                <TableCell>{getCellContent(row, cell.id)}</TableCell>
+    return (
+        <PaddingLayout>
+            <TableContainer component={Paper}>
+                <Table className={classes.table}>
+                    <TableHead>
+                        <TableRow>
+                            {headCells.map((cell) => (
+                                <TableCell>
+                                    <strong>{cell.label}</strong>
+                                </TableCell>
                             ))}
                         </TableRow>
-                    )) : null}
-                </TableBody>
-            </Table>
-        </TableContainer>
-        <Dialog
-            open={open}
-            onClose={handleClose}
-            fullWidth={true}
-            maxWidth="md"
-        >
-            {props.rawLocations ?
-                <>
-                    <DialogTitle>{props.rawLocations[selectedRow] && props.rawLocations[selectedRow].title}</DialogTitle>
-                    <HospitalDetail location={props.rawLocations[selectedRow]}></HospitalDetail>
-                    <DialogActions>
-                        <Button onClick={handleClose} color="primary">
-                            Ok
-                        </Button>
-                    </DialogActions></> : null}
-
-        </Dialog>
-    </PaddingLayout>)
+                    </TableHead>
+                    <TableBody>
+                        {props.rawLocations
+                            ? props.rawLocations.map((row, index) => (
+                                  <TableRow
+                                      key={row.id}
+                                      onClick={() => handleClickOpen(index)}
+                                      hover={true}
+                                      className={classes.tableRow}
+                                  >
+                                      {headCells.map((cell) => (
+                                          <TableCell>
+                                              {getCellContent(row, cell.id)}
+                                          </TableCell>
+                                      ))}
+                                  </TableRow>
+                              ))
+                            : null}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                fullWidth={true}
+                maxWidth="md"
+            >
+                {props.rawLocations ? (
+                    <>
+                        <DialogTitle>
+                            {props.rawLocations[selectedRow] &&
+                                props.rawLocations[selectedRow].title}
+                        </DialogTitle>
+                        <HospitalDetail
+                            location={props.rawLocations[selectedRow]}
+                        ></HospitalDetail>
+                        <DialogActions>
+                            <Button onClick={handleClose} color="primary">
+                                Ok
+                            </Button>
+                        </DialogActions>
+                    </>
+                ) : null}
+            </Dialog>
+        </PaddingLayout>
+    );
 };
 
-
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     rawLocations: state.leaflet.rawLocations,
-})
+});
 
 const mapDispatchToProps = {
-    setRawLocations
+    setRawLocations,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
-

@@ -71,7 +71,11 @@ function QontoStepIcon(props) {
                 [classes.active]: active,
             })}
         >
-            {completed ? <Check className={classes.completed}/> : <div className={classes.circle}/>}
+            {completed ? (
+                <Check className={classes.completed} />
+            ) : (
+                <div className={classes.circle} />
+            )}
         </div>
     );
 }
@@ -133,9 +137,9 @@ function ColorlibStepIcon(props) {
     const { active, completed } = props;
 
     const icons = {
-        1: <SettingsIcon/>,
-        2: <GroupAddIcon/>,
-        3: <VideoLabelIcon/>,
+        1: <SettingsIcon />,
+        2: <GroupAddIcon />,
+        3: <VideoLabelIcon />,
     };
 
     return (
@@ -156,7 +160,7 @@ ColorlibStepIcon.propTypes = {
     icon: PropTypes.node,
 };
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
         marginTop: 20,
@@ -167,7 +171,6 @@ const useStyles = makeStyles(theme => ({
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
-
     },
 
     button: {
@@ -201,29 +204,31 @@ function CustomizedStepper(props) {
     const steps = getSteps();
 
     const handleNext = () => {
-
-        props.setActiveStep(props.activeStep + 1)
-
+        props.setActiveStep(props.activeStep + 1);
     };
 
     const handleBack = () => {
-        props.setActiveStep(props.activeStep - 1)
-
+        props.setActiveStep(props.activeStep - 1);
     };
 
     const handleReset = () => {
-        props.setActiveStep(0)
+        props.setActiveStep(0);
         //reset
-        props.resetAttr()
+        props.resetAttr();
     };
 
     return (
         <div className={classes.root}>
-
-            <Stepper alternativeLabel activeStep={props.activeStep} connector={<QontoConnector/>}>
-                {steps.map(label => (
+            <Stepper
+                alternativeLabel
+                activeStep={props.activeStep}
+                connector={<QontoConnector />}
+            >
+                {steps.map((label) => (
                     <Step key={label}>
-                        <StepLabel StepIconComponent={QontoStepIcon}>{label}</StepLabel>
+                        <StepLabel StepIconComponent={QontoStepIcon}>
+                            {label}
+                        </StepLabel>
                     </Step>
                 ))}
             </Stepper>
@@ -231,8 +236,10 @@ function CustomizedStepper(props) {
             <div>
                 {props.activeStep === steps.length ? (
                     <div className={classes.buttonWrapper}>
-
-                        <Button onClick={handleReset} className={classes.button}>
+                        <Button
+                            onClick={handleReset}
+                            className={classes.button}
+                        >
                             Nochmal
                         </Button>
                     </div>
@@ -240,7 +247,11 @@ function CustomizedStepper(props) {
                     <div>
                         {/*<Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>*/}
                         <div className={classes.buttonWrapper}>
-                            <Button disabled={props.activeStep === 0} onClick={handleBack} className={classes.button}>
+                            <Button
+                                disabled={props.activeStep === 0}
+                                onClick={handleBack}
+                                className={classes.button}
+                            >
                                 Zurück
                             </Button>
                             <Button
@@ -249,7 +260,9 @@ function CustomizedStepper(props) {
                                 onClick={handleNext}
                                 className={classes.button}
                             >
-                                {props.activeStep === steps.length - 1 ? 'Fertig' : 'Weiter'}
+                                {props.activeStep === steps.length - 1
+                                    ? 'Fertig'
+                                    : 'Weiter'}
                             </Button>
                         </div>
                     </div>
@@ -259,16 +272,13 @@ function CustomizedStepper(props) {
     );
 }
 
-const mapStateToProps = state => ({
-
+const mapStateToProps = (state) => ({
     activeStep: state.registerUnit.activeStep,
-
-
-})
+});
 
 const mapDispatchToProps = {
     setActiveStep,
-    resetAttr
+    resetAttr,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CustomizedStepper);

@@ -13,7 +13,6 @@ const initState = {
 
     hasInternet: false,
 
-
     bedsWithDevicesCarpet: '',
     bedsWithoutDevicesCarpet: '',
 
@@ -24,10 +23,9 @@ const initState = {
     showers: '',
     toilets: '',
 
-
     activeStep: 0,
 
-    nav:"dashboard"
+    nav: 'dashboard',
 };
 
 export default function registerUnitReducer(state = initState, action) {
@@ -35,16 +33,14 @@ export default function registerUnitReducer(state = initState, action) {
         case types.SET_FORM_ATTRIBUTE:
             return {
                 ...state,
-                [action.target]: action.value
+                [action.target]: action.value,
             };
         case types.SET_ACTIVE_STEP:
-
             return {
                 ...state,
-                activeStep: action.step
+                activeStep: action.step,
             };
         case types.RESET_ATTR:
-
             return {
                 ...state,
                 lastName: '',
@@ -71,10 +67,9 @@ export default function registerUnitReducer(state = initState, action) {
         case types.SET_NAVIGATION:
             return {
                 ...state,
-                nav: action.nav
+                nav: action.nav,
             };
         default:
             return state;
     }
 }
-

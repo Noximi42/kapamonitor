@@ -1,7 +1,7 @@
 import types from '../types';
 
 const initState = {
-    user: null
+    user: null,
 };
 
 export default function registerUserReducer(state = initState, action) {
@@ -9,11 +9,10 @@ export default function registerUserReducer(state = initState, action) {
         case types.SET_USER:
             return {
                 ...state,
-                user: action.user
+                user: action.user,
             };
 
         default:
             return state;
     }
 }
-
