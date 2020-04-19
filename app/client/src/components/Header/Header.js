@@ -65,21 +65,22 @@ function Header(props) {
                         <NotificationsIcon />
                     </Badge>
                 </IconButton>
-                <IconButton color="inherit">
+                <IconButton
+                    color="inherit"
+                    onClick={() => {
+                        firebase
+                            .auth()
+                            .signOut()
+                            .then((res) => {
+                                props.setUser(null);
+                            })
+                            .catch((res) => {
+                                props.setUser(null);
+                            });
+                    }}
+                >
                     {/*<PersonIcon />*/}
-                    <Exit
-                        onClick={() => {
-                            firebase
-                                .auth()
-                                .signOut()
-                                .then((res) => {
-                                    props.setUser(null);
-                                })
-                                .catch((res) => {
-                                    props.setUser(null);
-                                });
-                        }}
-                    />
+                    <Exit />
                 </IconButton>
             </Toolbar>
         </AppBar>
