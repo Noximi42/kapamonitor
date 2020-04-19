@@ -6,6 +6,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import CustomCheckbox from '../../components/CustomCheckbox';
+import CustomDropdown from '../../components/CustomDropdown';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -24,39 +26,16 @@ const Dashboard = (props) => {
         setAge(event.target.value);
     };
 
-    const [state, setState] = React.useState({
-        checkedB: true,
-    });
-
-    const handleChangeCheckbox = (event) => {
-        setState({ ...state, [event.target.name]: event.target.checked });
-    };
-
     return (
         <PaddingLayout>
-            <div class="container-fluid">
-                <InputLabel id="demo-simple-select-label">Age</InputLabel>
-                <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={age}
-                    onChange={handleChangeDropdown}
-                >
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-            </div>
+            {CustomDropdown({
+                headline: 'asdf',
+                itemKeys: [10, 20, 30],
+                itemValues: {10: "Ten", 20: "Twenty", 30: "Thirty"},
+            })}
             <br></br>
             <FormControlLabel
-                control={
-                    <Checkbox
-                        checked={state.checkedB}
-                        onChange={handleChangeCheckbox}
-                        name="checkedB"
-                        color="primary"
-                    />
-                }
+                control={CustomCheckbox('checkedB')}
                 label="Primary"
             />
         </PaddingLayout>
