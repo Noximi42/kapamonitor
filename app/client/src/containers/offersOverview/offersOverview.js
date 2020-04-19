@@ -61,9 +61,6 @@ function simulateHTTPRequest() {
 const OffersOverview = (props) => {
     const classes = useStyles();
 
-    // const [state, setState] = useState({
-    //   apiData: exampleData,
-    // });
     useEffect(() => {
         async function fetchData() {
             const res = await simulateHTTPRequest().then((data) => {
@@ -81,9 +78,7 @@ const OffersOverview = (props) => {
     let rows = [];
 
     for (let item of props.offers) {
-        rows.push(
-            <CustomListItem key={item.id} item={item} checkBoxHandler={} />
-        );
+        rows.push(<CustomListItem key={item.id} item={item} />);
     }
 
     return (

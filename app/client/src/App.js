@@ -156,8 +156,8 @@ function App(props) {
                                 component={Register}
                             />
                             <DashboardRoute
-                                path="/offerOverview"
-                                component={OfferOverview}
+                                path="/offersOverview"
+                                component={OffersOverview}
                             />
                             <DashboardRoute
                                 path="/requirementsOverview"
