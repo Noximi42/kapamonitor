@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using KapaMonitor.Application.ContactInfos;
 using KapaMonitor.Domain.Internal;
 using static KapaMonitor.Application.ContactInfos.CreateContactInfo;
+using System.Collections.Generic;
 
 namespace KapaMonitor.Api.Controllers
 {
@@ -54,10 +55,10 @@ namespace KapaMonitor.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ContactInfoViewModel))]
         public async Task<IActionResult> Post([FromBody] CreateContactInfoRequest contactInfo)
         {
-            (bool dbOpFailed, ContactInfoViewModel? vm) = await new CreateContactInfo(_context).Do(contactInfo);
+            (bool success, ContactInfoViewModel? vm, RequestError? error) = await new CreateContactInfo(_context).Do(contactInfo);
 
-            if (dbOpFailed)
-                return StatusCode(StatusCodes.Status500InternalServerError, ErrorMessages.DatabaseOperationFailed);
+            if (!success && error != null)
+                return StatusCode((int)error.StatusCode, error.Errors);
 
             return Ok(vm);
         }
@@ -75,13 +76,10 @@ namespace KapaMonitor.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ContactInfoViewModel))]
         public async Task<IActionResult> Put([FromBody] ContactInfoViewModel contactInfo)
         {
-            (bool dbOpFailed, ContactInfoViewModel? vm) = await new UpdateContactInfo(_context).Do(contactInfo);
+            (bool success, ContactInfoViewModel? vm, RequestError? error) = await new UpdateContactInfo(_context).Do(contactInfo);
 
-            if (dbOpFailed)
-                return StatusCode(StatusCodes.Status500InternalServerError, ErrorMessages.DatabaseOperationFailed);
-
-            if (vm == null)
-                return NotFound();
+            if (!success && error != null)
+                return StatusCode((int)error.StatusCode, error.Errors);
 
             return Ok(vm);
         }

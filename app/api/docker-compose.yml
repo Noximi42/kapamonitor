@@ -14,6 +14,10 @@ services:
       dockerfile: KapaMonitor.Api/Dockerfile
     depends_on: 
       - db-server
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "5000:80"
     networks: 
       - localdev
 
@@ -24,7 +28,7 @@ services:
       - db_volume:/var/lib/postgresql/data
     environment: 
       POSTGRES_USER: "sa"
-      POSTGRES_PASSWORD: "Chris123456"
+      POSTGRES_PASSWORD: "Dev123456"
       POSTGRES_DB: "KapaMonitor"
     ports:
       - "5432"

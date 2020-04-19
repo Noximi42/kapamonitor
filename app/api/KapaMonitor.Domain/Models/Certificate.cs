@@ -4,16 +4,17 @@ using System.ComponentModel.DataAnnotations;
 
 namespace KapaMonitor.Domain.Models
 {
-    public class Location
+    public class Certificate
     {
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
 
+
         [Required]
-        public Address Address { get; set; }
-        public ICollection<ContactInfoLocation> ContactInfoLocations { get; set; }
-        public ICollection<Offer> Offers { get; set; }
+        public Resource Resource { get; set; }
+        public ICollection<OfferCertificate> OfferCertificates { get; set; }
+        public ICollection<RequirementCertificate> RequirementCertificates { get; set; }
+
     }
 }
-

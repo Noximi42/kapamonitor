@@ -1,4 +1,5 @@
 ﻿using KapaMonitor.Domain.Models;
+using System.Collections.Generic;
 
 namespace KapaMonitor.Application.ContactInfos
 {
@@ -20,5 +21,22 @@ namespace KapaMonitor.Application.ContactInfos
         public string? LastName { get; set; }
         public string? Email { get; set; }
         public string? Phone { get; set; }
+
+
+        public (bool isValid, List<string> errors) CheckValidity()
+        {
+            List<string> errors = new List<string>();
+
+            if (Id <= 0)
+                errors.Add("id is required");
+            if (string.IsNullOrEmpty(FirstName))
+                errors.Add("firstName is required");
+            if (string.IsNullOrEmpty(LastName))
+                errors.Add("lastName is required");
+            if (string.IsNullOrEmpty(Email))
+                errors.Add("email is required");
+
+            return (errors.Count == 0, errors);
+        }
     }
 }
