@@ -2,9 +2,10 @@ import React from 'react';
 import Checkbox from '@material-ui/core/Checkbox';
 
 const CustomCheckbox = (props) => {
-    const { checkboxName } = props;
+    const { checkboxId } = props;
     const handleChangeCheckbox = (event) => {
         setState({ ...state, [event.target.name]: event.target.checked });
+        var targetId = event.target.id;
     };
     const [state, setState] = React.useState({
         checkedB: true,
@@ -15,6 +16,7 @@ const CustomCheckbox = (props) => {
             onChange={handleChangeCheckbox}
             name="checkedB"
             color="primary"
+            id={checkboxId}
         />
     );
 };

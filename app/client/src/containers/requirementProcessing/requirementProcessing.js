@@ -31,11 +31,15 @@ const Dashboard = (props) => {
             {CustomDropdown({
                 headline: 'asdf',
                 itemKeys: [10, 20, 30],
-                itemValues: {10: "Ten", 20: "Twenty", 30: "Thirty"},
+                itemValues: { 10: 'Ten', 20: 'Twenty', 30: 'Thirty' },
             })}
             <br></br>
             <FormControlLabel
-                control={CustomCheckbox('checkedB')}
+                control={CustomCheckbox({ checkboxId: '10'})}
+                label="Primary"
+            />
+            <FormControlLabel
+                control={CustomCheckbox({ checkboxId: '20'})}
                 label="Primary"
             />
         </PaddingLayout>
