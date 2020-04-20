@@ -3,56 +3,17 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import PaddingLayout from '../../components/PaddingLayout';
 import CustomListItem from '../../components/CustomListItem';
+import SearchPanel from '../../components/SearchPanel';
 import { connect } from 'react-redux';
-import { setOffers } from '../../store/offers/actions';
+import {
+    setOffers,
+    updateOffers,
+    setSearchFilter,
+} from '../../store/offers/actions';
+import { getAllOffers } from '../../services/backend-rest-service';
+import { exampleData } from '../../__MOCK__/mockData';
 
 const useStyles = makeStyles((theme) => ({}));
-
-const exampleData = [
-    {
-        id: 0,
-        ikId: 'This some Test',
-        isEmergencyHospital: true,
-        bedsWithVentilator: 200,
-        bedsWithoutVentilator: 500,
-        barrierFree: true,
-        locationId: 0,
-    },
-    {
-        id: 1,
-        ikId: 'This some Testdata',
-        isEmergencyHospital: true,
-        bedsWithVentilator: 0,
-        bedsWithoutVentilator: 0,
-        barrierFree: true,
-        locationId: 1,
-    },
-    {
-        id: 2,
-        ikId: 'Ding 2',
-        isEmergencyHospital: true,
-        bedsWithVentilator: 0,
-        bedsWithoutVentilator: 0,
-        barrierFree: true,
-        locationId: 2,
-    },
-    {
-        id: 3,
-        ikId: 'Ein Ding',
-    },
-    {
-        id: 4,
-        ikId: 'Ein Ding',
-    },
-    {
-        id: 5,
-        ikId: 'Ein Ding',
-    },
-    {
-        id: 6,
-        ikId: 'Ein Ding',
-    },
-];
 
 function simulateHTTPRequest() {
     return new Promise(function (resolve, reject) {
@@ -67,13 +28,21 @@ const YourOffers = (props) => {
 
     useEffect(() => {
         async function fetchData() {
-            const res = await simulateHTTPRequest().then((data) => {
-                console.log('Fetch completed');
-                console.log('data', data);
-                props.setOffers(data);
-            });
+            let res = await simulateHTTPRequest()
+                .then((data) => {
+                    console.log('Fetch completed');
+                    const extendedData = data.map((v) => ({
+                        ...v,
+                        checked: false,
+                    }));
+                    return extendedData;
+                })
+                .then((data) => {
+                    props.setOffers(data);
+                    return data;
+                });
 
-            console.log(res);
+            res = await getAllOffers();
         }
 
         fetchData();
@@ -82,24 +51,44 @@ const YourOffers = (props) => {
     let rows = [];
 
     for (let item of props.offers) {
-        rows.push(<CustomListItem key={item.id} item={item} />);
+        rows.push(
+            <CustomListItem
+                key={item.id}
+                item={item}
+                handleCheckbox={(event) => {
+                    props.updateOffers([
+                        {
+                            ...item,
+                            checked: event.target.checked,
+                        },
+                    ]);
+                }}
+            />
+        );
     }
 
     return (
         <PaddingLayout title="Deine Angebote">
-            <div className={classes.root}>{rows}</div>
+            <div className={classes.root}>
+                <SearchPanel
+                    handleSearch={(event) => {
+                        props.setSearchFilter(event.target.value);
+                    }}
+                />
+                {rows}
+            </div>
         </PaddingLayout>
     );
 };
 
 const mapStateToProps = (state) => ({
-    // TODO StateToProps
     offers: state.offers.filteredOffers,
 });
 
 const mapDispatchToProps = {
-    // TODO Redux actions
     setOffers,
+    updateOffers,
+    setSearchFilter,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(YourOffers);

@@ -27,19 +27,6 @@ const useStyles = makeStyles((theme) => ({
 
 const CustomListItem = (props) => {
     const classes = useStyles();
-
-    const [checked, setChecked] = React.useState(true);
-
-    const handleChange = (event) => {
-        setChecked(event.target.checked);
-    };
-
-    console.log('Props', props);
-
-    //   const [state, setState] = useState((previousState)=>{
-    //       console.log('PreviousState',previousState);
-    //   });
-
     return (
         <Paper
             className={classes.paper}
@@ -48,13 +35,15 @@ const CustomListItem = (props) => {
             <Grid container alignItems="stretch">
                 <Grid item xs={12} sm={1}>
                     <Checkbox
-                        checked={checked}
-                        onChange={handleChange}
+                        checked={props.item.checked}
+                        onChange={props.handleCheckbox}
                         inputProps={{ 'aria-label': 'Check Item' }}
                     />
                 </Grid>
                 <Grid item xs={12} sm={3}>
-                    <Typography variant="subtitle1">Artikelname</Typography>
+                    <Typography variant="subtitle1">
+                        {props.item.ikId ? props.item.ikId : 'Artikelname'}
+                    </Typography>
                     <Grid
                         container
                         alignItems="center"
@@ -84,12 +73,4 @@ const CustomListItem = (props) => {
     );
 };
 
-const mapStateToProps = (state) => ({
-    // rawLocations: state.leaflet.rawLocations,
-});
-
-const mapDispatchToProps = {
-    // setRawLocations,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(CustomListItem);
+export default CustomListItem;

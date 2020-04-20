@@ -9,7 +9,8 @@ const initState = {
 };
 
 function removeFromArray(original, remove) {
-    return original.filter((value) => !remove.includes(value));
+    let copy = original.slice();
+    return copy.filter((value) => !remove.includes(value));
 }
 
 export default function registerUnitReducer(state = initState, action) {
@@ -17,13 +18,25 @@ export default function registerUnitReducer(state = initState, action) {
         case types.SET_OFFERS:
             return {
                 ...state,
-                offers: action.newOffers.map(
-                    (obj) => state.offers.find((o) => o.id === obj.id) || obj
-                ),
-                filteredOffers: action.newOffers.map(
-                    (obj) => state.offers.find((o) => o.id === obj.id) || obj
-                ),
+                offers: action.newOffers,
+                filteredOffers: action.newOffers,
             };
+
+        case types.UPDATE_OFFERS:
+            let updatedOffers = state.offers.map(
+                (obj) =>
+                    action.updatedOffers.find((o) => o.id === obj.id) || obj
+            );
+            let updatedfilteredOffers = state.filteredOffers.map(
+                (obj) =>
+                    action.updatedOffers.find((o) => o.id === obj.id) || obj
+            );
+            return {
+                ...state,
+                offers: updatedOffers,
+                filteredOffers: updatedfilteredOffers,
+            };
+
         case types.DELETE_OFFERS:
             return {
                 ...state,
@@ -37,6 +50,7 @@ export default function registerUnitReducer(state = initState, action) {
             return {
                 ...state,
                 filter: {
+                    ...state.filter,
                     text: '',
                 },
             };
@@ -45,7 +59,9 @@ export default function registerUnitReducer(state = initState, action) {
                 ...state,
                 filter: action.filter,
                 filteredOffers: state.offers.filter((offer) => {
-                    return offer.ikId.includes(action.filter.text);
+                    return offer.ikId
+                        .toUpperCase()
+                        .includes(action.filter.text.toUpperCase());
                 }),
             };
         default:

@@ -19,3 +19,15 @@ export const getAllLocations = async () => {
 
     return instance.get('/Location', configAxios);
 };
+
+export const getAllOffers = async () => {
+    let user = firebase.auth().currentUser;
+    if (user) {
+        let token = await user.getIdToken();
+        configAxios = {
+            headers: { Authorization: `Bearer ${token}` },
+        };
+    }
+
+    return instance.get('/Offer', configAxios);
+};

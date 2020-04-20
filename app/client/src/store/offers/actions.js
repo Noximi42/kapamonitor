@@ -5,6 +5,11 @@ export const setOffers = (newOffers) => ({
     newOffers,
 });
 
+export const updateOffers = (updatedOffers) => ({
+    type: types.UPDATE_OFFERS,
+    updatedOffers,
+});
+
 export const deleteOffers = (deletedOffers) => ({
     type: types.DELETE_OFFERS,
     deletedOffers,
@@ -15,7 +20,7 @@ export const resetSearchFilter = () => ({
 });
 
 export const setSearchFilter = (searchtext) => ({
-    type: types.setSearchFilter,
+    type: types.SET_SEARCH_FILTER,
     filter: {
         text: searchtext,
     },
