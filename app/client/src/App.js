@@ -7,7 +7,12 @@ import {
 } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { connect } from 'react-redux';
-import { MuiThemeProvider } from '@material-ui/core/styles';
+import {
+    MuiThemeProvider,
+    responsiveFontSizes,
+    createMuiTheme,
+} from '@material-ui/core/styles';
+
 import MainLayout from './layouts/MainLayout';
 import EmptyLayout from './layouts/EmptyLayout';
 
@@ -32,6 +37,9 @@ import Register from './containers/Register/Register';
 import UserNotice from './components/UserNotice/UserNotice';
 
 firebase.initializeApp(config.firebaseConfig);
+
+let theme = createMuiTheme();
+theme = responsiveFontSizes(theme);
 
 const LOGIN_STATE = {
     SUCCESS: 'SUCCESS',
@@ -95,7 +103,7 @@ function App(props) {
     return (
         <>
             {user.loggedIn === LOGIN_STATE.SUCCESS ? (
-                <MuiThemeProvider>
+                <MuiThemeProvider theme={theme}>
                     <CssBaseline />
                     <div style={{ height: '100vh' }}>
                         <Router>
@@ -154,7 +162,6 @@ function App(props) {
                             <Route path="/login" component={LoginPage} />
                             <Route path="/sign-up" component={SignUpPage} />
                             <Route exact path="/" component={LoginPage} />
-                            <EmptyRoute component={NotFound} />
                         </Switch>
                     </Router>
                 </div>

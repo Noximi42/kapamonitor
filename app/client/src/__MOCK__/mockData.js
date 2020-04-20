@@ -40,3 +40,49 @@ const rows = new Array(30)
     .map((entry) => mockEntries[pickRandomEntry(3)]);
 
 export const getAllLocations = () => rows;
+
+export const exampleData = [
+    {
+        id: 0,
+        ikId: 'Waschpulver',
+        isEmergencyHospital: true,
+        bedsWithVentilator: 200,
+        bedsWithoutVentilator: 500,
+        barrierFree: true,
+        locationId: 0,
+    },
+    {
+        id: 1,
+        ikId: 'Mehl',
+        isEmergencyHospital: true,
+        bedsWithVentilator: 0,
+        bedsWithoutVentilator: 0,
+        barrierFree: true,
+        locationId: 1,
+    },
+    {
+        id: 2,
+        ikId: 'Einhornstaub',
+        isEmergencyHospital: true,
+        bedsWithVentilator: 0,
+        bedsWithoutVentilator: 0,
+        barrierFree: true,
+        locationId: 2,
+    },
+    {
+        id: 3,
+        ikId: 'Knäckebrot',
+    },
+    {
+        id: 4,
+        ikId: 'Orangensaft',
+    },
+    {
+        id: 5,
+        ikId: 'Petersilie',
+    },
+    {
+        id: 6,
+        ikId: 'Tomaten',
+    },
+];

@@ -11,8 +11,8 @@ const styles = (theme) => ({
     },
     content: {
         flexGrow: 1,
-        padding: theme.spacing.unit * 3,
-        marginTop: theme.spacing.unit * 7,
+        padding: theme.spacing(3),
+        marginTop: theme.spacing(7),
         overflowX: 'hidden',
     },
     contentShift: {
@@ -30,7 +30,6 @@ const styles = (theme) => ({
 
 const PaddingLayout = (props) => {
     const { classes, children, title, titlePadding } = props;
-    console.log(props);
     return (
         <div className={classes.content}>
             <Paper
