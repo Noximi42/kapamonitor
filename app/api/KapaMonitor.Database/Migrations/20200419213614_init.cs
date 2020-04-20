@@ -55,16 +55,14 @@ namespace KapaMonitor.Database.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Resources",
+                name: "UnitsOfMeasure",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Resources", x => x.Id);
+                    table.PrimaryKey("PK_UnitsOfMeasure", x => x.Name);
                 });
 
             migrationBuilder.CreateTable(
@@ -123,6 +121,26 @@ namespace KapaMonitor.Database.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Resources",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(nullable: false),
+                    UnitOfMeasureName = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Resources", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Resources_UnitsOfMeasure_UnitOfMeasureName",
+                        column: x => x.UnitOfMeasureName,
+                        principalTable: "UnitsOfMeasure",
+                        principalColumn: "Name",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Certificates",
                 columns: table => new
                 {
@@ -152,7 +170,7 @@ namespace KapaMonitor.Database.Migrations
                     CreationDate = table.Column<DateTime>(nullable: false),
                     LastChangedDate = table.Column<DateTime>(nullable: true),
                     ContactInfoId = table.Column<int>(nullable: false),
-                    LocationId = table.Column<int>(nullable: false),
+                    LocationId = table.Column<int>(nullable: true),
                     ResourceId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -169,7 +187,7 @@ namespace KapaMonitor.Database.Migrations
                         column: x => x.LocationId,
                         principalTable: "Locations",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Offers_Resources_ResourceId",
                         column: x => x.ResourceId,
@@ -209,26 +227,6 @@ namespace KapaMonitor.Database.Migrations
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Requirements_Resources_ResourceId",
-                        column: x => x.ResourceId,
-                        principalTable: "Resources",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UnitOfMeasure",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(nullable: false),
-                    ResourceId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UnitOfMeasure", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_UnitOfMeasure_Resources_ResourceId",
                         column: x => x.ResourceId,
                         principalTable: "Resources",
                         principalColumn: "Id",
@@ -346,10 +344,9 @@ namespace KapaMonitor.Database.Migrations
                 column: "ResourceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UnitOfMeasure_ResourceId",
-                table: "UnitOfMeasure",
-                column: "ResourceId",
-                unique: true);
+                name: "IX_Resources_UnitOfMeasureName",
+                table: "Resources",
+                column: "UnitOfMeasureName");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -370,9 +367,6 @@ namespace KapaMonitor.Database.Migrations
                 name: "RequirementCertificate");
 
             migrationBuilder.DropTable(
-                name: "UnitOfMeasure");
-
-            migrationBuilder.DropTable(
                 name: "Offers");
 
             migrationBuilder.DropTable(
@@ -389,6 +383,9 @@ namespace KapaMonitor.Database.Migrations
 
             migrationBuilder.DropTable(
                 name: "Resources");
+
+            migrationBuilder.DropTable(
+                name: "UnitsOfMeasure");
         }
     }
 }

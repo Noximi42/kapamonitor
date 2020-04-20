@@ -18,5 +18,9 @@ namespace KapaMonitor.Domain.Internal
         public static readonly Error CreateContactInfo = new Error { Code = 1, Message = "Failed to add new ContactInfo to database." };
         public static readonly Error UpdateContactInfo = new Error { Code = 2, Message = "Failed to update existing ContactInfo in database." };
         public static readonly Error DeleteContactInfo = new Error { Code = 3, Message = "Failed to remove ContactInfo from database." };
+
+        public static readonly Error CreateOffer = new Error { Code = 1, Message = "Failed to add new Offer to database." };
+        public static readonly Error UpdateOffer = new Error { Code = 2, Message = "Failed to update existing Offer in database." };
+        public static readonly Error DeleteOffer = new Error { Code = 3, Message = "Failed to remove Offer from database." };
     }
 }
