@@ -33,17 +33,81 @@ namespace KapaMonitor.Database.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("ErrorMessage")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Object")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("StackTrace")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.ToTable("ErrorLogs");
+                });
+
+            modelBuilder.Entity("KapaMonitor.Domain.Models.Address", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("City")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("ContactInfoId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("HouseNumber")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("LocationId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("State")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Street")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ZipCode")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContactInfoId")
+                        .IsUnique();
+
+                    b.HasIndex("LocationId")
+                        .IsUnique();
+
+                    b.ToTable("Addresses");
+                });
+
+            modelBuilder.Entity("KapaMonitor.Domain.Models.Certificate", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("ResourceId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ResourceId");
+
+                    b.ToTable("Certificates");
                 });
 
             modelBuilder.Entity("KapaMonitor.Domain.Models.ContactInfo", b =>
@@ -54,15 +118,15 @@ namespace KapaMonitor.Database.Migrations
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Email")
-                        .HasColumnType("text");
-
-                    b.Property<string>("FbUserId")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Phone")
@@ -73,105 +137,6 @@ namespace KapaMonitor.Database.Migrations
                     b.ToTable("ContactInfos");
                 });
 
-            modelBuilder.Entity("KapaMonitor.Domain.Models.Gym", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<double>("Area")
-                        .HasColumnType("double precision");
-
-                    b.Property<bool>("BarrierFree")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("Beds")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("HeavyCurrent")
-                        .HasColumnType("boolean");
-
-                    b.Property<double>("HeavyCurrentCapacity")
-                        .HasColumnType("double precision");
-
-                    b.Property<int>("QuantityWaterConnections")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Gyms");
-                });
-
-            modelBuilder.Entity("KapaMonitor.Domain.Models.Hospital", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<bool>("BarrierFree")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("BedsWithVentilator")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("BedsWithoutVentilator")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("IkId")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsEmergencyHospital")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("LocationId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LocationId")
-                        .IsUnique();
-
-                    b.ToTable("Hospitals");
-                });
-
-            modelBuilder.Entity("KapaMonitor.Domain.Models.Hotel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<int>("BedsWithVentilatorOtherFLoor")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("BedsWithVentilatorWithCarpet")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("BedsWithoutVentilatorOtherFLoor")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("BedsWithoutVentilatorWithCarpet")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("FireProtectionsRegulations")
-                        .HasColumnType("text");
-
-                    b.Property<double>("HeavyCurentCapacity")
-                        .HasColumnType("double precision");
-
-                    b.Property<bool>("HeavyCurrent")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("KitchenCapacity")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Hotels");
-                });
-
             modelBuilder.Entity("KapaMonitor.Domain.Models.Location", b =>
                 {
                     b.Property<int>("Id")
@@ -179,128 +144,279 @@ namespace KapaMonitor.Database.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<bool>("AccessToInternet")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Accessability")
+                    b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("City")
-                        .HasColumnType("text");
+                    b.HasKey("Id");
+
+                    b.ToTable("Locations");
+                });
+
+            modelBuilder.Entity("KapaMonitor.Domain.Models.ManyToManyHelper.ContactInfoLocation", b =>
+                {
+                    b.Property<int>("ContactInfoId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("LocationId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("ContactInfoId", "LocationId");
+
+                    b.HasIndex("LocationId");
+
+                    b.ToTable("ContactInfoLocation");
+                });
+
+            modelBuilder.Entity("KapaMonitor.Domain.Models.ManyToManyHelper.OfferCertificate", b =>
+                {
+                    b.Property<int>("OfferId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("CertificateId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("OfferId", "CertificateId");
+
+                    b.HasIndex("CertificateId");
+
+                    b.ToTable("OfferCertificate");
+                });
+
+            modelBuilder.Entity("KapaMonitor.Domain.Models.ManyToManyHelper.RequirementCertificate", b =>
+                {
+                    b.Property<int>("RequirementId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("CertificateId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("RequirementId", "CertificateId");
+
+                    b.HasIndex("CertificateId");
+
+                    b.ToTable("RequirementCertificate");
+                });
+
+            modelBuilder.Entity("KapaMonitor.Domain.Models.Offer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<int>("ContactInfoId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("GeoLatitude")
-                        .HasColumnType("text");
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("GeoLongitude")
-                        .HasColumnType("text");
+                    b.Property<DateTime?>("LastChangedDate")
+                        .HasColumnType("timestamp without time zone");
 
-                    b.Property<int?>("GymId")
+                    b.Property<int?>("LocationId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("HospitalId")
+                    b.Property<float>("Number")
+                        .HasColumnType("real");
+
+                    b.Property<int>("ResourceId")
                         .HasColumnType("integer");
-
-                    b.Property<int?>("HotelId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("HouseNumber")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PostCode")
-                        .HasColumnType("text");
-
-                    b.Property<int?>("SanitaryInfoId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("State")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Street")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Url")
-                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ContactInfoId");
 
-                    b.HasIndex("GymId")
-                        .IsUnique();
+                    b.HasIndex("LocationId");
 
-                    b.HasIndex("HotelId")
-                        .IsUnique();
+                    b.HasIndex("ResourceId");
 
-                    b.HasIndex("SanitaryInfoId")
-                        .IsUnique();
-
-                    b.ToTable("Locations");
+                    b.ToTable("Offers");
                 });
 
-            modelBuilder.Entity("KapaMonitor.Domain.Models.SanitaryInfo", b =>
+            modelBuilder.Entity("KapaMonitor.Domain.Models.Requirement", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<bool>("BarrierFree")
-                        .HasColumnType("boolean");
+                    b.Property<float>("AlreadySatisfied")
+                        .HasColumnType("real");
 
-                    b.Property<int>("Floor")
+                    b.Property<int>("ContactInfoId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("QuantityBathrooms")
+                    b.Property<float>("CreationDate")
+                        .HasColumnType("real");
+
+                    b.Property<DateTime?>("LastChangedDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("LocationId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("QuantityShowers")
-                        .HasColumnType("integer");
+                    b.Property<float>("Number")
+                        .HasColumnType("real");
 
-                    b.Property<int>("QuantitySinks")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("QuantityToilents")
+                    b.Property<int>("ResourceId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.ToTable("SanitaryInfos");
+                    b.HasIndex("ContactInfoId");
+
+                    b.HasIndex("LocationId");
+
+                    b.HasIndex("ResourceId");
+
+                    b.ToTable("Requirements");
                 });
 
-            modelBuilder.Entity("KapaMonitor.Domain.Models.Hospital", b =>
+            modelBuilder.Entity("KapaMonitor.Domain.Models.Resource", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UnitOfMeasureName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UnitOfMeasureName");
+
+                    b.ToTable("Resources");
+                });
+
+            modelBuilder.Entity("KapaMonitor.Domain.Models.UnitOfMeasure", b =>
+                {
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Name");
+
+                    b.ToTable("UnitsOfMeasure");
+                });
+
+            modelBuilder.Entity("KapaMonitor.Domain.Models.Address", b =>
+                {
+                    b.HasOne("KapaMonitor.Domain.Models.ContactInfo", "ContactInfo")
+                        .WithOne("Address")
+                        .HasForeignKey("KapaMonitor.Domain.Models.Address", "ContactInfoId");
+
                     b.HasOne("KapaMonitor.Domain.Models.Location", "Location")
-                        .WithOne("Hospital")
-                        .HasForeignKey("KapaMonitor.Domain.Models.Hospital", "LocationId")
+                        .WithOne("Address")
+                        .HasForeignKey("KapaMonitor.Domain.Models.Address", "LocationId");
+                });
+
+            modelBuilder.Entity("KapaMonitor.Domain.Models.Certificate", b =>
+                {
+                    b.HasOne("KapaMonitor.Domain.Models.Resource", "Resource")
+                        .WithMany("Certificates")
+                        .HasForeignKey("ResourceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("KapaMonitor.Domain.Models.Location", b =>
+            modelBuilder.Entity("KapaMonitor.Domain.Models.ManyToManyHelper.ContactInfoLocation", b =>
                 {
                     b.HasOne("KapaMonitor.Domain.Models.ContactInfo", "ContactInfo")
-                        .WithMany("Location")
+                        .WithMany("ContactInfoLocations")
                         .HasForeignKey("ContactInfoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("KapaMonitor.Domain.Models.Gym", "Gym")
-                        .WithOne("Location")
-                        .HasForeignKey("KapaMonitor.Domain.Models.Location", "GymId");
+                    b.HasOne("KapaMonitor.Domain.Models.Location", "Location")
+                        .WithMany("ContactInfoLocations")
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
 
-                    b.HasOne("KapaMonitor.Domain.Models.Hotel", "Hotel")
-                        .WithOne("Location")
-                        .HasForeignKey("KapaMonitor.Domain.Models.Location", "HotelId");
+            modelBuilder.Entity("KapaMonitor.Domain.Models.ManyToManyHelper.OfferCertificate", b =>
+                {
+                    b.HasOne("KapaMonitor.Domain.Models.Certificate", "Certificate")
+                        .WithMany("OfferCertificates")
+                        .HasForeignKey("CertificateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("KapaMonitor.Domain.Models.SanitaryInfo", "SanitaryInfo")
-                        .WithOne("Location")
-                        .HasForeignKey("KapaMonitor.Domain.Models.Location", "SanitaryInfoId");
+                    b.HasOne("KapaMonitor.Domain.Models.Offer", "Offer")
+                        .WithMany("OfferCertificates")
+                        .HasForeignKey("OfferId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("KapaMonitor.Domain.Models.ManyToManyHelper.RequirementCertificate", b =>
+                {
+                    b.HasOne("KapaMonitor.Domain.Models.Certificate", "Certificate")
+                        .WithMany("RequirementCertificates")
+                        .HasForeignKey("CertificateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("KapaMonitor.Domain.Models.Requirement", "Requirement")
+                        .WithMany("RequirementCertificates")
+                        .HasForeignKey("RequirementId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("KapaMonitor.Domain.Models.Offer", b =>
+                {
+                    b.HasOne("KapaMonitor.Domain.Models.ContactInfo", "ContactInfo")
+                        .WithMany("Offers")
+                        .HasForeignKey("ContactInfoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("KapaMonitor.Domain.Models.Location", "Location")
+                        .WithMany("Offers")
+                        .HasForeignKey("LocationId");
+
+                    b.HasOne("KapaMonitor.Domain.Models.Resource", "Resource")
+                        .WithMany("Offers")
+                        .HasForeignKey("ResourceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("KapaMonitor.Domain.Models.Requirement", b =>
+                {
+                    b.HasOne("KapaMonitor.Domain.Models.ContactInfo", "ContactInfo")
+                        .WithMany("Requirements")
+                        .HasForeignKey("ContactInfoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("KapaMonitor.Domain.Models.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("KapaMonitor.Domain.Models.Resource", "Resource")
+                        .WithMany("Requirements")
+                        .HasForeignKey("ResourceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("KapaMonitor.Domain.Models.Resource", b =>
+                {
+                    b.HasOne("KapaMonitor.Domain.Models.UnitOfMeasure", "UnitOfMeasure")
+                        .WithMany("Resources")
+                        .HasForeignKey("UnitOfMeasureName")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

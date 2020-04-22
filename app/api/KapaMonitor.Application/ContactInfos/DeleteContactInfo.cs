@@ -4,6 +4,7 @@ using KapaMonitor.Domain.Internal;
 using KapaMonitor.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace KapaMonitor.Application.ContactInfos
@@ -17,12 +18,12 @@ namespace KapaMonitor.Application.ContactInfos
             _context = context;
         }
 
-        public async Task<(bool DbOpFailed, bool Succeeded)> Do(int id)
+        public async Task<(bool Succeeded, RequestError? error)> Do(int id)
         {
             var contactInfo = await _context.ContactInfos.FirstOrDefaultAsync(c => c.Id == id);
 
             if (contactInfo == null)
-                return (false, false);
+                return (false, new RequestError(HttpStatusCode.BadRequest, "contactInfo not found."));
 
             _context.Remove(contactInfo);
 
@@ -33,10 +34,10 @@ namespace KapaMonitor.Application.ContactInfos
             catch (Exception ex)
             {
                 await new ErrorLogging(_context).LogError(ErrorMessages.DeleteContactInfo, ex);
-                return (true, false);
+                return (false, new RequestError(HttpStatusCode.InternalServerError, ErrorMessages.DatabaseOperationFailed));
             }
 
-            return (false, true);
+            return (true, null);
         }
     }
 }

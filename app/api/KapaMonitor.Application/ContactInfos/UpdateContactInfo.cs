@@ -3,6 +3,8 @@ using KapaMonitor.Database;
 using KapaMonitor.Domain.Internal;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace KapaMonitor.Application.ContactInfos
@@ -16,16 +18,21 @@ namespace KapaMonitor.Application.ContactInfos
             _context = context;
         }
 
-        public async Task<(bool DbOpFailed, ContactInfoViewModel? ViewModel)> Do(ContactInfoViewModel vm)
+        public async Task<(bool success, ContactInfoViewModel? viewModel, RequestError? error)> Do(ContactInfoViewModel vm)
         {
+            (bool isValid, List<string> errors) requestValidity = vm.CheckValidity();
+
+            if (!requestValidity.isValid)
+                return (false, null, new RequestError(HttpStatusCode.BadRequest, requestValidity.errors));
+
             var contactInfo = await _context.ContactInfos.FirstOrDefaultAsync(c => c.Id == vm.Id);
 
             if (contactInfo == null)
-                return (false, null);
+                return (false, null, new RequestError(HttpStatusCode.BadRequest, "ContactInfo not found."));
 
-            contactInfo.FirstName = vm.FirstName;
-            contactInfo.LastName = vm.LastName;
-            contactInfo.Email = vm.Email;
+            contactInfo.FirstName = vm.FirstName!;
+            contactInfo.LastName = vm.LastName!;
+            contactInfo.Email = vm.Email!;
             contactInfo.Phone = vm.Phone;
 
             try
@@ -35,10 +42,10 @@ namespace KapaMonitor.Application.ContactInfos
             catch (Exception ex)
             {
                 await new ErrorLogging(_context).LogError(ErrorMessages.UpdateContactInfo, ex, vm);
-                return (true, null);
+                return (false, null, new RequestError(HttpStatusCode.InternalServerError, ErrorMessages.DatabaseOperationFailed));
             }
 
-            return (false, new ContactInfoViewModel(contactInfo));
+            return (true, new ContactInfoViewModel(contactInfo), null);
         }
     }
 }

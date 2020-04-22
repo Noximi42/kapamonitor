@@ -10,10 +10,13 @@ import { bindActionCreators } from 'redux';
 
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import { swapThemeColors, toggleThemeMode } from '../../../store/settings/settings';
+import {
+    swapThemeColors,
+    toggleThemeMode,
+} from '../../../store/settings/settings';
 import { setFormAttribute } from '../../../store/register/actions';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
         marginBottom: 50,
@@ -28,11 +31,11 @@ const useStyles = makeStyles(theme => ({
     textField: {
         marginTop: theme.spacing(2),
         width: '100%',
-        flexGrow: 1
+        flexGrow: 1,
     },
     textFieldSmall: {
         marginTop: theme.spacing(2),
-        flexGrow: 2
+        flexGrow: 2,
     },
     besideWrapper: {
         display: 'flex',
@@ -46,18 +49,16 @@ const useStyles = makeStyles(theme => ({
         marginTop: theme.spacing(2),
     },
     space: {
-        width: 20
+        width: 20,
     },
-    checkBox:{
+    checkBox: {
         marginTop: theme.spacing(2),
         width: '100%',
         flexGrow: 1,
-    }
+    },
 }));
 
-
 function Second(props) {
-
     const classes = useStyles();
     const [state, setState] = useState({
         street: '',
@@ -65,33 +66,29 @@ function Second(props) {
         postalCode: '',
         city: '',
         address: '',
-
-    })
-    const handleChange = prop => event => {
-
+    });
+    const handleChange = (prop) => (event) => {
         setState({
             [prop]: event.target.value,
-        })
+        });
 
-        console.log(event.target, prop)
-    }
+        console.log(event.target, prop);
+    };
 
     const [locationType, setLocationType] = React.useState('hotel');
 
-    const handleChangeSelect = event => {
+    const handleChangeSelect = (event) => {
         setLocationType(event.target.value);
     };
 
     const [internet, setInternet] = React.useState(false);
-    const handleChangeInternet = event => {
-        internet ? setInternet(false) : setInternet(true)
+    const handleChangeInternet = (event) => {
+        internet ? setInternet(false) : setInternet(true);
     };
-
 
     return (
         <div className={classes.root}>
             <FormControl className={classes.formControl}>
-
                 <Select
                     variant="outlined"
                     className={classes.selectEmpty}
@@ -110,45 +107,74 @@ function Second(props) {
                         className={classes.textField}
                         value={props.street}
                         name={'street'}
-                        onChange={event => props.setFormAttribute(event.target.name, event.target.value)}
+                        onChange={(event) =>
+                            props.setFormAttribute(
+                                event.target.name,
+                                event.target.value
+                            )
+                        }
                         id="outlined-basic"
                         label="Straße"
-                        variant="outlined"/>
-                    <div className={classes.space}/>
+                        variant="outlined"
+                    />
+                    <div className={classes.space} />
                     <TextField
                         className={classes.textFieldSmall}
                         value={props.number}
                         name={'number'}
-                        onChange={event => props.setFormAttribute(event.target.name, event.target.value)}
+                        onChange={(event) =>
+                            props.setFormAttribute(
+                                event.target.name,
+                                event.target.value
+                            )
+                        }
                         id="outlined-basic"
                         label="Hausnummer"
-                        variant="outlined"/>
+                        variant="outlined"
+                    />
                 </div>
                 <div className={classes.besideWrapper}>
                     <TextField
                         className={classes.textFieldSmall}
                         value={props.postalCode}
                         name={'postalCode'}
-                        onChange={event => props.setFormAttribute(event.target.name, event.target.value)}
+                        onChange={(event) =>
+                            props.setFormAttribute(
+                                event.target.name,
+                                event.target.value
+                            )
+                        }
                         id="outlined-basic"
                         label="Postleitzahl"
-                        variant="outlined"/>
-                    <div className={classes.space}/>
+                        variant="outlined"
+                    />
+                    <div className={classes.space} />
                     <TextField
                         className={classes.textField}
                         value={props.city}
                         name={'city'}
-                        onChange={event => props.setFormAttribute(event.target.name, event.target.value)}
+                        onChange={(event) =>
+                            props.setFormAttribute(
+                                event.target.name,
+                                event.target.value
+                            )
+                        }
                         id="outlined-basic"
                         label="Stadt"
-                        variant="outlined"/>
+                        variant="outlined"
+                    />
                 </div>
                 <FormControlLabel
                     className={classes.checkBox}
                     control={
                         <Checkbox
                             checked={props.internet}
-                            onChange={event => props.setFormAttribute(event.target.name, event.target.value)}
+                            onChange={(event) =>
+                                props.setFormAttribute(
+                                    event.target.name,
+                                    event.target.value
+                                )
+                            }
                             name="checkedB"
                             color="primary"
                             label="Indeterminate"
@@ -156,28 +182,21 @@ function Second(props) {
                     }
                     label="Lokalität besitzt Internetzugang"
                 />
-
             </FormControl>
         </div>
     );
 }
 
-const mapStateToProps = state => ({
-
+const mapStateToProps = (state) => ({
     street: state.registerUnit.street,
     number: state.registerUnit.number,
     postalCode: state.registerUnit.postalCode,
     city: state.registerUnit.city,
     internet: state.registerUnit.internet,
-
-})
+});
 
 const mapDispatchToProps = {
-    setFormAttribute
-
+    setFormAttribute,
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Second);
+export default connect(mapStateToProps, mapDispatchToProps)(Second);

@@ -340,3 +340,5 @@ ASALocalRun/
 healthchecksdb
 /KapaMonitor.Api/aws-ecs-tools-defaults.json
 .DS_Store
+.vscode
+

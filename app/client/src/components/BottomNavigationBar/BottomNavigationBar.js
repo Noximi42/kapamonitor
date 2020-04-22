@@ -9,41 +9,40 @@ import { makeStyles } from '@material-ui/core/styles';
 import { setNavigation } from '../../store/register/actions';
 import { connect } from 'react-redux';
 
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 
 const drawerWidth = 240;
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
         position: 'fixed',
         bottom: 0,
-        zIndex: 99
+        zIndex: 99,
     },
     drawerPaper: {
         position: 'fixed',
-        top: theme.spacing.unit * 8,
+        top: theme.spacing(8),
         whiteSpace: 'nowrap',
         width: drawerWidth,
         transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen
-        })
+            duration: theme.transitions.duration.enteringScreen,
+        }),
     },
     drawerPaperClose: {
         overflowX: 'hidden',
         transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen
+            duration: theme.transitions.duration.leavingScreen,
         }),
-        width: theme.spacing.unit * 8,
+        width: theme.spacing(8),
         [theme.breakpoints.up('sm')]: {
-            width: theme.spacing.unit * 9
-        }
-    }
+            width: theme.spacing(9),
+        },
+    },
 }));
 
-
-const BottomNavigationBar = props => {
+const BottomNavigationBar = (props) => {
     const history = useHistory();
 
     const classes = useStyles();
@@ -53,11 +52,15 @@ const BottomNavigationBar = props => {
     const handleChange = (event, newValue) => {
         setValue(newValue);
         // console.log(newValue)
-        props.setNavigation(newValue)
-        history.push('/' + newValue)
+        props.setNavigation(newValue);
+        history.push('/' + newValue);
     };
     return (
-        <BottomNavigation value={props.nav} onChange={handleChange} className={classes.root}>
+        <BottomNavigation
+            value={props.nav}
+            onChange={handleChange}
+            className={classes.root}
+        >
             {/*<Link to="/dashboard" onClick={()=>handleChange("dashboard")}>*/}
             {/*<BottomNavigationAction label="Übersicht" value="dashboard" icon={<DashboardIcon/>}/>*/}
             {/*</Link>*/}
@@ -69,26 +72,56 @@ const BottomNavigationBar = props => {
             {/*<BottomNavigationAction label="Signin" value="signin-oidc" icon={<LoginIcon/>}/>*/}
             {/*</Link>*/}
             {/*<Link to={"setting"}><BottomNavigationAction label="Profile" value="profile" icon={<SettingsIcon/>}/></Link>*/}
-            <BottomNavigationAction label="Übersicht Angebote" value="offersOverview" icon={<DashboardIcon/>}/>
-            <BottomNavigationAction label="Übersicht Bedarfe" value="requirementsOverview" icon={<DashboardIcon/>}/>
-            <BottomNavigationAction label="Account Info" value="accountInformation" icon={<LoginIcon/>}/>
-            <BottomNavigationAction label="Admin Panel" value="adminPanel" icon={<LoginIcon/>}/>
-            <BottomNavigationAction label="Angebot Bearbeiten" value="offerProcessing" icon={<CreateIcon/>}/>
-            <BottomNavigationAction label="Bedarf Bearbeiten" value="requirementProcessing" icon={<CreateIcon/>}/>
-            <BottomNavigationAction label="Deine Angebote" value="yourOffers" icon={<MapIcon/>}/>
-            <BottomNavigationAction label="Deine Bedarfe" value="yourRequirements" icon={<MapIcon/>}/>
-
+            <BottomNavigationAction
+                label="Übersicht Angebote"
+                value="offersOverview"
+                icon={<DashboardIcon />}
+            />
+            <BottomNavigationAction
+                label="Übersicht Bedarfe"
+                value="requirementsOverview"
+                icon={<DashboardIcon />}
+            />
+            <BottomNavigationAction
+                label="Account Info"
+                value="accountInformation"
+                icon={<LoginIcon />}
+            />
+            <BottomNavigationAction
+                label="Admin Panel"
+                value="adminPanel"
+                icon={<LoginIcon />}
+            />
+            <BottomNavigationAction
+                label="Angebot Bearbeiten"
+                value="offerProcessing"
+                icon={<CreateIcon />}
+            />
+            <BottomNavigationAction
+                label="Bedarf Bearbeiten"
+                value="requirementProcessing"
+                icon={<CreateIcon />}
+            />
+            <BottomNavigationAction
+                label="Deine Angebote"
+                value="yourOffers"
+                icon={<MapIcon />}
+            />
+            <BottomNavigationAction
+                label="Deine Bedarfe"
+                value="yourRequirements"
+                icon={<MapIcon />}
+            />
         </BottomNavigation>
     );
 };
 
-
-const mapStateToProps = state => ({
-    nav: state.registerUnit.nav
-})
+const mapStateToProps = (state) => ({
+    nav: state.registerUnit.nav,
+});
 
 const mapDispatchToProps = {
-    setNavigation
+    setNavigation,
 };
 
 export default connect(

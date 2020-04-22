@@ -6,12 +6,14 @@ using Microsoft.AspNetCore.Http;
 using KapaMonitor.Application.ContactInfos;
 using KapaMonitor.Domain.Internal;
 using static KapaMonitor.Application.ContactInfos.CreateContactInfo;
+using System.Collections.Generic;
 
 namespace KapaMonitor.Api.Controllers
 {
     [Authorize]
     [ApiController]
     [Route("api/[controller]")]
+    [Consumes("application/json")]
     [Produces("application/json")]
     public class ContactInfoController : ControllerBase
     {
@@ -45,19 +47,29 @@ namespace KapaMonitor.Api.Controllers
         /// <summary>
         /// Adds the transmitted ContactInfo to the database
         /// </summary>
+        /// <remarks>
+        /// <b>Required:</b>
+        /// <ul>
+        ///     <li>firstName</li>
+        ///     <li>lastName</li>
+        ///     <li>email</li>
+        ///     <li>address.zipCode</li>
+        /// </ul>
+        /// </remarks>
         /// <param name="contactInfo">The ContactInfo to add</param>
         /// <returns>The the newly created ContactInfo</returns>
         /// <response code="200">Returns the newly created ContactInfo</response>
+        /// <response code="400">The request parameters are invalid. Check error messages in response.</response>
         /// <response code="401">If the user is not logged in</response>
         /// <response code="500">If the database operation failed unexpectedly</response>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ContactInfoViewModel))]
         public async Task<IActionResult> Post([FromBody] CreateContactInfoRequest contactInfo)
         {
-            (bool dbOpFailed, ContactInfoViewModel? vm) = await new CreateContactInfo(_context).Do(contactInfo);
+            (bool success, ContactInfoViewModel? vm, RequestError? error) = await new CreateContactInfo(_context).Do(contactInfo);
 
-            if (dbOpFailed)
-                return StatusCode(StatusCodes.Status500InternalServerError, ErrorMessages.DatabaseOperationFailed);
+            if (!success && error != null)
+                return StatusCode((int)error.StatusCode, error.Errors);
 
             return Ok(vm);
         }
@@ -65,23 +77,29 @@ namespace KapaMonitor.Api.Controllers
         /// <summary>
         /// Updates the transmitted ContactInfo in the database
         /// </summary>
+        /// /// <remarks>
+        /// <b>Required:</b>
+        /// <ul>
+        ///     <li>id</li>
+        ///     <li>firstName</li>
+        ///     <li>lastName</li>
+        ///     <li>email</li>
+        /// </ul>
+        /// </remarks>
         /// <param name="contactInfo">The ContactInfo to update. Ensure that the correct id was provided.</param>
         /// <returns>The the updated ContactInfo</returns>
         /// <response code="200">Returns the updated ContactInfo</response>
+        /// <response code="400">The request parameters are invalid. Check error messages in response.</response>
         /// <response code="401">If the user is not logged in</response>
-        /// <response code="404">If the ContactInfo with the spezified id doesn't exist</response>
         /// <response code="500">If the database operation failed unexpectedly</response>
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ContactInfoViewModel))]
         public async Task<IActionResult> Put([FromBody] ContactInfoViewModel contactInfo)
         {
-            (bool dbOpFailed, ContactInfoViewModel? vm) = await new UpdateContactInfo(_context).Do(contactInfo);
+            (bool success, ContactInfoViewModel? vm, RequestError? error) = await new UpdateContactInfo(_context).Do(contactInfo);
 
-            if (dbOpFailed)
-                return StatusCode(StatusCodes.Status500InternalServerError, ErrorMessages.DatabaseOperationFailed);
-
-            if (vm == null)
-                return NotFound();
+            if (!success && error != null)
+                return StatusCode((int)error.StatusCode, error.Errors);
 
             return Ok(vm);
         }
@@ -97,13 +115,10 @@ namespace KapaMonitor.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            (bool dbOpFailed, bool succeeded) = await new DeleteContactInfo(_context).Do(id);
+            (bool success, RequestError? error) = await new DeleteContactInfo(_context).Do(id);
 
-            if (dbOpFailed)
-                return StatusCode(StatusCodes.Status500InternalServerError, ErrorMessages.DatabaseOperationFailed);
-
-            if (!succeeded)
-                return NotFound();
+            if (!success && error != null)
+                return StatusCode((int)error.StatusCode, error.Errors);
 
             return Ok();
         }

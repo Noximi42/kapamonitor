@@ -7,24 +7,24 @@ import BottomNavigationBar from '../components/BottomNavigationBar';
 
 const drawerWidth = 240;
 
-const styles = theme => ({
+const styles = (theme) => ({
     root: {
-        display: 'flex'
+        display: 'flex',
     },
     content: {
         flexGrow: 1,
-        // padding: theme.spacing.unit * 3,
-        // marginTop: theme.spacing.unit * 7,
-        overflowX: 'hidden'
+        // padding: theme.spacing(3),
+        // marginTop: theme.spacing(7),
+        overflowX: 'hidden',
     },
     contentShift: {
         marginLeft: drawerWidth,
         width: `calc(100% - ${drawerWidth}px)`,
         transition: theme.transitions.create(['width', 'margin'], {
             easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen
-        })
-    }
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+    },
 });
 
 class MainLayout extends Component {
@@ -33,7 +33,7 @@ class MainLayout extends Component {
     };
 
     handleToggleDrawer = () => {
-        this.setState(prevState => {
+        this.setState((prevState) => {
             return { open: !prevState.open };
         });
     };
@@ -43,19 +43,17 @@ class MainLayout extends Component {
         return (
             <Fragment>
                 <div className={classes.root}>
-                    <Header
-                        handleToggleDrawer={this.handleToggleDrawer}
-                    />
+                    <Header handleToggleDrawer={this.handleToggleDrawer} />
                     <main
                         className={classNames(classes.content, {
-                            [classes.contentShift]: this.state.open
+                            [classes.contentShift]: this.state.open,
                         })}
                     >
                         {children}
                     </main>
                 </div>
                 {/*<Sidebar open={this.state.open} drawerWidth={drawerWidth} />*/}
-                <BottomNavigationBar/>
+                <BottomNavigationBar />
             </Fragment>
         );
     }

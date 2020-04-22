@@ -1,0 +1,53 @@
+version: '3.5'
+
+networks: 
+  localdev:
+    name: localdev
+    driver: bridge
+
+services:
+  api:
+    image: ${DOCKER_REGISTRY-}kapamonitor_api
+    container_name: api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    build:
+      context: ../../app/api
+      dockerfile: ../../docker/dev/api/Dockerfile
+    depends_on: 
+      - db-server
+    ports:
+      - "5000:80"
+    networks: 
+      - localdev
+
+  client:
+    image: ${DOCKER_REGISTRY-}kapamonitor_client
+    container_name: client
+    build: 
+      context: ../../app/client
+      dockerfile: ../../docker/dev/client/Dockerfile
+    volumes:
+      - ../../app/client:/app/ 
+    ports:
+      - "3000:3000"
+    networks:
+      - localdev
+    stdin_open: true
+
+  db-server:
+    image: postgres:latest
+    container_name: db-server
+    volumes:
+      - db_volume:/var/lib/postgresql/data
+    environment: 
+      POSTGRES_USER: "sa"
+      POSTGRES_PASSWORD: "Dev123456"
+      POSTGRES_DB: "KapaMonitor"
+    ports:
+      - "5432"
+    restart: always
+    networks: 
+      - localdev
+volumes:
+  db_volume:

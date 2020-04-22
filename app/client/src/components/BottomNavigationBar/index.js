@@ -1,2 +1,2 @@
-import BottomNavigation from "./BottomNavigationBar";
+import BottomNavigation from './BottomNavigationBar';
 export default BottomNavigation;
