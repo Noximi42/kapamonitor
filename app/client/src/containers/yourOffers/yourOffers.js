@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import PaddingLayout from '../../components/PaddingLayout';
-import CustomListItem from '../../components/CustomListItem';
-import SearchPanel from '../../components/SearchPanel';
+import { Edit, Delete, Info } from '@material-ui/icons';
+import {
+    PaddingLayout,
+    SearchPanel,
+    CustomListItem,
+    CustomIconRow,
+} from '../../components';
 import { connect } from 'react-redux';
 import {
     setOffers,
@@ -63,7 +66,23 @@ const YourOffers = (props) => {
                         },
                     ]);
                 }}
-            />
+            >
+                <CustomIconRow
+                    icons={[<Edit />, <Delete />, <Info />]}
+                    clickHandlers={[
+                        () => {
+                            console.log('Function 1');
+                            // setOpenEdit(true);
+                        },
+                        () => {
+                            console.log('Function 2');
+                        },
+                        () => {
+                            console.log('Function 3');
+                        },
+                    ]}
+                />
+            </CustomListItem>
         );
     }
 

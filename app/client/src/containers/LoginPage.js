@@ -152,19 +152,19 @@ function LoginPage(props) {
                         </Button>
                         <Grid container>
                             <Grid item xs>
-                                <LinkMat variant="body2">
-                                    <Link to="/sign-up">
-                                        {' '}
-                                        Passwort vergessen?
-                                    </Link>
-                                </LinkMat>
+                                {/* <LinkMat variant="body2"> */}
+                                <Link to="/sign-up" variant="body2">
+                                    {' '}
+                                    Passwort vergessen?
+                                </Link>
+                                {/* </LinkMat> */}
                             </Grid>
                             <Grid item>
-                                <LinkMat variant="body2">
-                                    <Link to="/sign-up">
-                                        {'Noch kein Account? Sign Up'}
-                                    </Link>
-                                </LinkMat>
+                                {/* <LinkMat variant="body2"> */}
+                                <Link to="/sign-up">
+                                    {'Noch kein Account? Sign Up'}
+                                </Link>
+                                {/* </LinkMat> */}
                             </Grid>
                         </Grid>
                         <Box mt={5}>
