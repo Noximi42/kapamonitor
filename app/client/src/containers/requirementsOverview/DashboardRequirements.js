@@ -3,6 +3,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
+import { TextField } from '@material-ui/core';
 import { TableCell } from '@material-ui/core';
 import TableRow from '@material-ui/core/TableRow';
 import TableHead from '@material-ui/core/TableHead';
@@ -29,55 +30,61 @@ export const headCells = [
     { id: 'amount', label: 'Anzahl', numberic: true },
 ];
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     table: {
         minWidth: 650,
     },
     tableRow: {
         cursor: 'pointer',
-    }
-});
+    },
+}));
 
-const getIconForType = type => {
+const getIconForType = (type) => {
     switch (type) {
         case 'Hotel':
-            return (<HotelIcon alt="Hotel"></HotelIcon>);
+            return <HotelIcon alt="Hotel"></HotelIcon>;
             break;
         case 'Hospital':
-            return (<LocalHospitalIcon alt="Krankenhaus"></LocalHospitalIcon>);
+            return <LocalHospitalIcon alt="Krankenhaus"></LocalHospitalIcon>;
             break;
     }
-}
+};
 
 const getNumberOfBedsForType = (row) => {
     switch (row.type) {
         case 'Hotel':
-            return row.hotel.bedsWithVentilatorWithCarpet + row.hotel.bedsWithoutVentilatorWithCarpet + row.hotel.bedsWithVentilatorOtherFLoor;
+            return (
+                row.hotel.bedsWithVentilatorWithCarpet +
+                row.hotel.bedsWithoutVentilatorWithCarpet +
+                row.hotel.bedsWithVentilatorOtherFLoor
+            );
             break;
         case 'Hospital':
-            return row.hospital.bedsWithVentilator + row.hospital.bedsWithoutVentilator;
+            return (
+                row.hospital.bedsWithVentilator +
+                row.hospital.bedsWithoutVentilator
+            );
             break;
     }
-}
-
+};
 
 const getCellContent = (row, cellId) => {
     switch (cellId) {
         case 'location':
-            var location = Locations.filter(loc => (loc.id == row.locationId));
-            return location[0] ? location[0].locationName : "none";
+            var location = Locations.filter((loc) => loc.id == row.locationId);
+            return location[0] ? location[0].locationName : 'none';
             break;
         case 'resourceName':
-            var resources = Resources.filter(res => (res.id == row.resourceId));
-            return resources[0]? resources[0].resourceName : "none";
+            var resources = Resources.filter((res) => res.id == row.resourceId);
+            return resources[0] ? resources[0].resourceName : 'none';
             break;
         case 'amount':
-            var resources = Resources.filter(res => (res.id == row.resourceId));
-            var unit = Uom.filter(u => 
-                (u.id == resources[0].uomId)
-            );
-            var numberAndUnit = `${row.number}`
-            return (numberAndUnit &&  unit[0])? numberAndUnit + unit[0].uomName : "none";
+            var resources = Resources.filter((res) => res.id == row.resourceId);
+            var unit = Uom.filter((u) => u.id == resources[0].uomId);
+            var numberAndUnit = `${row.number}`;
+            return numberAndUnit && unit[0]
+                ? numberAndUnit + unit[0].uomName
+                : 'none';
             break;
         default:
             return row[cellId];
@@ -94,7 +101,7 @@ const Resources = getAllResources();
 const Uom = getAllUom();
 const Locations = getAllLocations();
 
-const Dashboard = props => {
+const Dashboard = (props) => {
     const classes = useStyles();
 
     const [open, setOpen] = React.useState(false);
@@ -120,51 +127,92 @@ const Dashboard = props => {
 
     function handleClickOpen(index) {
         setOpen(true);
-        setSelectedRow(index)
-    };
+        setSelectedRow(index);
+    }
     const handleClose = () => {
         setOpen(false);
     };
-    return (<PaddingLayout>
-        <TableContainer component={Paper}>
-            <Table className={classes.table}>
-                <TableHead>
-                    <TableRow>
-                        {headCells.map(cell => (
-                            <TableCell><strong>{cell.label}</strong></TableCell>
-                        ))}
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {/*props.*/rawRequirements ? /*props.*/rawRequirements.map((row, index) => (
-                        <TableRow key={row.id} onClick={() => handleClickOpen(index)} hover={true}
-                                  className={classes.tableRow}>
-                            {headCells.map(cell => (
-                                <TableCell>{getCellContent(row, cell.id)}</TableCell>
+    return (
+        <PaddingLayout>
+            <TextField
+                id="plzFilterTextfield"
+                label="Postleitzahl"
+                variant="outlined"
+            />
+            <span>&nbsp;</span> <span>&nbsp;</span>
+            <TextField
+                id="surroundingsFilterTextfield"
+                label="Umkreis"
+                variant="outlined"
+            />
+            <TableContainer component={Paper}>
+                <Table className={classes.table}>
+                    <TableHead>
+                        <TableRow>
+                            {headCells.map((cell) => (
+                                <TableCell>
+                                    <strong>{cell.label}</strong>
+                                </TableCell>
                             ))}
                         </TableRow>
-                    )) : null}
-                </TableBody>
-            </Table>
-        </TableContainer>
-        <Dialog
-            open={open}
-            onClose={handleClose}
-            fullWidth={true}
-            maxWidth="md"
-        >
-            {/*props.*/rawRequirements ?
-                <>
-                    <DialogTitle>{/*props.*/rawRequirements[selectedRow] && /*props.*/rawRequirements[selectedRow].title}</DialogTitle>
-                    
-                    <DialogActions>
-                        <Button onClick={handleClose} color="primary">
-                            Ok
-                        </Button>
-                    </DialogActions></> : null}
+                    </TableHead>
+                    <TableBody>
+                        {
+                            /*props.*/ rawRequirements
+                                ? /*props.*/ rawRequirements.map(
+                                      (row, index) => (
+                                          <TableRow
+                                              key={row.id}
+                                              onClick={() =>
+                                                  handleClickOpen(index)
+                                              }
+                                              hover={true}
+                                              className={classes.tableRow}
+                                          >
+                                              {headCells.map((cell) => (
+                                                  <TableCell>
+                                                      {getCellContent(
+                                                          row,
+                                                          cell.id
+                                                      )}
+                                                  </TableCell>
+                                              ))}
+                                          </TableRow>
+                                      )
+                                  )
+                                : null
+                        }
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                fullWidth={true}
+                maxWidth="md"
+            >
+                {
+                    /*props.*/ rawRequirements ? (
+                        <>
+                            <DialogTitle>
+                                {
+                                    /*props.*/ rawRequirements[selectedRow] &&
+                                        /*props.*/ rawRequirements[selectedRow]
+                                            .title
+                                }
+                            </DialogTitle>
 
-        </Dialog>
-    </PaddingLayout>)
+                            <DialogActions>
+                                <Button onClick={handleClose} color="primary">
+                                    Ok
+                                </Button>
+                            </DialogActions>
+                        </>
+                    ) : null
+                }
+            </Dialog>
+        </PaddingLayout>
+    );
 };
 
 /*<HospitalDetail location={props.rawRequirements[selectedRow]}></HospitalDetail>*/
@@ -178,5 +226,3 @@ const mapDispatchToProps = {
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);*/
 export default connect()(Dashboard);
-
-
