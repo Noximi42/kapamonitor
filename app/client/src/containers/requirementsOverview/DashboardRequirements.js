@@ -1,3 +1,6 @@
+//TODO: connection to backend (doing)
+//implement textfield/filter components
+
 import React, { useEffect } from 'react';
 import TableContainer from '@material-ui/core/TableContainer';
 import Paper from '@material-ui/core/Paper';
@@ -8,20 +11,17 @@ import { TableCell } from '@material-ui/core';
 import TableRow from '@material-ui/core/TableRow';
 import TableHead from '@material-ui/core/TableHead';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-//import LinearProgress from '@material-ui/core/LinearProgress';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
 import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
 import HotelIcon from '@material-ui/icons/Hotel';
-//import { getAllLocations } from '../services/backend-rest-service';
 import { getAllRequirements } from '../../__MOCK__/mockRequirements.js';
 import { getAllResources } from '../../__MOCK__/mockRequirements.js';
 import { getAllUom } from '../../__MOCK__/mockRequirements.js';
 import { getAllLocations } from '../../__MOCK__/mockRequirements.js';
 import PaddingLayout from '../../components/PaddingLayout';
-//import { HospitalDetail } from '../components/HospitalDetail';
 import { connect } from 'react-redux';
 
 export const headCells = [
@@ -39,34 +39,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const getIconForType = (type) => {
-    switch (type) {
-        case 'Hotel':
-            return <HotelIcon alt="Hotel"></HotelIcon>;
-            break;
-        case 'Hospital':
-            return <LocalHospitalIcon alt="Krankenhaus"></LocalHospitalIcon>;
-            break;
-    }
-};
 
-const getNumberOfBedsForType = (row) => {
-    switch (row.type) {
-        case 'Hotel':
-            return (
-                row.hotel.bedsWithVentilatorWithCarpet +
-                row.hotel.bedsWithoutVentilatorWithCarpet +
-                row.hotel.bedsWithVentilatorOtherFLoor
-            );
-            break;
-        case 'Hospital':
-            return (
-                row.hospital.bedsWithVentilator +
-                row.hospital.bedsWithoutVentilator
-            );
-            break;
-    }
-};
 
 const getCellContent = (row, cellId) => {
     switch (cellId) {
@@ -134,17 +107,7 @@ const Dashboard = (props) => {
     };
     return (
         <PaddingLayout>
-            <TextField
-                id="plzFilterTextfield"
-                label="Postleitzahl"
-                variant="outlined"
-            />
-            <span>&nbsp;</span> <span>&nbsp;</span>
-            <TextField
-                id="surroundingsFilterTextfield"
-                label="Umkreis"
-                variant="outlined"
-            />
+
             <TableContainer component={Paper}>
                 <Table className={classes.table}>
                     <TableHead>
@@ -215,14 +178,5 @@ const Dashboard = (props) => {
     );
 };
 
-/*<HospitalDetail location={props.rawRequirements[selectedRow]}></HospitalDetail>*/
-/*const mapStateToProps = state => ({
-    rawRequirements: state.leaflet.rawRequirements,
-})
 
-const mapDispatchToProps = {
-    setRawRequirements
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);*/
 export default connect()(Dashboard);
