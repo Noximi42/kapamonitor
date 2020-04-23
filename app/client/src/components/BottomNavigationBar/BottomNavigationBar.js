@@ -64,6 +64,9 @@ const BottomNavigationBar = (props) => {
             {/*<Link to="/dashboard" onClick={()=>handleChange("dashboard")}>*/}
             {/*<BottomNavigationAction label="Übersicht" value="dashboard" icon={<DashboardIcon/>}/>*/}
             {/*</Link>*/}
+            {/*<Link to="../containers/DashboardRequirements.js" onClick={()=>handleChange("Übersicht Bedarfe")}>*/}
+            {/*<BottomNavigationAction label="Übersicht Bedarfe" value="offersOverview" icon={<DashboardIcon/>}/>*/}
+            {/*</Link>*/};
             {/*<Link to="/map" onClick={()=>handleChange("map")}>*/}
             {/*<BottomNavigationAction label="Karte" value="map" icon={<MapIcon/>}/>*/}
             {/*</Link>*/}
