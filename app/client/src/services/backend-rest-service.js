@@ -8,7 +8,7 @@ const instance = axios.create({
 });
 var configAxios = {};
 
-export const getAllLocations = async () => {
+const login = async () => {
     let user = firebase.auth().currentUser;
     if (user) {
         let token = await user.getIdToken();
@@ -16,18 +16,24 @@ export const getAllLocations = async () => {
             headers: { Authorization: `Bearer ${token}` },
         };
     }
+};
 
+export const getAllLocations = async () => {
+    await login();
     return instance.get('/Location', configAxios);
 };
 
 export const getAllOffers = async () => {
-    let user = firebase.auth().currentUser;
-    if (user) {
-        let token = await user.getIdToken();
-        configAxios = {
-            headers: { Authorization: `Bearer ${token}` },
-        };
-    }
-
+    await login();
     return instance.get('/Offer', configAxios);
+};
+
+export const deleteOffer = async (id) => {
+    await login();
+    return instance.delete('/Offer/' + id, configAxios);
+};
+
+export const getOffer = async (id) => {
+    await login();
+    return instance.get('/Offer/' + id, configAxios);
 };

@@ -6,6 +6,7 @@ import {
     SearchPanel,
     CustomListItem,
     CustomIconRow,
+    CustomFormDialog,
 } from '../../components';
 import { connect } from 'react-redux';
 import {
@@ -13,7 +14,11 @@ import {
     updateOffers,
     setSearchFilter,
 } from '../../store/offers/actions';
-import { getAllOffers } from '../../services/backend-rest-service';
+import {
+    getAllOffers,
+    deleteOffer,
+    getOffer,
+} from '../../services/backend-rest-service';
 import { exampleData } from '../../__MOCK__/mockData';
 
 const useStyles = makeStyles((theme) => ({}));
@@ -28,6 +33,10 @@ function simulateHTTPRequest() {
 
 const YourOffers = (props) => {
     const classes = useStyles();
+
+    const [openEdit, setOpenEdit] = React.useState(false);
+    const [openDetails, setOpenDetails] = React.useState(false);
+    const [selectedItem, setSelectedItem] = React.useState(0);
 
     useEffect(() => {
         async function fetchData() {
@@ -53,6 +62,8 @@ const YourOffers = (props) => {
 
     let rows = [];
 
+    // setOpenEdit(true);
+
     for (let item of props.offers) {
         rows.push(
             <CustomListItem
@@ -70,15 +81,23 @@ const YourOffers = (props) => {
                 <CustomIconRow
                     icons={[<Edit />, <Delete />, <Info />]}
                     clickHandlers={[
-                        () => {
+                        function () {
                             console.log('Function 1');
-                            // setOpenEdit(true);
+                            setSelectedItem(item);
+                            setOpenEdit(true);
                         },
-                        () => {
+                        async function () {
                             console.log('Function 2');
+                            setSelectedItem(item);
+                            await deleteOffer(item.id);
+                            setSelectedItem(0);
                         },
-                        () => {
+                        async function () {
                             console.log('Function 3');
+                            setSelectedItem(item);
+                            setOpenDetails(true);
+                            await getOffer(item.id);
+                            //setSelectedItem();
                         },
                     ]}
                 />
@@ -95,6 +114,34 @@ const YourOffers = (props) => {
                     }}
                 />
                 {rows}
+                <CustomFormDialog
+                    initialState={{
+                        open: openEdit,
+                        confirm: 'Speichern',
+                        cancel: 'Abbrechen',
+                        title: 'Angebot ' + selectedItem.id + ' bearbeiten',
+                        paragraph: 'Hier können Sie ihr Angebot bearbeiten',
+                        item: selectedItem,
+                    }}
+                    handleClose={(item) => {
+                        setOpenEdit(false);
+                        props.updateOffers([item]);
+                    }}
+                />
+                <CustomFormDialog
+                    initialState={{
+                        open: openDetails,
+                        confirm: 'Speichern',
+                        cancel: 'Abbrechen',
+                        title: 'Details zum Angebot ' + selectedItem.id,
+                        paragraph:
+                            'Hier können Sie Details des Angebots einsehen',
+                        item: selectedItem,
+                    }}
+                    handleClose={(item) => {
+                        setOpenDetails(false);
+                    }}
+                />
             </div>
         </PaddingLayout>
     );

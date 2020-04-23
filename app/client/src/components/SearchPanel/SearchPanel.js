@@ -63,6 +63,7 @@ function SearchPanel(props) {
                         }}
                         inputProps={{ 'aria-label': 'search' }}
                         onChange={props.handleSearch}
+                        fullWidth
                     />
                 </div>
             </Paper>

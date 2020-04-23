@@ -27,3 +27,6 @@ export * from './Header';
 
 export { default as BottomNavigationBar } from './BottomNavigationBar';
 export * from './BottomNavigationBar';
+
+export { default as CustomFormDialog } from './CustomFormDialog/CustomFormDialog';
+export * from './CustomFormDialog/CustomFormDialog';
