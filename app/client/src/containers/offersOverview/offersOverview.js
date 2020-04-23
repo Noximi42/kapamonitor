@@ -82,7 +82,7 @@ const Dashboard = props => {
         setSelectedRow(index);
     };
     function handleFilterTypeChange(index) {
-        props.rawResources[index].selected = !props.rawResources[index].selected;
+        // handle resource selected/deselected in filter
     };
     const handleClose = () => {
         setOpen(false);
@@ -94,7 +94,7 @@ const Dashboard = props => {
                     <FormLabel component="legend">Filter</FormLabel>
                     <FormGroup>
                         {props.rawResources ? props.rawResources.map((resource, index) => (
-                            <FormControlLabel 
+                            <FormControlLabel
                                 control={<Checkbox name={resource.id} defaultChecked={true} onChange={() => handleFilterTypeChange(index)} />}
                                 label={resource.name}
                             />
