@@ -6,12 +6,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import {
-    FormControl,
-    InputLabel,
-    Input,
-    FormHelperText,
-} from '@material-ui/core';
 import { useForm, Controller } from 'react-hook-form';
 
 export default function CustomFormDialog(props) {

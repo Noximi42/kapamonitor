@@ -35,7 +35,7 @@ const CustomIconRow = (props) => {
                 {value}
             </IconButton>
         );
-        if (key < props.icons - 1) {
+        if (key < props.icons.length - 1) {
             items.push(
                 <Divider
                     key={'Divider-' + key}
