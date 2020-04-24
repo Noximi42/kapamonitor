@@ -29,12 +29,6 @@ import Box from '@material-ui/core/Box';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { useTranslation } from 'react-i18next';
 
-export const headCells = [
-    { id: 'resource', label: 'Typ', numberic: false },
-    { id: 'amount', label: 'Menge', numberic: true },
-    { id: 'postCode', label: 'PLZ', numberic: true },
-];
-
 const useStyles = makeStyles({
     table: {
         minWidth: 650,
@@ -64,11 +58,29 @@ const getCellContent = (row, cellId) => {
 };
 
 const Dashboard = (props) => {
-    const classes = useStyles();
     const { t } = useTranslation();
+    const classes = useStyles();
 
     const [open, setOpen] = React.useState(false);
     const [selectedRow, setSelectedRow] = React.useState(null);
+
+    const headCells = [
+        {
+            id: 'resource',
+            label: t('pages.offerOverview.table.resource'),
+            numberic: false,
+        },
+        {
+            id: 'amount',
+            label: t('pages.offerOverview.table.amount'),
+            numberic: true,
+        },
+        {
+            id: 'postCode',
+            label: t('pages.offerOverview.table.postcode'),
+            numberic: true,
+        },
+    ];
 
     useEffect(() => {
         async function fetchRows() {
@@ -127,13 +139,13 @@ const Dashboard = (props) => {
                     </FormControl>
                     <FormControl className={classes.inputFormControl}>
                         <InputLabel htmlFor="postCode">
-                            {t(pages.offerOverview.postcode)}
+                            {t('pages.offerOverview.postcode')}
                         </InputLabel>
                         <Input id="postCode" name="postCode" />
                     </FormControl>
                     <FormControl className={classes.inputFormControl}>
                         <InputLabel htmlFor="radius">
-                            {t(pages.offerOverview.distance)}
+                            {t('pages.offerOverview.distance')}
                         </InputLabel>
                         <Input id="radius" name="radius" />
                     </FormControl>

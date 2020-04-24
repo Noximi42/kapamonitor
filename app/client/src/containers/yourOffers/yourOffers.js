@@ -121,8 +121,8 @@ const YourOffers = (props) => {
                         open: openEdit,
                         confirm: t('pages.yourOffers.save'),
                         cancel: t('pages.yourOffers.cancel'),
-                        title: 'Angebot ' + selectedItem.id + ' bearbeiten',
-                        paragraph: 'Hier können Sie ihr Angebot bearbeiten',
+                        title: t('pages.yourOffers.editOffer'),
+                        paragraph: t('pages.yourOffers.editOfferDescription'),
                         item: selectedItem,
                     }}
                     handleClose={(item) => {
