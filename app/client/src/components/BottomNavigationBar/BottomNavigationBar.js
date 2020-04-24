@@ -8,6 +8,7 @@ import LoginIcon from '@material-ui/icons/LockOpen';
 import { makeStyles } from '@material-ui/core/styles';
 import { setNavigation } from '../../store/register/actions';
 import { connect } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import { useHistory } from 'react-router-dom';
 
@@ -44,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
 
 const BottomNavigationBar = (props) => {
     const history = useHistory();
+    const { t } = useTranslation();
 
     const classes = useStyles();
     const { open } = props;
@@ -55,6 +57,7 @@ const BottomNavigationBar = (props) => {
         props.setNavigation(newValue);
         history.push('/' + newValue);
     };
+
     return (
         <BottomNavigation
             value={props.nav}
@@ -76,42 +79,44 @@ const BottomNavigationBar = (props) => {
             {/*</Link>*/}
             {/*<Link to={"setting"}><BottomNavigationAction label="Profile" value="profile" icon={<SettingsIcon/>}/></Link>*/}
             <BottomNavigationAction
-                label="Übersicht Angebote"
+                label={t('components.bottomNavigationBar.offersOverview')}
                 value="offersOverview"
                 icon={<DashboardIcon />}
             />
             <BottomNavigationAction
-                label="Übersicht Bedarfe"
+                label={t('components.bottomNavigationBar.requirementsOverview')}
                 value="requirementsOverview"
                 icon={<DashboardIcon />}
             />
             <BottomNavigationAction
-                label="Account Info"
+                label={t('components.bottomNavigationBar.accountInfo')}
                 value="accountInformation"
                 icon={<LoginIcon />}
             />
             <BottomNavigationAction
-                label="Admin Panel"
+                label={t('components.bottomNavigationBar.adminPanel')}
                 value="adminPanel"
                 icon={<LoginIcon />}
             />
             <BottomNavigationAction
-                label="Angebot Bearbeiten"
+                label={t('components.bottomNavigationBar.offerProcessing')}
                 value="offerProcessing"
                 icon={<CreateIcon />}
             />
             <BottomNavigationAction
-                label="Bedarf Bearbeiten"
+                label={t(
+                    'components.bottomNavigationBar.requirementsProcessing'
+                )}
                 value="requirementProcessing"
                 icon={<CreateIcon />}
             />
             <BottomNavigationAction
-                label="Deine Angebote"
+                label={t('components.bottomNavigationBar.yourOffers')}
                 value="yourOffers"
                 icon={<MapIcon />}
             />
             <BottomNavigationAction
-                label="Deine Bedarfe"
+                label={t('components.bottomNavigationBar.yourRequirements')}
                 value="yourRequirements"
                 icon={<MapIcon />}
             />

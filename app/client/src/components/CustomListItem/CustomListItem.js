@@ -1,32 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Paper from '@material-ui/core/Paper';
-import { IconButton } from '@material-ui/core';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { Edit, Delete, Info } from '@material-ui/icons';
 import Checkbox from '@material-ui/core/Checkbox';
-import Divider from '@material-ui/core/Divider';
+import { useTranslation } from 'react-i18next';
 
-const useStyles = makeStyles((theme) => ({
-    itembox: {
-        width: 'fit-content',
-        border: `1px solid ${theme.palette.divider}`,
-        borderRadius: theme.shape.borderRadius,
-        backgroundColor: theme.palette.background.paper,
-        color: theme.palette.text.secondary,
-        '& svg': {
-            margin: theme.spacing(0.2),
-        },
-        '& hr': {
-            margin: theme.spacing(0, 0.2),
-        },
-    },
-}));
+const useStyles = makeStyles((theme) => ({}));
 
 const CustomListItem = (props) => {
     const classes = useStyles();
+    const { t } = useTranslation();
+
     return (
         <Paper
             className={classes.paper}
@@ -42,29 +27,13 @@ const CustomListItem = (props) => {
                 </Grid>
                 <Grid item xs={12} sm={3}>
                     <Typography variant="subtitle1">
-                        {props.item.ikId ? props.item.ikId : 'Artikelname'}
+                        {props.item.ikId ? props.item.ikId : null}
                     </Typography>
-                    <Grid
-                        container
-                        alignItems="center"
-                        className={classes.itembox}
-                    >
-                        <IconButton>
-                            <Edit />
-                        </IconButton>
-                        <Divider orientation="vertical" flexItem />
-                        <IconButton>
-                            <Delete />
-                        </IconButton>
-                        <Divider orientation="vertical" flexItem />
-                        <IconButton>
-                            <Info />
-                        </IconButton>
-                    </Grid>
+                    {props.children}
                 </Grid>
                 <Grid item xs={12} sm={8}>
                     <Typography variant="subtitle1">
-                        Zusatzinformationen
+                        {t('components.customListItem.headingRight')}
                     </Typography>
                     <Typography variant="subtitle2">500 Stück</Typography>
                 </Grid>

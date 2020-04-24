@@ -3,6 +3,7 @@ import { Search } from '@material-ui/icons';
 import { IconButton, InputBase, Paper, Typography } from '@material-ui/core';
 import { makeStyles, fade } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
     search: {
@@ -48,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
 
 function SearchPanel(props) {
     const classes = useStyles();
+    const { t } = useTranslation();
     return (
         <div>
             <Paper style={{ marginBottom: '2em' }}>
@@ -56,13 +58,14 @@ function SearchPanel(props) {
                         <Search />
                     </div>
                     <InputBase
-                        placeholder="Suche…"
+                        placeholder={t('components.searchPanel.placeholder')}
                         classes={{
                             root: classes.inputRoot,
                             input: classes.inputInput,
                         }}
                         inputProps={{ 'aria-label': 'search' }}
                         onChange={props.handleSearch}
+                        fullWidth
                     />
                 </div>
             </Paper>
