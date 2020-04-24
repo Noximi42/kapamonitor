@@ -13,6 +13,8 @@ import * as firebase from 'firebase';
 import { setUser } from '../../store/user/actions';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import LanguagePopover from '../LanguagePopover';
+
 const useStyles = makeStyles((theme) => ({
     toolbarRoot: {
         paddingRight: 24,
@@ -60,6 +62,7 @@ function Header(props) {
                 <div className={classes.logo}>
                     <img src="/kapa_hands.png" className={classes.logoImg} />
                 </div>
+                <LanguagePopover />
                 <IconButton color="inherit">
                     <Badge badgeContent={4} color="secondary">
                         <NotificationsIcon />

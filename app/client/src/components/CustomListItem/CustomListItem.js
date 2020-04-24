@@ -4,11 +4,13 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Checkbox from '@material-ui/core/Checkbox';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({}));
 
 const CustomListItem = (props) => {
     const classes = useStyles();
+    const { t } = useTranslation();
 
     return (
         <Paper
@@ -25,13 +27,13 @@ const CustomListItem = (props) => {
                 </Grid>
                 <Grid item xs={12} sm={3}>
                     <Typography variant="subtitle1">
-                        {props.item.ikId ? props.item.ikId : 'Artikelname'}
+                        {props.item.ikId ? props.item.ikId : null}
                     </Typography>
                     {props.children}
                 </Grid>
                 <Grid item xs={12} sm={8}>
                     <Typography variant="subtitle1">
-                        Zusatzinformationen
+                        {t('components.customListItem.headingRight')}
                     </Typography>
                     <Typography variant="subtitle2">500 Stück</Typography>
                 </Grid>

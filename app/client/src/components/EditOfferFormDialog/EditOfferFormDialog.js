@@ -7,8 +7,10 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useForm, Controller } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
-export default function CustomFormDialog(props) {
+export default function EditOfferFormDialog(props) {
+    const { t } = useTranslation();
     const initialState = props.initialState;
     const { handleSubmit, control, errors } = useForm({
         validateCriteriaMode: 'all',
@@ -21,7 +23,6 @@ export default function CustomFormDialog(props) {
         };
         props.handleClose(updatedItem);
     }).bind(this);
-
     return (
         <Dialog
             open={initialState.open}
@@ -44,11 +45,11 @@ export default function CustomFormDialog(props) {
                         defaultValue=""
                         helperText={
                             errors?.ikId?.types?.required
-                                ? 'Angebotsname erforderlich'
+                                ? t('components.editOfferFormDialog.required')
                                 : ''
                         }
                         error={errors?.ikId ? true : false}
-                        label="Angebotsname"
+                        label={t('components.editOfferFormDialog.label1')}
                         placeholder={initialState.item.ikId}
                         fullWidth
                     />

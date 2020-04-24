@@ -6,7 +6,7 @@ import {
     SearchPanel,
     CustomListItem,
     CustomIconRow,
-    CustomFormDialog,
+    EditOfferFormDialog,
 } from '../../components';
 import { connect } from 'react-redux';
 import {
@@ -19,6 +19,7 @@ import {
     deleteOffer,
     getOffer,
 } from '../../services/backend-rest-service';
+import { useTranslation } from 'react-i18next';
 import { exampleData } from '../../__MOCK__/mockData';
 
 const useStyles = makeStyles((theme) => ({}));
@@ -32,6 +33,7 @@ function simulateHTTPRequest() {
 }
 
 const YourOffers = (props) => {
+    const { t } = useTranslation();
     const classes = useStyles();
 
     const [openEdit, setOpenEdit] = React.useState(false);
@@ -106,7 +108,7 @@ const YourOffers = (props) => {
     }
 
     return (
-        <PaddingLayout title="Deine Angebote">
+        <PaddingLayout title={t('pages.yourOffers.title')}>
             <div className={classes.root}>
                 <SearchPanel
                     handleSearch={(event) => {
@@ -114,11 +116,11 @@ const YourOffers = (props) => {
                     }}
                 />
                 {rows}
-                <CustomFormDialog
+                <EditOfferFormDialog
                     initialState={{
                         open: openEdit,
-                        confirm: 'Speichern',
-                        cancel: 'Abbrechen',
+                        confirm: t('pages.yourOffers.save'),
+                        cancel: t('pages.yourOffers.cancel'),
                         title: 'Angebot ' + selectedItem.id + ' bearbeiten',
                         paragraph: 'Hier können Sie ihr Angebot bearbeiten',
                         item: selectedItem,
@@ -128,7 +130,7 @@ const YourOffers = (props) => {
                         props.updateOffers([item]);
                     }}
                 />
-                <CustomFormDialog
+                <EditOfferFormDialog
                     initialState={{
                         open: openDetails,
                         confirm: 'Speichern',

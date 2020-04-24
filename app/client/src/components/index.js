@@ -28,5 +28,8 @@ export * from './Header';
 export { default as BottomNavigationBar } from './BottomNavigationBar';
 export * from './BottomNavigationBar';
 
-export { default as CustomFormDialog } from './CustomFormDialog/CustomFormDialog';
-export * from './CustomFormDialog/CustomFormDialog';
+export { default as EditOfferFormDialog } from './EditOfferFormDialog/EditOfferFormDialog';
+export * from './EditOfferFormDialog/EditOfferFormDialog';
+
+export { default as LanguagePopover } from './LanguagePopover/LanguagePopover';
+export * from './LanguagePopover/LanguagePopover';
