@@ -19,17 +19,40 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
-      - name: Build api
-        run: docker build ./app/api --file ./docker/prod/api/Dockerfile --tag kapamonitor/api:latest
         
-      - name: Build client
-        run: docker build ./app/client --file ./docker/prod/client/Dockerfile --tag kapamonitor/client:latest
-      
       - name: Log into registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
 
+      - name: Build api
+        run: docker build ./app/api --file ./docker/prod/api/Dockerfile --tag api
+        
+      - name: Build client
+        run: docker build ./app/client --file ./docker/prod/client/Dockerfile --tag client
+
       - name: Push image
         run: |
-          docker push kapamonitor/api:latest
-          docker push kapamonitor/client:latest
+          IMAGE_ID_API=docker.pkg.github.com/${{ github.repository }}/api
+          IMAGE_ID_CLIENT=docker.pkg.github.com/${{ github.repository }}/client
+          
+          # Change all uppercase to lowercase
+          IMAGE_ID_API=$(echo $IMAGE_ID_API | tr '[A-Z]' '[a-z]')
+          IMAGE_ID_CLIENT=$(echo $IMAGE_ID_CLIENT | tr '[A-Z]' '[a-z]')
+
+          # Strip git ref prefix from version
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          echo VERSION
+
+          # Strip "v" prefix from tag name
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+
+          # Use Docker `latest` tag convention
+          [ "$VERSION" == "master" ] && VERSION=latest
+
+          echo IMAGE_ID=$IMAGE_ID
+          echo VERSION=$VERSION
+          
+          docker tag api $IMAGE_ID_API:$VERSION
+          docker tag image $IMAGE_ID_CLIENT:$VERSION
+          
+          docker push $IMAGE_ID_API:$VERSION
+          docker push $IMAGE_ID_CLIENT:$VERSION
