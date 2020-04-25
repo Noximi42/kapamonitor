@@ -23,6 +23,7 @@ import { getAllUom } from '../../__MOCK__/mockRequirements.js';
 import { getAllLocations } from '../../__MOCK__/mockRequirements.js';
 import PaddingLayout from '../../components/PaddingLayout';
 import { connect } from 'react-redux';
+import TextInput from '../../components/CustomTextinput/index.js';
 
 export const headCells = [
     { id: 'location', label: 'Einrichtung', numberic: false },
@@ -106,8 +107,9 @@ const Dashboard = (props) => {
         setOpen(false);
     };
     return (
+        
         <PaddingLayout>
-
+            <TextInput label='hello'></TextInput>
             <TableContainer component={Paper}>
                 <Table className={classes.table}>
                     <TableHead>
