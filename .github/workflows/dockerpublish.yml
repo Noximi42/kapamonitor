@@ -1,0 +1,35 @@
+name: Docker CI
+
+on:
+  push:
+    # Publish `master` as Docker `latest` image.
+    branches:
+      - master
+
+# env:
+  # TODO: Change variable to your image's name.
+  # IMAGE_NAME: api
+
+jobs:
+  # Push image to GitHub Packages.
+  # See also https://docs.docker.com/docker-hub/builds/
+  push:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build api
+        run: docker build ./docker/prod/api --file Dockerfile --tag kapamonitor/api:latest
+        
+      - name: Build client
+        run: docker build ./docker/prod/client --file Dockerfile --tag kapamonitor/client:latest
+
+      - name: Log into registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+
+      - name: Push image
+        run: |
+          docker push kapamonitor/api:latest
+          docker push kapamonitor/client:latest
