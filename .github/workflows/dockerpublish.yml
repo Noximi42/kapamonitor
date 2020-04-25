@@ -27,7 +27,7 @@ jobs:
         run: docker build ./app/api --file ./docker/prod/api/Dockerfile --tag api
         
       - name: Build client
-        #run: docker build ./app/client --file ./docker/prod/client/Dockerfile --tag client
+        run: docker build ./app/client --file ./docker/prod/client/Dockerfile --tag client
 
       - name: Push image
         run: |
