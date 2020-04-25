@@ -21,10 +21,10 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Build api
-        run: docker build ./docker/prod/api --file Dockerfile --tag kapamonitor/api:latest
+        run: docker build ./app/api/KapaMonitor.Api --file ../../../docker/prod/api/Dockerfile --tag kapamonitor/api:latest
         
       - name: Build client
-        run: docker build ./docker/prod/client --file Dockerfile --tag kapamonitor/client:latest
+        run: docker build ./app/client --file ../../docker/prod/client/Dockerfile --tag kapamonitor/client:latest
 
       - name: Log into registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
