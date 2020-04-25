@@ -48,4 +48,4 @@ jobs:
           docker tag client $IMAGE_ID_CLIENT:$VERSION
           
           docker push $IMAGE_ID_API:$VERSION
-          #docker push $IMAGE_ID_CLIENT:$VERSION
+          docker push $IMAGE_ID_CLIENT:$VERSION
