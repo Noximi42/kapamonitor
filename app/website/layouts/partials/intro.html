@@ -1,5 +1,6 @@
 {{ $data := index .Site.Data .Site.Language.Lang }} {{ with $data.intro }}
 <div id="intro">
+  <span class="symbol"><img src="/images/kapa_hands.png" alt="" /></span>
   <h1>
     {{ range $i, $e := .title }} {{ if $i }} <br />
     {{ end }} {{ .line }} {{ end }}
