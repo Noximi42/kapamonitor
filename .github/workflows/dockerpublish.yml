@@ -24,10 +24,10 @@ jobs:
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
 
       - name: Build api
-        run: docker build ./app/api --file ../../docker/prod/api/Dockerfile --tag kapamonitor/api:latest
+        run: docker build ./app/api --file ./docker/prod/api/Dockerfile --tag kapamonitor/api:latest
         
       - name: Build client
-        run: docker build ./app/client --file ../../docker/prod/client/Dockerfile --tag kapamonitor/client:latest
+        run: docker build ./app/client --file ./docker/prod/client/Dockerfile --tag kapamonitor/client:latest
 
       - name: Push image
         run: |
