@@ -26,21 +26,21 @@ jobs:
       - name: Build api
         run: docker build ./app/api --file ./docker/prod/api/Dockerfile --tag api
         
-      - name: Build client
-        run: docker build ./app/client --file ./docker/prod/client/Dockerfile --tag client
+      #- name: Build client
+        #run: docker build ./app/client --file ./docker/prod/client/Dockerfile --tag client
 
       - name: Push image
         run: |
           IMAGE_ID_API=docker.pkg.github.com/${{ github.repository }}/api
-          IMAGE_ID_CLIENT=docker.pkg.github.com/${{ github.repository }}/client
+          #IMAGE_ID_CLIENT=docker.pkg.github.com/${{ github.repository }}/client
           
           # Change all uppercase to lowercase
           IMAGE_ID_API=$(echo $IMAGE_ID_API | tr '[A-Z]' '[a-z]')
-          IMAGE_ID_CLIENT=$(echo $IMAGE_ID_CLIENT | tr '[A-Z]' '[a-z]')
+          #IMAGE_ID_CLIENT=$(echo $IMAGE_ID_CLIENT | tr '[A-Z]' '[a-z]')
 
           # Strip git ref prefix from version
           VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-          echo VERSION
+          echo VERSION1=$VERSION
 
           # Strip "v" prefix from tag name
           [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
@@ -48,11 +48,11 @@ jobs:
           # Use Docker `latest` tag convention
           [ "$VERSION" == "master" ] && VERSION=latest
 
-          echo IMAGE_ID=$IMAGE_ID
+          echo IMAGE_ID_API=$IMAGE_ID_API
           echo VERSION=$VERSION
           
           docker tag api $IMAGE_ID_API:$VERSION
-          docker tag image $IMAGE_ID_CLIENT:$VERSION
+          #docker tag image $IMAGE_ID_CLIENT:$VERSION
           
           docker push $IMAGE_ID_API:$VERSION
-          docker push $IMAGE_ID_CLIENT:$VERSION
+          #docker push $IMAGE_ID_CLIENT:$VERSION
