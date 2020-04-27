@@ -5,7 +5,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 
 const TextInput = (props) => {
     const [name, setName] = React.useState('');
-    const { title } = props;
+    const { title, initialName } = props;
 
     const handleChangeTextInput = (event) => {
         setName(event.target.value);
@@ -16,7 +16,7 @@ const TextInput = (props) => {
                 <InputLabel htmlFor="component-simple">{title}</InputLabel>
                 <Input
                     id="component-simple"
-                    value={name}
+                    value={initialName}
                     onChange={handleChangeTextInput}
                 />
             </FormControl>

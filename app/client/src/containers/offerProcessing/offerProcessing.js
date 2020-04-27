@@ -12,7 +12,6 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-
 const Dashboard = (props) => {
     const classes = useStyles();
 
@@ -21,15 +20,15 @@ const Dashboard = (props) => {
             <div class="container-fluid">
                 {CustomTextinput({
                     title: 'pretty title',
+                    initialName: 'test',
                 })}
             </div>
             <div class="container-fluid">
-                {CustomButton({type: "save"})}
-                {CustomButton({type: "delete"})}
+                {CustomButton({ type: 'save' })}
+                {CustomButton({ type: 'delete' })}
             </div>
         </PaddingLayout>
     );
 };
 
 export default Dashboard;
-

@@ -8,6 +8,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import CustomCheckbox from '../../components/CustomCheckbox';
 import CustomDropdown from '../../components/CustomDropdown';
+import CustomTextinput from '../../components/CustomTextinput';
+import CustomButton from '../../components/CustomButton';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -19,6 +21,15 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const masterDataRessources = {
+    1: {
+        name: 'Handschuhe',
+        certificates: {
+            1: 'Schutzklasse X',
+            2: 'Zertifikat Y',
+        },
+    },
+};
 
 const Dashboard = (props) => {
     const [age, setAge] = React.useState('');
@@ -29,18 +40,26 @@ const Dashboard = (props) => {
 
     return (
         <PaddingLayout>
+            <div class="container-fluid">
+                {CustomTextinput({
+                    title: 'Titel',
+                    initialName: "Test"
+                })}
+            </div>
+            <br></br>
+
             {CustomDropdown({
-                headline: 'asdf',
+                headline: 'Bedarf Ressource',
                 itemKeys: [10, 20, 30],
                 itemValues: { 10: 'Ten', 20: 'Twenty', 30: 'Thirty' },
             })}
             <br></br>
             <FormControlLabel
-                control={CustomCheckbox({ checkboxId: '10'})}
+                control={CustomCheckbox({ checkboxId: '10' })}
                 label="Primary"
             />
             <FormControlLabel
-                control={CustomCheckbox({ checkboxId: '20'})}
+                control={CustomCheckbox({ checkboxId: '20' })}
                 label="Primary"
             />
         </PaddingLayout>
@@ -48,4 +67,3 @@ const Dashboard = (props) => {
 };
 
 export default Dashboard;
-
