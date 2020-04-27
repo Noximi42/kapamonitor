@@ -1,6 +1,6 @@
 languageCode = "de-de"
 title = "Kapamonitor"
-baseURL = "http://localhost:1313/"
+baseURL = "http://localhost:4000/"
 theme = "massively"
 googleanalytics = ""
 disqusShortname = ""

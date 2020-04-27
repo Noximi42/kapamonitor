@@ -1,7 +1,7 @@
-version: '3.5'
+version: "3.5"
 
-networks: 
-  localdev:
+networks:
+  local:
     name: local
     driver: bridge
 
@@ -16,18 +16,27 @@ services:
       dockerfile: ../../docker/dev/api/Dockerfile
     ports:
       - "5000:80"
-    networks: 
+    networks:
       - local
 
   client:
     image: ${DOCKER_REGISTRY-}kapamonitor_client
     container_name: client
-    build: 
+    build:
       context: ../../app/client
-      dockerfile: ../../docker/dev/client/Dockerfile
-    volumes:
-      - ../../app/client:/app/ 
+      dockerfile: ../../docker/prod/client/Dockerfile
     ports:
       - "80:3000"
+    networks:
+      - local
+
+  website:
+    image: ${DOCKER_REGISTRY-}kapamonitor_website
+    container_name: website
+    build:
+      context: ../../app/website
+      dockerfile: ../../docker/prod/website/Dockerfile
+    ports:
+      - "4000:80"
     networks:
       - local
