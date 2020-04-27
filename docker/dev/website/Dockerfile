@@ -1,5 +1,5 @@
 
-FROM klakegg/hugo:0.69.2-busybox
+FROM klakegg/hugo:ext-alpine
 WORKDIR /app
 COPY . /app/
 CMD ["server", "--disableFastRender", "--bind 0.0.0.0"]

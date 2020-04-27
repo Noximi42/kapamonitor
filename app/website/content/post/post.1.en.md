@@ -1,8 +1,11 @@
 +++
-title = 'Primis eget imperdiet lorem'
-slug = 'post1'
-image = 'images/pic03.jpg'
-description = 'Example of post with missing date property'
+title = 'Did you know that...'
+slug = 'knew-you-know-what-01'
+date = "2020-04-27T00:00:00"
+description = 'We made good use of the time at home and went on a search for the most interesting facts about the pandemic'
 disableComments = true
 +++
-Example of post with missing date property.
+
+> The crisis throws some things in our lives mixed up. Some companies become inventive. Completely new markets are created. For example, the luxury brand Prada now produces protective clothing...
+
+{{< instagram B_DeaWyonz1 >}}

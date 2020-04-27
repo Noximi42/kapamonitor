@@ -1,11 +1,29 @@
 +++
-title = 'first post'
-slug = 'post'
-image = 'images/pic02.jpg'
-date = "2012-02-06T00:00:00"
-description = 'Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis magna etiam.'
+title = 'Der Anfang unserer Reise'
+slug = 'unsere-reise'
+image = 'images/main_article.jpg'
+date = "2020-04-27T00:00:00"
+description = 'Im Rahmen des von der deutschen Bundesregierung geförderten Hackathons #WirVsVirus haben wir, eine nicht-kommerzielle Gruppe von Informatikern und Wirtschaftswissenschaftlern, das Projekt „KapaMonitor“ gestartet und entwickeln es seitdem weiter.'
 disableComments = true
 +++
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sit amet dui nec dui commodo auctor non eu mauris. Duis varius finibus vestibulum. Praesent aliquam, erat sed dictum feugiat, velit erat iaculis elit, eget iaculis ex libero ac sapien. Sed maximus ut lectus et varius. Nullam posuere velit vitae est consectetur porttitor. Vestibulum tempor felis ante, nec volutpat risus vestibulum ac. Mauris at finibus felis, eu placerat arcu. Sed nec semper nunc. Proin eget mollis felis. Donec fermentum lectus non metus elementum, dignissim ornare felis congue. In rhoncus vehicula nibh, ac imperdiet dolor tincidunt sit amet.
 
-Nullam commodo, diam nec finibus ultrices, odio enim tempus risus, quis dapibus ex ligula non erat. In sed lectus id massa fermentum euismod fringilla vel ligula. Quisque tincidunt tortor non ante scelerisque convallis ut vitae nunc. Mauris id consectetur sapien, et vulputate turpis. Nulla et diam urna. Duis varius, metus sit amet mollis gravida, felis turpis sodales nulla, id dapibus lacus est ac felis. Cras porttitor orci sit amet lorem scelerisque laoreet. Sed non mi et velit bibendum efficitur ut et mauris. Curabitur sem nisl, condimentum suscipit magna sit amet, vehicula ultricies purus. Phasellus blandit ultrices ante, eget blandit turpis fringilla et. Nam commodo volutpat semper.
+KapaMonitor hilft in der aktuellen Krise dabei, zum einen Bedarf im Gesundheitssektor und zum anderen verfügbare Ressourcen (z.B. medizinische Ausstattung, Krankenhausbetten, Personal) ausfindig zu machen und für Entscheidungsträger übersichtlich darzustellen. So kann eine zentrale Vergabe von Ressourcen an Einrichtungen erfolgen und Engpässen vorgebeugt werden.
+
+{{< youtube r9i6WxEeIt0 >}}
+
+#### TL;DR KapaMonitor ist ein pro Bono Projekt hinter dem kein Unternehmen steht und mit dem wir keine kommerziellen Interessen verfolgen!
+
+### Ziel ist es, mit der Anwendung:
+- für Entscheidungsträger wie Leitstellen oder Verantwortliche vom Katastrophenschutz eine Übersicht zu schaffen über Bettenauslastung und Ressourcenbedarf von Gesundheitseinrichtungen, sowie über durch Dritte verfügbare Ressourcen.
+
+- Einrichtungen wie Krankenhäusern eine Plattform zu geben, auf der sie ihren Bedarf angeben und versuchen können, Angebote zu finden.
+
+- Anbietern von Kapazitäten und Ressourcen eine Plattform zu geben, über die dieser Bedarf sichtbar gemacht und verfügbare Ressourcen gemeldet werden können.
+
+#### Ressourcen können z.B. Lokalitäten, (nicht-)medizinische Ausstattung oder Personal sein. 
+
+### Wie machen wir einen Unterschied?
+
+Viele Lösungen konzentrieren sich ausschließlich auf die Optimierung der Bettenauslastung durch Umverteilung zwischen den Krankenhäusern. Mit KapaMonitor verfolgten wir frühzeitig die Idee, diesen Ansatz durch die Erschließung von Ausweichmöglichkeiten auf nicht medizinische Einrichtungen zu ergänzen, die für Patienten mit unkritischen Krankheiten genutzt werden könnten.
+
+Die Anwendung ist Open Source und frei von Rechten und Lizenzgebühren. Sie lässt sich auf unterschiedlichste Anwendungsfälle ausweiten, ist skalierbar und technisch für eine großflächige Umsetzung ausgelegt. Dieses Projekt berücksichtigt auch die Zuständigkeiten im Katastrophenschutz und ist daher ideal für den Einsatz auf Landesebene geeignet. Eine flächendeckende Einführung der Plattform KapaMonitor ist voraussichtlich bis zum 01.06.2020 möglich.
