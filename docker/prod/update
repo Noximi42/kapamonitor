@@ -1,0 +1,21 @@
+#!bin/bash
+
+sudo docker stop api
+sudo docker stop client
+
+sudo docker rm api
+sudo docker rm client
+
+cat github_packages_password | sudo docker login docker.pkg.github.com -u Noximi42 --password-stdin
+
+sudo docker pull docker.pkg.github.com/noximi42/kapamonitor/api:latest
+sudo docker pull docker.pkg.github.com/noximi42/kapamonitor/client:latest
+
+sudo docker tag docker.pkg.github.com/noximi42/kapamonitor/api api
+sudo docker tag docker.pkg.github.com/noximi42/kapamonitor/client client
+
+sudo docker rmi docker.pkg.github.com/noximi42/kapamonitor/api
+sudo docker rmi docker.pkg.github.com/noximi42/kapamonitor/client
+
+sudo docker run --env-file envVars -p 5000:80 --name api -d api
+sudo docker run -p 80:80 --name client -d client
