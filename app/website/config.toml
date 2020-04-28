@@ -1,10 +1,11 @@
-languageCode = "de-de"
+languageCode = "de-DE"
 title = "Kapamonitor"
 baseURL = "http://localhost:1313/"
 theme = "massively"
 googleanalytics = ""
 disqusShortname = ""
 disableKinds = ["taxonomy", "taxonomyTerm", "section"]
+defaultContentLanguage = "de"
 
 [params]
   favicon = "images/favicon.ico"
@@ -18,10 +19,12 @@ disableKinds = ["taxonomy", "taxonomyTerm", "section"]
 #     featuredPost = true
 #     paginationPages = 2
 #     showFirstLast = false
- 
+
 [languages]
-[languages.en]
-  languageName = "English"
 [languages.de]
   languageName = "Deutsch"
+  weight = 2
   title = "Kapamonitor"
+[languages.en]
+  languageName = "English"
+  weight = 1
