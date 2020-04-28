@@ -28,6 +28,9 @@ jobs:
         
       - name: Build client
         run: docker build ./app/client --file ./docker/prod/client/Dockerfile --tag client
+        
+      - name: Build website
+        run: docker build ./app/website --file ./docker/prod/website/Dockerfile --tag website
 
       - name: Push image
         run: |
