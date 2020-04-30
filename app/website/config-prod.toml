@@ -1,0 +1,30 @@
+languageCode = "de-DE"
+title = "Kapamonitor"
+baseURL = "http://kapamonitor.de/"
+theme = "massively"
+googleanalytics = ""
+disqusShortname = ""
+disableKinds = ["taxonomy", "taxonomyTerm", "section"]
+defaultContentLanguage = "de"
+
+[params]
+  favicon = "images/favicon.ico"
+  # set to change date format
+  # dateFormat = "2.1.2006"
+
+# Below parameters can be set to override default post settings
+[params.posts]
+     folderName = "post"
+     pageSize = "4"
+#     featuredPost = true
+#     paginationPages = 2
+#     showFirstLast = false
+ 
+[languages]
+[languages.en]
+  languageName = "English"
+  weight = 1
+[languages.de]
+  languageName = "Deutsch"
+  title = "Kapamonitor"
+  weight = 2
