@@ -24,7 +24,7 @@ namespace KapaMonitor.Api.Controllers
         public async Task<IActionResult> Get()
         {
             await _context.Database.EnsureCreatedAsync();
-            return Ok(_context.Database.CanConnect() ? "Ok" : "Not Ok");
+            return Ok(_context.Database.CanConnect());
         }
     }
 }
