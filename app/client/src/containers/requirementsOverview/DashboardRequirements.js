@@ -1,12 +1,11 @@
 //TODO: connection to backend (doing)
 //implement textfield/filter components
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import TableContainer from '@material-ui/core/TableContainer';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
-import { TextField } from '@material-ui/core';
 import { TableCell } from '@material-ui/core';
 import TableRow from '@material-ui/core/TableRow';
 import TableHead from '@material-ui/core/TableHead';
@@ -15,15 +14,14 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
-import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
-import HotelIcon from '@material-ui/icons/Hotel';
 import { getAllRequirements } from '../../__MOCK__/mockRequirements.js';
 import { getAllResources } from '../../__MOCK__/mockRequirements.js';
 import { getAllUom } from '../../__MOCK__/mockRequirements.js';
 import { getAllLocations } from '../../__MOCK__/mockRequirements.js';
 import PaddingLayout from '../../components/PaddingLayout';
 import { connect } from 'react-redux';
-import TextInput from '../../components/CustomTextinput/index.js';
+import DashboardFilterbox from '../../components/DashboardFilterbox';
+//in dashboard werden Daten abgerufen, diese werden an Filterbox übergeben
 
 export const headCells = [
     { id: 'location', label: 'Einrichtung', numberic: false },
@@ -78,6 +76,9 @@ const Locations = getAllLocations();
 const Dashboard = (props) => {
     const classes = useStyles();
 
+    const [state, setState] = React.useState( {
+        displayedRequirements: rawRequirements, //Startwert
+    } );
     const [open, setOpen] = React.useState(false);
     const [selectedRow, setSelectedRow] = React.useState(null);
 
@@ -102,14 +103,22 @@ const Dashboard = (props) => {
     function handleClickOpen(index) {
         setOpen(true);
         setSelectedRow(index);
+        console.log(selectedRow);
     }
     const handleClose = () => {
         setOpen(false);
     };
+
+    const onFilterChange = (filteredList) => {
+        console.log(filteredList);
+        setState({ ...state, displayedRequirements: filteredList });
+        
+    };
+
     return (
         
         <PaddingLayout>
-            <TextInput label='hello'></TextInput>
+            <DashboardFilterbox rawResources={Resources} data={rawRequirements} callback={onFilterChange}/> 
             <TableContainer component={Paper}>
                 <Table className={classes.table}>
                     <TableHead>
@@ -123,8 +132,8 @@ const Dashboard = (props) => {
                     </TableHead>
                     <TableBody>
                         {
-                            /*props.*/ rawRequirements
-                                ? /*props.*/ rawRequirements.map(
+                            /*props.*/ state.displayedRequirements
+                                ? /*props.*/ state.displayedRequirements.map(
                                       (row, index) => (
                                           <TableRow
                                               key={row.id}
@@ -161,9 +170,9 @@ const Dashboard = (props) => {
                         <>
                             <DialogTitle>
                                 {
-                                    /*props.*/ rawRequirements[selectedRow] &&
-                                        /*props.*/ rawRequirements[selectedRow]
-                                            .title
+                                    //rawRequirements[selectedRow].resourceName
+                                    rawRequirements[0].resourceName
+                                    
                                 }
                             </DialogTitle>
 
