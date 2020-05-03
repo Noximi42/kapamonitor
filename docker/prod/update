@@ -1,22 +1,17 @@
 #!bin/bash
 
-sudo docker stop api
-sudo docker stop client
-sudo docker stop website
-sudo docker stop proxy
+sudo docker-compose stop
 
 sudo docker rm api
 sudo docker rm client
 sudo docker rm website
 sudo docker rm proxy
-sudo docker network rm local
 
 cat github_packages_password | sudo docker login docker.pkg.github.com -u Noximi42 --password-stdin
 
 sudo docker pull docker.pkg.github.com/noximi42/kapamonitor/api:latest
 sudo docker pull docker.pkg.github.com/noximi42/kapamonitor/client:latest
 sudo docker pull docker.pkg.github.com/noximi42/kapamonitor/website:latest
-
 
 sudo docker tag docker.pkg.github.com/noximi42/kapamonitor/api api
 sudo docker tag docker.pkg.github.com/noximi42/kapamonitor/client client
@@ -26,9 +21,4 @@ sudo docker rmi docker.pkg.github.com/noximi42/kapamonitor/api
 sudo docker rmi docker.pkg.github.com/noximi42/kapamonitor/client
 sudo docker rmi docker.pkg.github.com/noximi42/kapamonitor/website
 
-sudo docker network create local
-
-sudo docker run --env-file envVars --name api --network local -d api
-sudo docker run --name client --network local -d client
-sudo docker run --name website --network local -d website
-sudo docker run --name proxy -p 80:80 --network local -v /home/ubuntu/reverse-proxy-nginx.conf:/etc/nginx/conf.d/default.conf -d nginx:mainline-alpine
+sudo docker-compose up -d
