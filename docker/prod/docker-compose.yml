@@ -72,4 +72,4 @@ services:
       - certbot-var:/var/lib/letsencrypt
     depends_on:
       - proxy
-    command: certonly --webroot --webroot-path=/var/www/html --email kapamonitor@gmail.com --agree-tos --no-eff-email -d kapamonitor.de -d www.kapamonitor.de 
+    command: certonly --webroot --webroot-path=/var/www/html --email kapamonitor@gmail.com --agree-tos --no-eff-email -d kapamonitor.de -d www.kapamonitor.de -d app.kapamonitor.de -d api.kapamonitor.de
