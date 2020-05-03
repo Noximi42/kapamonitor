@@ -15,8 +15,12 @@
 [CONTACT_SOCIAL]
   other = "Socialmedia"
 [COPYRIGHT_MESSAGE_1]
-  other = "Design: [HTML5 UP](https://html5up.net)"
+  other = "[Impressum](https://kapamonitor.de/impressum)"
 [COPYRIGHT_MESSAGE_2]
+  other = "[Datenschutz](https://kapamonitor.de/datenschutz)"
+[COPYRIGHT_MESSAGE_3]
+  other = "Design: [HTML5 UP](https://html5up.net)"
+[COPYRIGHT_MESSAGE_4]
   other = "Hugo Port: [curttimson](https://curtistimson.co.uk)"
 [INTRO_CONTINUE]
   other = "Weiter"
