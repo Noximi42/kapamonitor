@@ -10,7 +10,7 @@
         "pretty": "prettier --write \"./**/*.{js,jsx,json}\""
     },
     "dependencies": {
-        "@material-ui/core": "latest",
+        "@material-ui/core": "^4.9.12",
         "@material-ui/icons": "3.0.2",
         "axios": "^0.19.2",
         "classnames": "^2.2.6",
