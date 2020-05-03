@@ -1,5 +1,5 @@
 [CONTACT_ADDRESS]
-  other = "Addresse"
+  other = "Address"
 [CONTACT_EMAIL]
   other = "Email"
 [CONTACT_FORM_FIELD_EMAIL]
@@ -9,28 +9,28 @@
 [CONTACT_FORM_FIELD_NAME]
   other = "Name"
 [CONTACT_FORM_SUBMIT_SEND_MESSAGE]
-  other = "Senden Sie eine Nachricht"
+  other = "Send A Message"
 [CONTACT_PHONE]
-  other = "Telefon"
+  other = "Phone"
 [CONTACT_SOCIAL]
-  other = "Socialmedia"
+  other = "Social"
 [COPYRIGHT_MESSAGE_1]
   other = "Design: [HTML5 UP](https://html5up.net)"
 [COPYRIGHT_MESSAGE_2]
   other = "Hugo Port: [curttimson](https://curtistimson.co.uk)"
 [INTRO_CONTINUE]
-  other = "Weiter"
+  other = "Continue"
 [NAV_MENU]
   other = "Menu"
 [NAV_CONTACT]
-  other = "Kontakt"
+  other = "Contact"
 [NAV_SIGN_IN]
-  other = "Anmelden"
+  other = "Login"
 [PAGINATION_NEXT]
-  other = "Weiter"
+  other = "Next"
 [PAGINATION_PREVIOUS]
-  other = "Zurück"
+  other = "Prev"
 [PAGINATION_FIRST]
-  other = "Erste Seite"
+  other = "First"
 [PAGINATION_LAST]
-  other = "Letzte Seite"
+  other = "Last"
