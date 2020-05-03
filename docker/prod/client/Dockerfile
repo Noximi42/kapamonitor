@@ -1,10 +1,9 @@
-FROM node:12.16.1-alpine as build
+FROM node:alpine as build
 WORKDIR /app
 COPY package.json yarn.lock /app/
-RUN npm install --silent
+RUN yarn install --silent
 COPY . /app/
-RUN npm run build
+RUN yarn run build
 
-FROM nginx:1.17.9-alpine
+FROM nginx:alpine
 COPY --from=build /app/build /usr/share/nginx/html
-EXPOSE 80
