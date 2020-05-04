@@ -2,7 +2,6 @@
 title = 'Der Anfang unserer Reise'
 slug = 'unsere-reise'
 image = 'images/main_article.jpg'
-date = "2020-04-27T00:00:00"
 description = 'Im Rahmen des von der deutschen Bundesregierung geförderten Hackathons #WirVsVirus haben wir, eine nicht-kommerzielle Gruppe von Informatikern und Wirtschaftswissenschaftlern, das Projekt „KapaMonitor“ gestartet und entwickeln es seitdem weiter.'
 disableComments = true
 +++
