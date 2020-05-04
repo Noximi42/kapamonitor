@@ -2,7 +2,6 @@
 title = 'The beginning of our journey'
 slug = 'our-trip'
 image = 'images/main_article.jpg'
-date = "2020-04-27T00:00:00"
 description = 'As part of the German government sponsored hackathon #WirVsVirus, we, a non-commercial group of computer scientists and economists, started the project "KapaMonitor" and have been developing it ever since'
 disableComments = true
 +++

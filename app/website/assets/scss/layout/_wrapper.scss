@@ -22,22 +22,25 @@
     //background-image:		url('../../images/overlay.png'),	linear-gradient(0deg, rgba(0,0,0,0.1), rgba(0,0,0,0.1)),	url('../../images/bg.jpg');
     background: rgb(2, 0, 36);
     background: -moz-linear-gradient(
-      -45deg,
+      -0deg,
       rgba(2, 0, 36, 1) 0%,
-      rgba(9, 9, 121, 1) 55%,
-      rgba(0, 126, 255, 1) 100%
+      rgba(198, 215, 235, 1) 50%,
+      rgba(24, 104, 174,1) 100% 
     );
+    //rgba(2, 0, 36, 1) 0%,
+     // rgba(9, 9, 121, 1) 55%,
+    // rgba(0, 126, 255, 1) 100%
     background: -webkit-linear-gradient(
-      -45deg,
+      -0deg,
       rgba(2, 0, 36, 1) 0%,
-      rgba(9, 9, 121, 1) 55%,
-      rgba(0, 126, 255, 1) 100%
+      rgba(198, 215, 235, 1) 50%,
+      rgba(24, 104, 174,1) 100%
     );
     background: linear-gradient(
-      -45deg,
+      -0deg,
       rgba(2, 0, 36, 1) 0%,
-      rgba(9, 9, 121, 1) 55%,
-      rgba(0, 126, 255, 1) 100%
+      rgba(198, 215, 235, 1) 50%,
+      rgba(24, 104, 174,1) 100%
     );
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#020024",endColorstr="#007eff",GradientType=1);
     background-size: auto, auto, 100% auto;

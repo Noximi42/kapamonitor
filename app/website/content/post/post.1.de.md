@@ -1,7 +1,6 @@
 +++
 title = 'Wusstest du, dass...'
 slug = 'wusstest-du-dass-01'
-date = "2020-04-27T00:00:00"
 description = 'Wir haben die Zeit zuhause sinnvoll genutzt und uns für euch auf die Suche nach den interessantesten Fakten zur Pandemie gemacht.'
 disableComments = true
 +++

@@ -1,7 +1,6 @@
 +++
 title = 'It`s going on behind the scenes!'
 slug = 'behind-the-scenes-01'
-date = "2020-04-28T00:00:00"
 description = 'We`ve made some progress lately.'
 disableComments = true
 +++

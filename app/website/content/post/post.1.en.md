@@ -1,7 +1,6 @@
 +++
 title = 'Did you know that...'
 slug = 'knew-you-know-what-01'
-date = "2020-04-27T00:00:00"
 description = 'We made good use of the time at home and went on a search for the most interesting facts about the pandemic'
 disableComments = true
 +++
