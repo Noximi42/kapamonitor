@@ -1,63 +1,59 @@
 import React, { useEffect } from 'react';
-import TableContainer from '@material-ui/core/TableContainer';
-import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
 import {
+    TableContainer,
+    Paper,
     TableCell,
-    Typography,
-    FormControl,
-    FormLabel,
-    FormGroup,
-    Checkbox,
-    Input,
-    InputLabel,
+    TableBody,
+    Table,
+    TableRow,
+    TableHead,
+    makeStyles,
 } from '@material-ui/core';
-import TableRow from '@material-ui/core/TableRow';
-import TableHead from '@material-ui/core/TableHead';
-import makeStyles from '@material-ui/core/styles/makeStyles';
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogActions from '@material-ui/core/DialogActions';
-import Button from '@material-ui/core/Button';
-import { getAllLocations } from '../../services/backend-rest-service';
+import { getAllOffers, getOffer } from '../../services/backend-rest-service';
 import PaddingLayout from '../../components/PaddingLayout';
-import { HospitalDetail } from '../../components/HospitalDetail';
-import { setRawLocations } from '../../store/leaflet/actions';
 import { connect } from 'react-redux';
-import Box from '@material-ui/core/Box';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { useTranslation } from 'react-i18next';
+import {
+    setOffers,
+    updateOffers,
+    setSearchFilter,
+} from '../../store/offers/actions';
+import { OfferSearchBox } from './OfferSearchBox';
+import { OfferDetails } from './OfferDetails';
+import { exampleData, simulateHTTPRequest } from '../../__MOCK__/mockData';
 
 const useStyles = makeStyles({
-    table: {
-        minWidth: 650,
-    },
-    tableRow: {
-        cursor: 'pointer',
-    },
-    checkboxFormControl: {
-        marginRight: 100,
-    },
-    inputFormControl: {
-        marginRight: 40,
-    },
+    // table: {
+    //     minWidth: 650,
+    // },
+    // tableRow: {
+    //     cursor: 'pointer',
+    // },
+    // checkboxFormControl: {
+    //     marginRight: 100,
+    // },
+    // inputFormControl: {
+    //     marginRight: 40,
+    // },
 });
 
 const getCellContent = (row, cellId) => {
-    switch (cellId) {
-        case 'resource':
-            return `Handschuhe`;
-            break;
-        case 'amount':
-            return `${row.capacity}`;
-            break;
-        default:
-            return row[cellId];
-    }
+    // console.log('row', row);
+    // console.log('cellId', cellId);
+    return row.ikId;
+    // switch (cellId) {
+    //     case 'resource':
+    //         return `Handschuhe`;
+    //         break;
+    //     case 'amount':
+    //         return `${row.capacity}`;
+    //         break;
+    //     default:
+    //         return row[cellId];
+    // }
 };
 
-const Dashboard = (props) => {
+const OffersOverview = (props) => {
     const { t } = useTranslation();
     const classes = useStyles();
 
@@ -76,101 +72,76 @@ const Dashboard = (props) => {
             numberic: true,
         },
         {
+            id: 'price',
+            label: t('pages.offerOverview.table.price'),
+            numberic: true,
+        },
+        {
             id: 'postCode',
             label: t('pages.offerOverview.table.postcode'),
+            numberic: true,
+        },
+        {
+            id: 'location',
+            label: t('pages.offerOverview.table.location'),
             numberic: true,
         },
     ];
 
     useEffect(() => {
         async function fetchRows() {
-            const res = await getAllLocations();
+            const res = await simulateHTTPRequest(exampleData); //getAllOffers();
 
-            if (res.status === 200) {
-                if (res.data.length > 0) {
-                    const mockCapacity = res.data.map((location) => ({
-                        ...location,
-                        capacity: Math.floor(Math.random() * 100),
-                    }));
-                    props.setRawLocations(mockCapacity);
-                }
-            }
+            const mockOffers = res.map((offer) => ({
+                ...offer,
+                capacity: Math.floor(Math.random() * 100),
+            }));
+            props.setOffers(mockOffers);
+
+            // TODO: Wenn der Endpunkt im Backend fertig ist.
+            // if (res.status === 200) {
+            //     if (res.data.length > 0) {
+            //         const mockOffers = res.data.map((offer) => ({
+            //             ...offer,
+            //             capacity: Math.floor(Math.random() * 100),
+            //         }));
+            //         props.setOffers(mockOffers);
+            //     }
+            // }
         }
 
         fetchRows();
     }, []);
 
-    function handleClickOpen(index) {
+    function handleClickOpen(ikId) {
         setOpen(true);
-        setSelectedRow(index);
+        setSelectedRow(ikId);
     }
-    function handleFilterTypeChange(index) {
-        // handle resource selected/deselected in filter
-    }
-    const handleClose = () => {
-        setOpen(false);
-    };
     return (
         <PaddingLayout>
             <TableContainer component={Paper}>
-                <Box component="div" m={2}>
-                    <FormControl className={classes.checkboxFormControl}>
-                        <FormLabel component="legend">Filter</FormLabel>
-                        <FormGroup>
-                            {props.rawResources
-                                ? props.rawResources.map((resource, index) => (
-                                      <FormControlLabel
-                                          control={
-                                              <Checkbox
-                                                  name={resource.id}
-                                                  defaultChecked={true}
-                                                  onChange={() =>
-                                                      handleFilterTypeChange(
-                                                          index
-                                                      )
-                                                  }
-                                              />
-                                          }
-                                          label={resource.name}
-                                      />
-                                  ))
-                                : null}
-                        </FormGroup>
-                    </FormControl>
-                    <FormControl className={classes.inputFormControl}>
-                        <InputLabel htmlFor="postCode">
-                            {t('pages.offerOverview.postcode')}
-                        </InputLabel>
-                        <Input id="postCode" name="postCode" />
-                    </FormControl>
-                    <FormControl className={classes.inputFormControl}>
-                        <InputLabel htmlFor="radius">
-                            {t('pages.offerOverview.distance')}
-                        </InputLabel>
-                        <Input id="radius" name="radius" />
-                    </FormControl>
-                </Box>
+                <OfferSearchBox />
                 <Table className={classes.table}>
                     <TableHead>
                         <TableRow>
-                            {headCells.map((cell) => (
-                                <TableCell>
+                            {headCells.map((cell, index) => (
+                                <TableCell key={index}>
                                     <strong>{cell.label}</strong>
                                 </TableCell>
                             ))}
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {props.rawLocations
-                            ? props.rawLocations.map((row, index) => (
+                        {props.offers
+                            ? props.offers.map((row, index) => (
                                   <TableRow
                                       key={row.id}
-                                      onClick={() => handleClickOpen(index)}
+                                      onClick={() => handleClickOpen(row.ikId)}
                                       hover={true}
                                       className={classes.tableRow}
                                   >
-                                      {headCells.map((cell) => (
-                                          <TableCell>
+                                      {headCells.map((cell, index) => (
+                                          <TableCell key={'tableCell-' + index}>
                                               {getCellContent(row, cell.id)}
                                           </TableCell>
                                       ))}
@@ -180,52 +151,41 @@ const Dashboard = (props) => {
                     </TableBody>
                 </Table>
             </TableContainer>
-            <Dialog
+            <OfferDetails
                 open={open}
-                onClose={handleClose}
-                fullWidth={true}
-                maxWidth="md"
-            >
-                {props.rawLocations ? (
-                    <>
-                        <DialogTitle>
-                            {props.rawLocations[selectedRow] &&
-                                props.rawLocations[selectedRow].title}
-                        </DialogTitle>
-                        <HospitalDetail
-                            location={props.rawLocations[selectedRow]}
-                        ></HospitalDetail>
-                        <DialogActions>
-                            <Button onClick={handleClose} color="primary">
-                                Ok
-                            </Button>
-                        </DialogActions>
-                    </>
-                ) : null}
-            </Dialog>
+                row={selectedRow}
+                handleClose={() => {
+                    setOpen(false);
+                }}
+            />
         </PaddingLayout>
     );
 };
 
+// const mapStateToProps = (state) => ({
+//     rawResources: [
+//         //hard coded for debug purposes
+//         {
+//             id: 'handschuhe',
+//             name: 'Handschuhe',
+//             selected: true,
+//         },
+//         {
+//             id: 'atemmasken',
+//             name: 'Atemmasken',
+//             selected: true,
+//         },
+//     ],
+// });
+
 const mapStateToProps = (state) => ({
-    rawLocations: state.leaflet.rawLocations,
-    rawResources: [
-        //hard coded for debug purposes
-        {
-            id: 'handschuhe',
-            name: 'Handschuhe',
-            selected: true,
-        },
-        {
-            id: 'atemmasken',
-            name: 'Atemmasken',
-            selected: true,
-        },
-    ],
+    offers: state.offers.filteredOffers,
 });
 
 const mapDispatchToProps = {
-    setRawLocations,
+    setOffers,
+    updateOffers,
+    setSearchFilter,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(OffersOverview);

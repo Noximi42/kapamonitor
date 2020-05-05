@@ -17,7 +17,9 @@ export const resources = {
                     table: {
                         resource: 'resource name',
                         amount: 'amount',
+                        price: 'price',
                         postcode: 'postcode',
+                        location: 'location',
                     },
                 },
             },
@@ -70,7 +72,9 @@ export const resources = {
                     table: {
                         resource: 'Resource',
                         amount: 'Menge',
+                        price: 'Preis',
                         postcode: 'Postleitzahl',
+                        location: 'Ort',
                     },
                 },
             },
