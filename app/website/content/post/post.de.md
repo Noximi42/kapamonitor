@@ -4,6 +4,7 @@ slug = 'unsere-reise'
 image = 'images/main_article.jpg'
 description = 'Im Rahmen des von der deutschen Bundesregierung geförderten Hackathons #WirVsVirus haben wir, eine nicht-kommerzielle Gruppe von Informatikern und Wirtschaftswissenschaftlern, das Projekt „KapaMonitor“ gestartet und entwickeln es seitdem weiter.'
 disableComments = true
+date = "2020-05-05T00:00:00"
 +++
 
 KapaMonitor hilft in der aktuellen Krise dabei, zum einen Bedarf im Gesundheitssektor und zum anderen verfügbare Ressourcen (z.B. medizinische Ausstattung, Krankenhausbetten, Personal) ausfindig zu machen und für Entscheidungsträger übersichtlich darzustellen. So kann eine zentrale Vergabe von Ressourcen an Einrichtungen erfolgen und Engpässen vorgebeugt werden.
