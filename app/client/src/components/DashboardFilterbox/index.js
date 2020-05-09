@@ -4,8 +4,6 @@ import Box from '@material-ui/core/Box';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
-
-
 const useStyles = makeStyles((theme) => ({
     checkboxFormControl: {
         marginRight: 100,
