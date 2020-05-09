@@ -1,1 +1,39 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,600,700,800);
+$primary: #1868ae;
+
 @import "bootstrap";
+
+body {
+    font-family: raleway, sans-serif;
+}
+
+.navContainer {
+    box-shadow: 0px -15px 5px 15px #333;
+}
+
+.navbar {
+    max-width: 1400px;
+}
+
+.navbar-nav {
+    max-width: 900px;
+    margin-top: 16px;
+}
+
+.nav-item.active .nav-link {
+    color: $primary !important;
+}
+
+h1 {
+    font-weight: bold;
+    color: $primary;
+    line-height: 1.5;
+}
+h2 {
+    font-weight: 600;
+    color: $primary;
+}
+
+p {
+    font-size: 18px;
+}

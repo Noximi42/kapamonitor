@@ -1,0 +1,87 @@
+$primary: #1868ae;
+
+.infoContainer {
+    margin-top: 3vw;
+    justify-content: center;
+
+    .row {
+        max-width: 1300px;
+    }
+
+    .btn {
+        width: 200px;
+    }
+
+    .btn-primary:hover {
+        background-color: white;
+        color: $primary;
+    }
+}
+
+.advantageContainer {
+    margin-top: 10vw;
+    
+    h2 {
+        margin-bottom: 2vw;
+    }
+    
+    .row {
+        max-width: 2000px;
+    }
+    
+    .advantageBlock {
+        span {
+            font-weight: 600;
+        }
+    }
+}
+
+.functionContainer {
+    margin-top: 10vw;
+    
+    .functionBlock {
+        h5 {
+            font-weight: 800 !important;
+            letter-spacing: 4px;
+        }
+
+        p {
+            font-size: 14px;
+        }
+    }
+}
+
+.aboutUsContainer {
+    margin-top: 10vw;
+
+    .aboutUsBlock {
+        h5 {
+            font-weight: 800 !important;
+            letter-spacing: 4px;
+        }
+
+        p {
+            font-size: 14px;
+        }
+    }
+}
+
+.teamContainer {
+    margin-top: 10vw;
+    max-width: 1200px;
+
+    .personContainer {
+        p {
+            font-size: 14px;
+        }
+    }
+
+    .personContainer-left {
+        padding-left: 3vw;
+        padding-right: 5vw;
+    }
+    .personContainer-right {
+        padding-left: 5vw;
+        padding-right: 3vw;
+    }
+}
