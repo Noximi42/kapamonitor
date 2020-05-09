@@ -2,7 +2,6 @@ import React from 'react';
 import { FormControl, FormLabel, FormGroup, Input, InputLabel, Checkbox } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import CustomCheckbox from '../../components/CustomCheckbox';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
 
