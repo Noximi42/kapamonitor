@@ -1,5 +1,4 @@
 //TODO: connection to backend (doing)
-//implement textfield/filter components
 
 import React from 'react';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -103,18 +102,15 @@ const Dashboard = (props) => {
     function handleClickOpen(index) {
         setOpen(true);
         setSelectedRow(index);
-        console.log(selectedRow);
     }
     const handleClose = () => {
         setOpen(false);
     };
 
     const onFilterChange = (filteredList) => {
-        console.log(filteredList);
         setState({ ...state, displayedRequirements: filteredList });
         
     };
-
     return (
         
         <PaddingLayout>
@@ -166,12 +162,11 @@ const Dashboard = (props) => {
                 maxWidth="md"
             >
                 {
-                    /*props.*/ rawRequirements ? (
+                    /*props.*/ rawRequirements[selectedRow] ? (
                         <>
                             <DialogTitle>
                                 {
-                                    //rawRequirements[selectedRow].resourceName
-                                    rawRequirements[0].resourceName
+                                    (Resources.map(e => (rawRequirements[selectedRow].resourceId == e.id).resourceName))[0]
                                     
                                 }
                             </DialogTitle>
