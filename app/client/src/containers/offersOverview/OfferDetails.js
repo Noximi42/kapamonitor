@@ -5,9 +5,17 @@ import {
     DialogActions,
     makeStyles,
     Button,
+    CircularProgress,
+    Card,
+    DialogContent,
+    DialogContentText,
+    Grid,
+    IconButton,
 } from '@material-ui/core';
+import { Close } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
 import { exampleData, simulateHTTPRequest } from '../../__MOCK__/mockData';
+import { LoadingDialog } from './LoadingDialog';
 
 const useStyles = makeStyles({
     // checkboxFormControl: {
@@ -21,7 +29,8 @@ const useStyles = makeStyles({
 export const OfferDetails = (props) => {
     const { t } = useTranslation();
     const classes = useStyles();
-    const [offer, setOffer] = React.useState(null);
+    let [offer, setOffer] = React.useState(null);
+    let [loading, setLoading] = React.useState(true);
     useEffect(() => {
         async function fetchRows() {
             const res = await simulateHTTPRequest(exampleData).then(
@@ -32,7 +41,7 @@ export const OfferDetails = (props) => {
                 }
             ); //getAllOffers();
             setOffer(res[0]);
-            console.log('Set', res[0]);
+            setLoading(false);
 
             // TODO: Wenn der Endpunkt im Backend fertig ist.
             // if (res.status === 200) {
@@ -48,25 +57,28 @@ export const OfferDetails = (props) => {
         fetchRows();
     });
 
-    return (
+    return loading ? (
+        <LoadingDialog open={true}></LoadingDialog>
+    ) : (
         <Dialog
             open={props.open}
-            onClose={props.handleClose}
+            onClose={() => {
+                setOffer(null);
+                setLoading(true);
+                props.handleClose();
+            }}
             fullWidth={true}
             maxWidth="md"
         >
-            {props.open ? (
-                <>
-                    <DialogTitle>
-                        {offer ? offer.ikId : 'Undefined'}
-                    </DialogTitle>
-                    <DialogActions>
-                        <Button onClick={props.handleClose} color="primary">
-                            Ok
-                        </Button>
-                    </DialogActions>
-                </>
-            ) : null}
+            <DialogTitle>{offer ? offer.ikId : null}</DialogTitle>
+            <DialogContent>
+                <p>Angebotsdetails</p>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={props.handleClose} color="primary">
+                    Ok
+                </Button>
+            </DialogActions>
         </Dialog>
     );
 };

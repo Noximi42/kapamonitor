@@ -91,6 +91,6 @@ export function simulateHTTPRequest(object) {
     return new Promise(function (resolve, reject) {
         setTimeout(function () {
             resolve(object);
-        }, 5000);
+        }, 1000);
     });
 }

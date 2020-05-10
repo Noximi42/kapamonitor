@@ -37,8 +37,10 @@ export const OfferSearchBox = (props) => {
                                       <Checkbox
                                           name={resource.id}
                                           defaultChecked={true}
-                                          onChange={() =>
-                                              {console.log('blub')}// handleFilterTypeChange(index)
+                                          onChange={
+                                              () => {
+                                                  console.log('blub');
+                                              } // handleFilterTypeChange(index)
                                           }
                                       />
                                   }

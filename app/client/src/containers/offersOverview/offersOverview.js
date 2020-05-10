@@ -8,6 +8,7 @@ import {
     TableRow,
     TableHead,
     makeStyles,
+    Grid,
 } from '@material-ui/core';
 import { getAllOffers, getOffer } from '../../services/backend-rest-service';
 import PaddingLayout from '../../components/PaddingLayout';
@@ -34,6 +35,9 @@ const useStyles = makeStyles({
     // },
     // inputFormControl: {
     //     marginRight: 40,
+    // },
+    // table: {
+    //     flex: 1,
     // },
 });
 
@@ -157,6 +161,7 @@ const OffersOverview = (props) => {
                 handleClose={() => {
                     setOpen(false);
                 }}
+                key={selectedRow}
             />
         </PaddingLayout>
     );
