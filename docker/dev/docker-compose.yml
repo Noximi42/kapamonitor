@@ -49,15 +49,12 @@ services:
       - localdev
 
   website:
-    image: ${DOCKER_REGISTRY-}kapamonitor_website
+    image: nginx:alpine
     container_name: website
-    build:
-      context: ../../app/website
-      dockerfile: ../../docker/dev/website/Dockerfile
     volumes:
-      - ../../app/website:/app/
+      - ../../app/website/dist:/usr/share/nginx/html
     ports:
-      - "1313:1313"
+      - "1313:80"
     networks:
       - localdev
 
