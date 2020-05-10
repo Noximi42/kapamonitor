@@ -1,7 +1,14 @@
-FROM klakegg/hugo:ext-alpine as build
-WORKDIR /app
-COPY . .
-RUN hugo --config config-prod.toml
+FROM node:10
 
-FROM nginx:1.17.9-alpine
-COPY --from=build /target /usr/share/nginx/html/
+WORKDIR /usr/src/app
+
+COPY package.json ./
+COPY webpack*.js ./
+
+RUN npm install
+
+COPY . .
+
+RUN npm run start
+
+CMD [ "node", "server.js" ]
