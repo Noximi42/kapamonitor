@@ -1,0 +1,217 @@
+@import './app.scss';
+
+$marginTop: calc(30px + 9vw);
+
+.infoContainer {
+    margin-top: $marginTop;
+    justify-content: center;
+
+    .row {
+        max-width: 1300px;
+    }
+
+    .btn {
+        width: 200px;
+    }
+
+    .btn-primary:hover {
+        background-color: white;
+        color: $primary;
+    }
+
+    video {
+        height: 100%;
+    }
+}
+
+.advantageContainer {
+    margin-top: $marginTop;
+    
+    h2 {
+        margin-bottom: 4vw;
+    }
+    
+    .row {
+        max-width: 2000px;
+    }
+    
+    .advantageBlock {
+        .imageContainer {
+            @extend .mb-0;
+            height: 120px;
+        }
+
+        p {
+            @extend .mx-auto;
+            @extend .mb-5;
+            max-width: 300px;
+            margin-bottom: 70px;
+        }
+
+        span {
+            font-weight: 600;
+        }
+    }
+}
+
+.functionContainer {
+    margin-top: 10vw;
+
+    h3 {
+        margin-bottom: 60px;
+    }
+
+    .row {
+        max-width: 1750px;
+    }
+
+    .stepIndicatorContainer {
+        position: relative;
+
+        .stepIndicator {
+            position: absolute;
+            top: 48px;
+            left: 14px;
+            color: white;
+            font-size: 30px;
+            font-weight: 600;
+        }
+    }
+    
+    .functionBlock {
+        .imageContainer {
+            @extend .mb-0;
+            height: 120px;
+        }
+
+        h5 {
+            font-weight: 800 !important;
+            letter-spacing: 4px;
+        }
+
+        p {
+            @extend .mx-auto;
+            @extend .mb-5;
+            max-width: 250px;
+            margin-bottom: 70px;
+            font-size: 14px;
+        }
+    }
+
+    .nextStepIndicator {
+        font-size: 60px;
+    }
+
+    @include media-breakpoint-down(md) {
+        .nextStepIndicator {
+            margin-top: -30px;
+            margin-bottom: 30px;
+            transform: rotate(90deg);
+        }
+    }
+}
+
+.aboutUsContainer {
+    margin-top: $marginTop;
+
+    h2 {
+        margin-bottom: 4vw;
+    }
+
+    .aboutUsBlock {
+        
+        .imageContainer {
+            @extend .mb-3;
+            height: 120px;
+        }
+
+        h5 {
+            font-weight: 800 !important;
+            letter-spacing: 4px;
+        }
+
+        p {
+            @extend .mx-auto;
+            @extend .mb-5;
+            text-align: left;
+            max-width: 200px;
+            font-size: 14px;
+        }
+    }
+}
+
+.teamContainer {
+    margin-top: 10vw;
+    max-width: 1200px;
+
+    h2 {
+        padding-bottom: 40px;
+    }
+
+    .carousel {
+        overflow: hidden;
+        
+        .carousel-indicators li {
+            background-color: black;
+        }
+
+        .carousel-item-container {
+            margin-bottom: 50px;
+        }
+
+        .personContainer {
+            p {
+                max-width: 350px;
+                font-size: 14px;
+            }
+        }
+    
+        .personContainer-left {
+            padding-left: 3vw;
+            padding-right: 4vw;
+        }
+        .personContainer-right {
+            padding-left: 4vw;
+            padding-right: 3vw;
+        }
+    
+        .carousel-control-prev {
+            left: -40px;
+        }
+    
+        .carousel-control-next {
+            right: -40px;
+        }
+
+        .personContainer-single {
+            display: none;
+        }
+
+        @include media-breakpoint-down(sm) {
+            .carousel-control-prev {
+                left: 0;
+            }
+            .carousel-control-next {
+                right: 0;
+            }
+
+            .personContainer-single {
+                display: block;
+            }
+            .personContainer-double {
+                display: none;
+            }
+        }
+    }
+}
+
+.contactContainer {
+    margin-top: 10vw;
+    height: 200px;
+
+    a {
+        color: white;
+        font-size: 30px;
+        font-style: italic;
+    }
+}
