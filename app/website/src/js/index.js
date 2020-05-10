@@ -1,19 +1,60 @@
 // --- style ---
-import '../scss/app.scss';
 import '../scss/index.scss';
 
-// --- assets ---
-import '../assets/logo.png';
-import '../assets/responsibility.png';
-import '../assets/solutionEnabler.png';
+let breakPoints = {
+    xSmall: {
+      min: 0,
+      max: 575
+    },
+    small: {
+      min: 576,
+      max: 767
+    },
+    medium: {
+      min: 768,
+      max: 991
+    },
+    large: {
+      min: 992,
+      max: 1199
+    },
+    xLarge: {
+      min: 1200,
+      max: Infinity
+    }
+};
 
-import '../assets/team/timo.jpg'
-import '../assets/team/valentina.jpg'
-import '../assets/team/niroja.jpg'
-import '../assets/team/timo.jpg'
+const getBreakpoint = function(screenWidth) {
+    if (screenWidth < breakPoints.small.min) {
+        return "xs";
+    } else if (screenWidth < breakPoints.medium.min) {
+        return "sm";
+    } else if (screenWidth < breakPoints.large.min) {
+        return "md";
+    } else {
+        return "lg";
+    }
+}
 
+$(window).resize(function() {
+    handleCarouselResize();
+});
+$(window).on('load', function() { 
+    handleCarouselResize();
+});
 
-// --- scripts ---
-import $ from "jquery";
-
-$('.carousel').carousel();
+const handleCarouselResize = function() {
+    let size = getBreakpoint($(window).width());
+    
+    if (size != "xs" && size != "sm") {
+        $('#teamCarousel .carousel-item').each(function() {
+            if ($(this).find('.personContainer').length == 1) {
+                $(this).removeClass('carousel-item');
+            }
+        });
+    } else {
+        $('#teamCarousel .carousel-item-container').each(function() {
+            $(this).parent().addClass('carousel-item');
+        });
+    }
+}

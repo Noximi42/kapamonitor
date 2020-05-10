@@ -1,38 +1,26 @@
-const glob = require("glob");
-const pathLib = require("path");
+const webpack = require('webpack');
+const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-
-var htmlPages = glob.sync("./src/*.html").map((path) => {
-  var chunk = path.replace(".html", "").replace("./src/", "");
-
-  return new HtmlWebpackPlugin({
-    template: path,
-    filename: `pages/${chunk}.html`,
-    chunks: [chunk, "vendor"],
-    inject: true,
-  });
-});
+// const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
   entry: {
-    index: "./src/js/index.js",
+    app: "./src/js/app.js",
+    index: "./src/js/index.js"
   },
   output: {
-    filename: "js/[name]/[name].js",
-    chunkFilename: "js/[name].js",
-    path: pathLib.resolve(__dirname, "dist"),
+    filename: "js/[name].js",
+    path: path.resolve(__dirname, "dist"),
   },
   watch: true,
-  //   devServer: {
-  //     contentBase: pathLib.resolve(__dirname, 'dist', 'pages'),
-  //     compress: true,
-  //     port: 1313
-  //   },
   module: {
     rules: [
+    {
+        test: /\.html$/,
+        use: ['html-loader']
+    },
       {
-        test: /\.(png|svg|jpg|gif)$/,
+        test: /\.(png|svg|jpg|gif|mp4)$/,
         use: [
             {
                 loader: "file-loader",
@@ -68,11 +56,15 @@ module.exports = {
       },
     ],
   },
-  optimization: {
-    splitChunks: {
-      chunks: "all",
-      name: "vendor",
-    },
-  },
-  plugins: [].concat(htmlPages),
+  plugins: [
+    //new CleanWebpackPlugin(),
+    new webpack.ProvidePlugin({
+        $: 'jquery',
+        jQuery: 'jquery'
+      }),
+    new HtmlWebpackPlugin({
+        template: './src/pages/index.html',
+        filename: 'index.html',
+      }),
+  ]
 };
