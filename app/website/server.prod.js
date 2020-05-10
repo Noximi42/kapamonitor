@@ -11,4 +11,3 @@ const app = express();
 app.use(express.static('./dist/', {index: 'index.html'}))
 
 app.listen(PORT, HOST);
-//console.log(`Running on http://${HOST}:${PORT}`);

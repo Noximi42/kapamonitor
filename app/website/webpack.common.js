@@ -9,10 +9,10 @@ module.exports = {
   },
   module: {
     rules: [
-    {
-        test: /\.html$/,
-        use: ['html-loader']
-    },
+      {
+          test: /\.html$/,
+          use: ['html-loader']
+      },
       {
         test: /\.(png|svg|jpg|gif|mp4)$/,
         use: [
