@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Net;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace KapaMonitor.Application.Offers
 {
@@ -19,7 +20,7 @@ namespace KapaMonitor.Application.Offers
             _context = context;
         }
 
-        public async Task<(bool success, OfferViewModel? viewModel, RequestError? error)> Do(CreateOfferRequest request)
+        public async Task<(bool success, OfferGetModel? viewModel, RequestError? error)> Do(OfferCreateModel request)
         {
             (bool isValid, List<string> errors) = request.CheckValidity();
 
@@ -32,14 +33,12 @@ namespace KapaMonitor.Application.Offers
             if (!_context.Resources.Any(r => r.Id == request.ResourceId))
                 return (false, null, new RequestError(HttpStatusCode.BadRequest,  "resource not found."));
 
-
-
             Offer offer = new Offer
             {
                 Number = (float)request.Number!,
 
                 ContactInfoId = (int)request.ContactInfoId!,
-                LocationId = request.LocationId == 0 ? null : request.LocationId,
+                LocationId = request.LocationId,
                 ResourceId = (int)request.ResourceId!,
 
                 CreationDate = DateTime.Now,
@@ -56,32 +55,9 @@ namespace KapaMonitor.Application.Offers
                 return (false, null, new RequestError(HttpStatusCode.InternalServerError, ErrorMessages.DatabaseOperationFailed));
             }
 
-            return (true, new OfferViewModel(offer), null);
-        }
+            offer = await _context.Offers.Include(o => o.ContactInfo).Include(o => o.Resource).Include(o => o.Location).ThenInclude(l => l.Address).FirstAsync(o => o.Id == offer.Id);
 
-
-        public class CreateOfferRequest
-        {
-            public float? Number { get; set; }
-
-            public int? ContactInfoId { get; set; }
-            public int? LocationId { get; set; }
-            public int? ResourceId { get; set; }
-
-
-            public (bool isValid, List<string> errors) CheckValidity()
-            {
-                List<string> errors = new List<string>();
-
-                if (Number == null || Number <= 0)
-                    errors.Add("number has to be greater than 0.");
-                if (ContactInfoId == null || ContactInfoId <= 0)
-                    errors.Add("contactInfoId is required.");
-                if (ResourceId == null || ResourceId <= 0)
-                    errors.Add("resourceId is required.");
-
-                return (errors.Count == 0, errors);
-            }
+            return (true, new OfferGetModel(offer), null);
         }
     }
 }

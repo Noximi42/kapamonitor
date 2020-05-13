@@ -25,7 +25,7 @@ namespace KapaMonitor.Api.Controllers
         }
 
         /// <summary>
-        /// Returns a specific Offer
+        /// Returns a specific Offer and its dependencies
         /// </summary>
         /// <param name="id">The id of the Offer</param>
         /// <returns>The specified Offer</returns>
@@ -33,10 +33,10 @@ namespace KapaMonitor.Api.Controllers
         /// <response code="401">If the user is not logged in</response>
         /// <response code="404">If the Offer with the spezified id doesn't exist</response>
         [HttpGet("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OfferViewModel))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OfferGetModel))]
         public async Task<IActionResult> Get(int id)
         {
-            OfferViewModel? vm = await new GetOffer(_context).Do(id);
+            OfferGetModel? vm = await new GetOffer(_context).Do(id);
 
             if (vm == null)
                 return NotFound();
@@ -45,13 +45,13 @@ namespace KapaMonitor.Api.Controllers
         }
 
         /// <summary>
-        /// Returns all Offers
+        /// Returns all Offers and its dependencies
         /// </summary>
         /// <returns>All Offers</returns>
-        /// <response code="200">Returns all Offers as list</response>
+        /// <response code="200">Returns all Offers and its dependencies as list</response>
         /// <response code="401">If the user is not logged in</response>
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<OfferViewModel>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<OfferGetModel>))]
         public async Task<IActionResult> Get()
         {
             var vms = await new GetOffers(_context).Do();
@@ -78,10 +78,10 @@ namespace KapaMonitor.Api.Controllers
         /// <response code="401">If the user is not logged in</response>
         /// <response code="500">If the database operation failed unexpectedly</response>
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OfferViewModel))]
-        public async Task<IActionResult> Post([FromBody] CreateOfferRequest offer)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OfferGetModel))]
+        public async Task<IActionResult> Post([FromBody] OfferCreateModel offer)
         {
-            (bool success, OfferViewModel? vm, RequestError? error) = await new CreateOffer(_context).Do(offer);
+            (bool success, OfferGetModel? vm, RequestError? error) = await new CreateOffer(_context).Do(offer);
 
             if (!success && error != null)
                 return StatusCode((int)error.StatusCode, error.Errors);
@@ -114,10 +114,10 @@ namespace KapaMonitor.Api.Controllers
         /// <response code="401">If the user is not logged in</response>
         /// <response code="500">If the database operation failed unexpectedly</response>
         [HttpPut]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OfferViewModel))]
-        public async Task<IActionResult> Put([FromBody] OfferViewModel offer)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OfferGetModel))]
+        public async Task<IActionResult> Put([FromBody] OfferUpdateModel offer)
         {
-            (bool success, OfferViewModel? vm, RequestError? error) = await new UpdateOffer(_context).Do(offer);
+            (bool success, OfferGetModel? vm, RequestError? error) = await new UpdateOffer(_context).Do(offer);
 
             if (!success && error != null)
                 return StatusCode((int)error.StatusCode, error.Errors);

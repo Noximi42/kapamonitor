@@ -7,30 +7,27 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Net;
 
-namespace KapaMonitor.Application.ContactInfos
+namespace KapaMonitor.Application.Locations
 {
-    public class CreateContactInfo
+    public class CreateLocation
     {
         private readonly ApplicationDbContext _context;
 
-        public CreateContactInfo(ApplicationDbContext context)
+        public CreateLocation(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task<(bool success, ContactInfoGetModel? viewModel, RequestError? error)> Do(ContactInfoCreateModel request)
+        public async Task<(bool success, LocationGetModel? viewModel, RequestError? error)> Do(LocationCreateModel request)
         {
             (bool isValid, List<string> errors) = request.CheckValidity();
 
             if (!isValid)
                 return (false, null, new RequestError(HttpStatusCode.BadRequest,  errors));
 
-            ContactInfo contactInfo = new ContactInfo
+            Location location = new Location
             {
-                FirstName = request.FirstName!,
-                LastName = request.LastName!,
-                Email = request.Email!,
-                Phone = request.Phone,
+                Name = request.Name!,
 
                 Address = new Address
                 {
@@ -42,21 +39,18 @@ namespace KapaMonitor.Application.ContactInfos
                 },
             };
 
-            _context.Add(contactInfo);
+            _context.Add(location);
             try
             {
                 await _context.SaveChangesAsync();
             } 
             catch (Exception ex)
             {
-                await new ErrorLogging(_context).LogError(ErrorMessages.CreateContactInfo, ex, request);
+                await new ErrorLogging(_context).LogError(ErrorMessages.CreateLocation, ex, request);
                 return (false, null, new RequestError(HttpStatusCode.InternalServerError, ErrorMessages.DatabaseOperationFailed));
             }
 
-            return (true, new ContactInfoGetModel(contactInfo), null);
+            return (true, new LocationGetModel(location), null);
         }
-
-
-        
     }
 }

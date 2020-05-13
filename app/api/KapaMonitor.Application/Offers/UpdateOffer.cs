@@ -19,7 +19,7 @@ namespace KapaMonitor.Application.Offers
             _context = context;
         }
 
-        public async Task<(bool success, OfferViewModel? viewModel, RequestError? error)> Do(OfferViewModel vm)
+        public async Task<(bool success, OfferGetModel? viewModel, RequestError? error)> Do(OfferUpdateModel vm)
         {
             (bool isValid, List<string> errors) = vm.CheckValidity();
 
@@ -37,7 +37,7 @@ namespace KapaMonitor.Application.Offers
             if (offer == null)
                 return (false, null, new RequestError(HttpStatusCode.BadRequest, "offer not found."));
 
-            offer.Number = (int)vm.Number!;
+            offer.Number = (float)vm.Number!;
             if (vm.ContactInfoId > 0)
                 offer.ContactInfoId = (int)vm.ContactInfoId;
             offer.LocationId = vm.LocationId;
@@ -56,7 +56,7 @@ namespace KapaMonitor.Application.Offers
                 return (false, null, new RequestError(HttpStatusCode.InternalServerError, ErrorMessages.DatabaseOperationFailed));
             }
 
-            return (true, new OfferViewModel(offer), null);
+            return (true, new OfferGetModel(offer), null);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace KapaMonitor.Application.ContactInfos
             _context = context;
         }
 
-        public async Task<(bool success, ContactInfoViewModel? viewModel, RequestError? error)> Do(ContactInfoViewModel vm)
+        public async Task<(bool success, ContactInfoGetModel? viewModel, RequestError? error)> Do(ContactInfoUpdateModel vm)
         {
             (bool isValid, List<string> errors) requestValidity = vm.CheckValidity();
 
@@ -45,7 +45,7 @@ namespace KapaMonitor.Application.ContactInfos
                 return (false, null, new RequestError(HttpStatusCode.InternalServerError, ErrorMessages.DatabaseOperationFailed));
             }
 
-            return (true, new ContactInfoViewModel(contactInfo), null);
+            return (true, new ContactInfoGetModel(contactInfo), null);
         }
     }
 }
