@@ -45,10 +45,10 @@ namespace KapaMonitor.Api.Controllers
         }
 
         /// <summary>
-        /// Returns all Offers and its dependencies
+        /// Returns all Offers and their dependencies
         /// </summary>
         /// <returns>All Offers</returns>
-        /// <response code="200">Returns all Offers and its dependencies as list</response>
+        /// <response code="200">Returns all Offers and their dependencies as list</response>
         /// <response code="401">If the user is not logged in</response>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<OfferGetModel>))]
