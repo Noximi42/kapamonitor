@@ -1,0 +1,40 @@
+version: '3.5'
+
+networks:
+  api_dev_network:
+    name: api_dev_network
+    driver: bridge
+
+services:
+  kapamonitor.api:
+    image: ${DOCKER_REGISTRY-}kapamonitor_dev_api
+    container_name: api_dev
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    build:
+      context: .
+      dockerfile: KapaMonitor.Api/Dockerfile
+    depends_on:
+      - db-server
+    ports:
+      - "5000:80"
+    networks:
+      - api_dev_network
+
+  db-server:
+    image: postgres:latest
+    container_name: db-server
+    volumes:
+      - api_dev_db_volume:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: "sa"
+      POSTGRES_PASSWORD: "Dev123456"
+      POSTGRES_DB: "KapaMonitor"
+    ports:
+      - "5432"
+    restart: always
+    networks:
+      - api_dev_network
+
+volumes:
+  api_dev_db_volume:

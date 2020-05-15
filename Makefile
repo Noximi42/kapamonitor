@@ -67,6 +67,7 @@ urls: ## Print Project URIs
 	echo -e "You can access your project at the following URLS:"
 	echo -e "---------------------------------------------------"
 	echo -e ""
+	echo -e "${bold}Website${normal}         http://localhost:1313/"
 	echo -e "${bold}Frontend${normal}        http://localhost:3000/"
 	echo -e "${bold}API${normal}             http://localhost:5000/"
 	echo -e "${bold}API Swagger${normal}     http://localhost:5000/swagger/index.html"

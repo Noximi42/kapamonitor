@@ -7,6 +7,7 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <title></title>
+    <link rel="icon" href="/assets/favIcon.ico">
   </head>
   <body class="blockTransitions">
     <div class="fixed-top bg-white">
@@ -34,7 +35,7 @@
                 <a id="teamLink" class="nav-link" href="#">Team</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Kontakt</a>
+                <a class="nav-link" href="https://app.kapamonitor.de">Login</a>
               </li>
             </ul>
           </div>
@@ -62,8 +63,8 @@
         </div>
         <div class="col-lg-6 p-5 align-self-center">
           <div class="d-flex">
-            <video c controls>
-              <source src="../assets/kapamonitor.mp4" type="video/mp4">
+            <video controls preload="metadata">
+              <source src="https://kapamonitor-public.s3.eu-central-1.amazonaws.com/kapamonitor.mp4" type="video/mp4">
             </video> 
           </div>
         </div>
@@ -264,7 +265,7 @@
 
     <div class="teamContainer text-center mx-auto">
       <h2 class="mt-5">Das Team</h2>
-      <div id="teamCarousel" class="carousel slide" data-ride="carousel">
+      <div id="teamCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
         <ol class="carousel-indicators">
           <li data-target="#teamCarousel" data-slide-to="0" class="active"></li>
           <li data-target="#teamCarousel" data-slide-to="1"></li>
@@ -272,7 +273,7 @@
           <li class="personContainer-single" data-target="#teamCarousel" data-slide-to="1"></li>
         </ol>
         <div class="carousel-inner">
-          <div class="carousel-item asdf active">
+          <div class="carousel-item active">
             <!-- First carousel item -->
             <div class="carousel-item-container d-flex flex-row justify-content-center">
               <div class="personContainer personContainer-left m-4 text-center">
@@ -293,7 +294,7 @@
               </div>
             </div>
           </div>
-          <div class="carousel-item asdf">
+          <div class="carousel-item">
             <!-- Second carousel item -->
             <div class="carousel-item-container d-flex flex-row justify-content-center">
               <div class="personContainer personContainer-single m-4 text-center">
@@ -322,7 +323,7 @@
               </div>
             </div>
           </div>
-          <div class="carousel-item asdf">
+          <div class="carousel-item">
             <!-- third carousel item -->
             <div class="carousel-item-container d-flex flex-row justify-content-center">
               <div class="personContainer personContainer-left personContainer-single m-4 text-center">
@@ -335,7 +336,7 @@
               </div>
             </div>
           </div>
-          <div class="carousel-item asdf">
+          <div class="carousel-item">
             <!-- 4th carousel item -->
             <div class="carousel-item-container d-flex flex-row justify-content-center">
               <div class="personContainer personContainer-right personContainer-single m-4 text-center">

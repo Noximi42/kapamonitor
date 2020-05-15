@@ -15,9 +15,9 @@ namespace KapaMonitor.Application.Offers
             _context = context;
         }
 
-        public async Task<IEnumerable<OfferViewModel>> Do()
+        public async Task<IEnumerable<OfferGetModel>> Do()
         {
-            return await _context.Offers.Select(o => new OfferViewModel(o)).ToListAsync();
+            return await _context.Offers.Include(o => o.ContactInfo).Include(o => o.Resource).Include(o => o.Location).ThenInclude(l => l.Address).Select(o => new OfferGetModel(o)).ToListAsync();
         }
     }
 }

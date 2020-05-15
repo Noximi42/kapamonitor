@@ -13,14 +13,14 @@ namespace KapaMonitor.Application.Offers
             _context = context;
         }
 
-        public async Task<OfferViewModel?> Do(int id)
+        public async Task<OfferGetModel?> Do(int id)
         {
-            var offer = await _context.Offers.FirstOrDefaultAsync(o => o.Id == id);
+            var offer = await _context.Offers.Include(o => o.ContactInfo).Include(o => o.Resource).Include(o => o.Location).ThenInclude(l => l.Address).FirstOrDefaultAsync(o => o.Id == id);
 
             if (offer == null)
                 return null;
 
-            return new OfferViewModel(offer);
+            return new OfferGetModel(offer);
         }
     }
 }

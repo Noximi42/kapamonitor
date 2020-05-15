@@ -33,10 +33,10 @@ namespace KapaMonitor.Api.Controllers
         /// <response code="401">If the user is not logged in</response>
         /// <response code="404">If the ContactInfo with the spezified id doesn't exist</response>
         [HttpGet("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ContactInfoViewModel))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ContactInfoGetModel))]
         public async Task<IActionResult> Get(int id)
         {
-            ContactInfoViewModel? vm = await new GetContactInfo(_context).Do(id);
+            ContactInfoGetModel? vm = await new GetContactInfo(_context).Do(id);
 
             if (vm == null)
                 return NotFound();
@@ -63,10 +63,10 @@ namespace KapaMonitor.Api.Controllers
         /// <response code="401">If the user is not logged in</response>
         /// <response code="500">If the database operation failed unexpectedly</response>
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ContactInfoViewModel))]
-        public async Task<IActionResult> Post([FromBody] CreateContactInfoRequest contactInfo)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ContactInfoGetModel))]
+        public async Task<IActionResult> Post([FromBody] ContactInfoCreateModel contactInfo)
         {
-            (bool success, ContactInfoViewModel? vm, RequestError? error) = await new CreateContactInfo(_context).Do(contactInfo);
+            (bool success, ContactInfoGetModel? vm, RequestError? error) = await new CreateContactInfo(_context).Do(contactInfo);
 
             if (!success && error != null)
                 return StatusCode((int)error.StatusCode, error.Errors);
@@ -93,10 +93,10 @@ namespace KapaMonitor.Api.Controllers
         /// <response code="401">If the user is not logged in</response>
         /// <response code="500">If the database operation failed unexpectedly</response>
         [HttpPut]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ContactInfoViewModel))]
-        public async Task<IActionResult> Put([FromBody] ContactInfoViewModel contactInfo)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ContactInfoGetModel))]
+        public async Task<IActionResult> Put([FromBody] ContactInfoUpdateModel contactInfo)
         {
-            (bool success, ContactInfoViewModel? vm, RequestError? error) = await new UpdateContactInfo(_context).Do(contactInfo);
+            (bool success, ContactInfoGetModel? vm, RequestError? error) = await new UpdateContactInfo(_context).Do(contactInfo);
 
             if (!success && error != null)
                 return StatusCode((int)error.StatusCode, error.Errors);
