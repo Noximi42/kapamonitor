@@ -16,15 +16,9 @@ import { Close } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
 import { exampleData, simulateHTTPRequest } from '../../__MOCK__/mockData';
 import { LoadingDialog } from './LoadingDialog';
+import {getOffer} from '../../services/backend-rest-service';
 
-const useStyles = makeStyles({
-    // checkboxFormControl: {
-    //     marginRight: 100,
-    // },
-    // inputFormControl: {
-    //     marginRight: 40,
-    // },
-});
+const useStyles = makeStyles({});
 
 export const OfferDetails = (props) => {
     const { t } = useTranslation();
@@ -41,7 +35,10 @@ export const OfferDetails = (props) => {
                 }
             ); //getAllOffers();
             setOffer(res[0]);
+            // const res = await getOffer(props.row);
+            // setOffer(res.data);
             setLoading(false);
+            // console.log('Loading Details', props)
 
             // TODO: Wenn der Endpunkt im Backend fertig ist.
             // if (res.status === 200) {
@@ -55,7 +52,7 @@ export const OfferDetails = (props) => {
             // }
         }
         fetchRows();
-    });
+    }, []);
 
     return loading ? (
         <LoadingDialog open={true}></LoadingDialog>

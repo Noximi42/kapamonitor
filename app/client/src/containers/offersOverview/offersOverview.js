@@ -36,9 +36,6 @@ const useStyles = makeStyles({
     // inputFormControl: {
     //     marginRight: 40,
     // },
-    // table: {
-    //     flex: 1,
-    // },
 });
 
 const getCellContent = (row, cellId) => {
@@ -94,7 +91,7 @@ const OffersOverview = (props) => {
 
     useEffect(() => {
         async function fetchRows() {
-            const res = await simulateHTTPRequest(exampleData); //getAllOffers();
+            const res = await simulateHTTPRequest(exampleData);
 
             const mockOffers = res.map((offer) => ({
                 ...offer,
@@ -122,10 +119,10 @@ const OffersOverview = (props) => {
         setSelectedRow(ikId);
     }
     return (
-        <PaddingLayout>
-            <TableContainer component={Paper}>
+        <PaddingLayout className={classes.root}>
+            <TableContainer component={Paper} className="table">
                 <OfferSearchBox />
-                <Table className={classes.table}>
+                <Table>
                     <TableHead>
                         <TableRow>
                             {headCells.map((cell, index) => (
@@ -155,6 +152,7 @@ const OffersOverview = (props) => {
                     </TableBody>
                 </Table>
             </TableContainer>
+            {open && 
             <OfferDetails
                 open={open}
                 row={selectedRow}
@@ -162,7 +160,7 @@ const OffersOverview = (props) => {
                     setOpen(false);
                 }}
                 key={selectedRow}
-            />
+            />}
         </PaddingLayout>
     );
 };
