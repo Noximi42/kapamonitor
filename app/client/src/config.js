@@ -1,6 +1,6 @@
 const prod = {
     API_URL:
-        'http://ec2-3-121-86-158.eu-central-1.compute.amazonaws.com:5000/api',
+        'https://api.kapamonitor.de/api',
 
     firebaseConfig: {
         apiKey: 'AIzaSyCtB1YY1mgxU9M9-itFAw1GZoJ_NRuMjO0',
