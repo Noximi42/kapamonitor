@@ -2,9 +2,9 @@
 
 namespace KapaMonitor.Application.Certificates
 {
-    public class CertificateViewModel
+    public class CertificateModel
     {
-        public CertificateViewModel(Certificate certificate)
+        public CertificateModel(Certificate certificate)
         {
             Id = certificate.Id;
             Name = certificate.Name;
@@ -12,7 +12,12 @@ namespace KapaMonitor.Application.Certificates
         }
 
         public int Id { get; set; }
-        public string? Name { get; set; }
+        public string Name { get; set; }
         public int ResourceId { get; set; }
+    }
+
+    public class CertificatGetModel : CertificateModel
+    {
+        public CertificatGetModel(Certificate certificate) : base(certificate) { }
     }
 }

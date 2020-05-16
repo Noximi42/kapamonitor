@@ -38,7 +38,7 @@ namespace KapaMonitor.Application.Offers
 
             ContactInfo = new ContactInfoGetModel(offer.ContactInfo);
             Location = offer.Location == null ? null : new LocationGetModel(offer.Location);
-            Resource = new ResourceViewModel(offer.Resource);
+            Resource = new ResourceGetModel(offer.Resource);
 
             CreationDate = offer.CreationDate;
             LastChangedDate = offer.LastChangedDate;
@@ -51,7 +51,7 @@ namespace KapaMonitor.Application.Offers
 
         public ContactInfoGetModel ContactInfo { get; set; }
         public LocationGetModel? Location { get; set; }
-        public ResourceViewModel Resource { get; set; }
+        public ResourceGetModel Resource { get; set; }
     }
 
     public class OfferCreateModel : OfferModel

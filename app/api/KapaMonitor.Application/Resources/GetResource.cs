@@ -17,14 +17,14 @@ namespace KapaMonitor.Application.Resources
             _context = context;
         }
 
-        public async Task<ResourceViewModel?> Do(int id)
+        public async Task<ResourceGetModel?> Do(int id)
         {
-            var resource = await _context.Resources.FirstOrDefaultAsync(r => r.Id == id);
+            var resource = await _context.Resources.Include(r => r.Certificates).FirstOrDefaultAsync(r => r.Id == id);
 
             if (resource == null)
                 return null;
 
-            return new ResourceViewModel(resource);
+            return new ResourceGetModel(resource);
         }
     }
 }

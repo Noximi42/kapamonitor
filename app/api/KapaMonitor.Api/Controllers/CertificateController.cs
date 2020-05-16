@@ -4,6 +4,8 @@ using KapaMonitor.Database;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using KapaMonitor.Application.Certificates;
+using System.Collections.Generic;
+using KapaMonitor.Application.Resources;
 
 namespace KapaMonitor.Api.Controllers
 {
@@ -30,15 +32,30 @@ namespace KapaMonitor.Api.Controllers
         /// <response code="401">If the user is not logged in</response>
         /// <response code="404">If the Certificate with the spezified id doesn't exist</response>
         [HttpGet("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CertificateViewModel))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CertificatGetModel))]
         public async Task<IActionResult> Get(int id)
         {
-            CertificateViewModel? vm = await new GetCertificate(_context).Do(id);
+            CertificatGetModel? vm = await new GetCertificate(_context).Do(id);
 
             if (vm == null)
                 return NotFound();
 
             return Ok(vm);
+        }
+
+        /// <summary>
+        /// Returns all Certificates
+        /// </summary>
+        /// <returns>All Certificates</returns>
+        /// <response code="200">Returns all Certificates as list</response>
+        /// <response code="401">If the user is not logged in</response>
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CertificatGetModel>))]
+        public async Task<IActionResult> Get()
+        {
+            var vms = await new GetCertificates(_context).Do();
+
+            return Ok(vms);
         }
     }
 }
