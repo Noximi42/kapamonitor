@@ -55,7 +55,10 @@ namespace KapaMonitor.Application.Offers
                 return (false, null, new RequestError(HttpStatusCode.InternalServerError, ErrorMessages.DatabaseOperationFailed));
             }
 
-            offer = await _context.Offers.Include(o => o.ContactInfo).Include(o => o.Resource).Include(o => o.Location).ThenInclude(l => l.Address).FirstAsync(o => o.Id == offer.Id);
+            offer = await _context.Offers.Include(o => o.ContactInfo)
+                                         .Include(o => o.Resource).ThenInclude(r => r.Certificates)
+                                         .Include(o => o.Location).ThenInclude(l => l.Address)
+                                         .FirstAsync(o => o.Id == offer.Id);
 
             return (true, new OfferGetModel(offer), null);
         }
