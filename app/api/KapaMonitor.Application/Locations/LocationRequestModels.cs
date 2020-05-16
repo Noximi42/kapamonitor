@@ -52,6 +52,7 @@ namespace KapaMonitor.Application.Locations
 
     public class LocationCreateModel : LocationModel
     {
+        public LocationCreateModel() { }
         public LocationCreateModel(Location location) : base(location) { }
     }
 
