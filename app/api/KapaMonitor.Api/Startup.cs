@@ -63,9 +63,9 @@ namespace KapaMonitor.Api
                     builder =>
                     {
                         builder.WithOrigins()
-                            .AllowAnyOrigin()
-                           .AllowAnyMethod()
-                           .AllowAnyHeader();
+                               .AllowAnyOrigin()
+                               .AllowAnyMethod()
+                               .AllowAnyHeader();
                     });
                 } 
                 else
@@ -73,9 +73,10 @@ namespace KapaMonitor.Api
                     options.AddPolicy(CorsPolicy,
                     builder =>
                     {
-                        builder.WithOrigins("http://ec2-3-121-86-158.eu-central-1.compute.amazonaws.com")
-                           .AllowAnyMethod()
-                           .AllowAnyHeader();
+                        builder.SetIsOriginAllowedToAllowWildcardSubdomains()
+                               .WithOrigins("https://*.kapamonitor.de")
+                               .AllowAnyMethod()
+                               .AllowAnyHeader();
                     });
                 }
             });
