@@ -86,3 +86,11 @@ export const exampleData = [
         ikId: 'Tomaten',
     },
 ];
+
+export function simulateHTTPRequest(object) {
+    return new Promise(function (resolve, reject) {
+        setTimeout(function () {
+            resolve(object);
+        }, 1000);
+    });
+}

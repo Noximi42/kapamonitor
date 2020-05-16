@@ -1,63 +1,49 @@
 import React, { useEffect } from 'react';
-import TableContainer from '@material-ui/core/TableContainer';
-import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
 import {
+    TableContainer,
+    Paper,
     TableCell,
-    Typography,
-    FormControl,
-    FormLabel,
-    FormGroup,
-    Checkbox,
-    Input,
-    InputLabel,
+    TableBody,
+    Table,
+    TableRow,
+    TableHead,
+    makeStyles,
+    Grid,
 } from '@material-ui/core';
-import TableRow from '@material-ui/core/TableRow';
-import TableHead from '@material-ui/core/TableHead';
-import makeStyles from '@material-ui/core/styles/makeStyles';
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogActions from '@material-ui/core/DialogActions';
-import Button from '@material-ui/core/Button';
-import { getAllLocations } from '../../services/backend-rest-service';
+import { getAllOffers, getOffer } from '../../services/backend-rest-service';
 import PaddingLayout from '../../components/PaddingLayout';
-import { HospitalDetail } from '../../components/HospitalDetail';
-import { setRawLocations } from '../../store/leaflet/actions';
 import { connect } from 'react-redux';
-import Box from '@material-ui/core/Box';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { useTranslation } from 'react-i18next';
+import {
+    setOffers,
+    updateOffers,
+    setSearchFilter,
+} from '../../store/offers/actions';
+import { OfferSearchBox } from './OfferSearchBox';
+import { OfferDetails } from './OfferDetails';
 
-const useStyles = makeStyles({
-    table: {
-        minWidth: 650,
-    },
-    tableRow: {
-        cursor: 'pointer',
-    },
-    checkboxFormControl: {
-        marginRight: 100,
-    },
-    inputFormControl: {
-        marginRight: 40,
-    },
-});
+const useStyles = makeStyles({});
 
-const getCellContent = (row, cellId) => {
+const getCellContent = (item, cellId) => {
     switch (cellId) {
         case 'resource':
-            return `Handschuhe`;
+            return item.resource.name;
             break;
         case 'amount':
-            return `${row.capacity}`;
+            return item.number;
+            break;
+        case 'postCode':
+            return item.location ? item.location.address.zipCode : '-';
+            break;
+        case 'location':
+            return item.location ? item.location.address.city : '-';
             break;
         default:
-            return row[cellId];
+            return '-';
     }
 };
 
-const Dashboard = (props) => {
+const OffersOverview = (props) => {
     const { t } = useTranslation();
     const classes = useStyles();
 
@@ -76,23 +62,32 @@ const Dashboard = (props) => {
             numberic: true,
         },
         {
+            id: 'price',
+            label: t('pages.offerOverview.table.price'),
+            numberic: true,
+        },
+        {
             id: 'postCode',
             label: t('pages.offerOverview.table.postcode'),
+            numberic: true,
+        },
+        {
+            id: 'location',
+            label: t('pages.offerOverview.table.location'),
             numberic: true,
         },
     ];
 
     useEffect(() => {
         async function fetchRows() {
-            const res = await getAllLocations();
+            const res = await getAllOffers();
 
             if (res.status === 200) {
                 if (res.data.length > 0) {
-                    const mockCapacity = res.data.map((location) => ({
-                        ...location,
-                        capacity: Math.floor(Math.random() * 100),
+                    const offers = res.data.map((offer) => ({
+                        ...offer,
                     }));
-                    props.setRawLocations(mockCapacity);
+                    props.setOffers(offers);
                 }
             }
         }
@@ -100,78 +95,36 @@ const Dashboard = (props) => {
         fetchRows();
     }, []);
 
-    function handleClickOpen(index) {
+    function handleClickOpen(ikId) {
         setOpen(true);
-        setSelectedRow(index);
+        setSelectedRow(ikId);
     }
-    function handleFilterTypeChange(index) {
-        // handle resource selected/deselected in filter
-    }
-    const handleClose = () => {
-        setOpen(false);
-    };
     return (
-        <PaddingLayout>
-            <TableContainer component={Paper}>
-                <Box component="div" m={2}>
-                    <FormControl className={classes.checkboxFormControl}>
-                        <FormLabel component="legend">Filter</FormLabel>
-                        <FormGroup>
-                            {props.rawResources
-                                ? props.rawResources.map((resource, index) => (
-                                      <FormControlLabel
-                                          control={
-                                              <Checkbox
-                                                  name={resource.id}
-                                                  defaultChecked={true}
-                                                  onChange={() =>
-                                                      handleFilterTypeChange(
-                                                          index
-                                                      )
-                                                  }
-                                              />
-                                          }
-                                          label={resource.name}
-                                      />
-                                  ))
-                                : null}
-                        </FormGroup>
-                    </FormControl>
-                    <FormControl className={classes.inputFormControl}>
-                        <InputLabel htmlFor="postCode">
-                            {t('pages.offerOverview.postcode')}
-                        </InputLabel>
-                        <Input id="postCode" name="postCode" />
-                    </FormControl>
-                    <FormControl className={classes.inputFormControl}>
-                        <InputLabel htmlFor="radius">
-                            {t('pages.offerOverview.distance')}
-                        </InputLabel>
-                        <Input id="radius" name="radius" />
-                    </FormControl>
-                </Box>
-                <Table className={classes.table}>
+        <PaddingLayout className={classes.root}>
+            <TableContainer component={Paper} className="table">
+                <OfferSearchBox />
+                <Table>
                     <TableHead>
                         <TableRow>
-                            {headCells.map((cell) => (
-                                <TableCell>
+                            {headCells.map((cell, index) => (
+                                <TableCell key={index}>
                                     <strong>{cell.label}</strong>
                                 </TableCell>
                             ))}
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {props.rawLocations
-                            ? props.rawLocations.map((row, index) => (
+                        {props.offers
+                            ? props.offers.map((item, index) => (
                                   <TableRow
-                                      key={row.id}
-                                      onClick={() => handleClickOpen(index)}
+                                      key={item.id}
+                                      onClick={() => handleClickOpen(item.id)}
                                       hover={true}
                                       className={classes.tableRow}
                                   >
-                                      {headCells.map((cell) => (
-                                          <TableCell>
-                                              {getCellContent(row, cell.id)}
+                                      {headCells.map((cell, index) => (
+                                          <TableCell key={'tableCell-' + index}>
+                                              {getCellContent(item, cell.id)}
                                           </TableCell>
                                       ))}
                                   </TableRow>
@@ -180,52 +133,28 @@ const Dashboard = (props) => {
                     </TableBody>
                 </Table>
             </TableContainer>
-            <Dialog
-                open={open}
-                onClose={handleClose}
-                fullWidth={true}
-                maxWidth="md"
-            >
-                {props.rawLocations ? (
-                    <>
-                        <DialogTitle>
-                            {props.rawLocations[selectedRow] &&
-                                props.rawLocations[selectedRow].title}
-                        </DialogTitle>
-                        <HospitalDetail
-                            location={props.rawLocations[selectedRow]}
-                        ></HospitalDetail>
-                        <DialogActions>
-                            <Button onClick={handleClose} color="primary">
-                                Ok
-                            </Button>
-                        </DialogActions>
-                    </>
-                ) : null}
-            </Dialog>
+            {open && (
+                <OfferDetails
+                    open={open}
+                    row={selectedRow}
+                    handleClose={() => {
+                        setOpen(false);
+                    }}
+                    key={selectedRow}
+                />
+            )}
         </PaddingLayout>
     );
 };
 
 const mapStateToProps = (state) => ({
-    rawLocations: state.leaflet.rawLocations,
-    rawResources: [
-        //hard coded for debug purposes
-        {
-            id: 'handschuhe',
-            name: 'Handschuhe',
-            selected: true,
-        },
-        {
-            id: 'atemmasken',
-            name: 'Atemmasken',
-            selected: true,
-        },
-    ],
+    offers: state.offers.filteredOffers,
 });
 
 const mapDispatchToProps = {
-    setRawLocations,
+    setOffers,
+    updateOffers,
+    setSearchFilter,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(OffersOverview);

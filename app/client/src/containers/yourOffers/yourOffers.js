@@ -20,17 +20,9 @@ import {
     getOffer,
 } from '../../services/backend-rest-service';
 import { useTranslation } from 'react-i18next';
-import { exampleData } from '../../__MOCK__/mockData';
+import { exampleData, simulateHTTPRequest } from '../../__MOCK__/mockData';
 
 const useStyles = makeStyles((theme) => ({}));
-
-function simulateHTTPRequest() {
-    return new Promise(function (resolve, reject) {
-        setTimeout(function () {
-            resolve(exampleData);
-        }, 5000);
-    });
-}
 
 const YourOffers = (props) => {
     const { t } = useTranslation();
@@ -42,7 +34,7 @@ const YourOffers = (props) => {
 
     useEffect(() => {
         async function fetchData() {
-            let res = await simulateHTTPRequest()
+            let res = await simulateHTTPRequest(exampleData)
                 .then((data) => {
                     console.log('Fetch completed');
                     const extendedData = data.map((v) => ({
