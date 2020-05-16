@@ -4,6 +4,8 @@ using KapaMonitor.Database;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using KapaMonitor.Application.Resources;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace KapaMonitor.Api.Controllers
 {
@@ -30,15 +32,27 @@ namespace KapaMonitor.Api.Controllers
         /// <response code="401">If the user is not logged in</response>
         /// <response code="404">If the Resource with the spezified id doesn't exist</response>
         [HttpGet("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResourceViewModel))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResourceGetModel))]
         public async Task<IActionResult> Get(int id)
         {
-            ResourceViewModel? vm = await new GetResource(_context).Do(id);
-
-            if (vm == null)
-                return NotFound();
+            var vm = await new GetResource(_context).Do(id);
 
             return Ok(vm);
+        }
+
+        /// <summary>
+        /// Returns all Resources
+        /// </summary>
+        /// <returns>All Resources</returns>
+        /// <response code="200">Returns all Resources as list</response>
+        /// <response code="401">If the user is not logged in</response>
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ResourceGetModel>))]
+        public async Task<IActionResult> Get()
+        {
+            var vms = await new GetResources(_context).Do();
+
+            return Ok(vms);
         }
     }
 }
