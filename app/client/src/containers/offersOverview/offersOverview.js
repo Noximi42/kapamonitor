@@ -21,37 +21,26 @@ import {
 } from '../../store/offers/actions';
 import { OfferSearchBox } from './OfferSearchBox';
 import { OfferDetails } from './OfferDetails';
-import { exampleData, simulateHTTPRequest } from '../../__MOCK__/mockData';
 
-const useStyles = makeStyles({
-    // table: {
-    //     minWidth: 650,
-    // },
-    // tableRow: {
-    //     cursor: 'pointer',
-    // },
-    // checkboxFormControl: {
-    //     marginRight: 100,
-    // },
-    // inputFormControl: {
-    //     marginRight: 40,
-    // },
-});
+const useStyles = makeStyles({});
 
-const getCellContent = (row, cellId) => {
-    // console.log('row', row);
-    // console.log('cellId', cellId);
-    return row.ikId;
-    // switch (cellId) {
-    //     case 'resource':
-    //         return `Handschuhe`;
-    //         break;
-    //     case 'amount':
-    //         return `${row.capacity}`;
-    //         break;
-    //     default:
-    //         return row[cellId];
-    // }
+const getCellContent = (item, cellId) => {
+    switch (cellId) {
+        case 'resource':
+            return item.resource.name;
+            break;
+        case 'amount':
+            return item.number;
+            break;
+        case 'postCode':
+            return item.location ? item.location.address.zipCode : '-';
+            break;
+        case 'location':
+            return item.location ? item.location.address.city : '-';
+            break;
+        default:
+            return '-';
+    }
 };
 
 const OffersOverview = (props) => {
@@ -91,24 +80,16 @@ const OffersOverview = (props) => {
 
     useEffect(() => {
         async function fetchRows() {
-            const res = await simulateHTTPRequest(exampleData);
+            const res = await getAllOffers();
 
-            const mockOffers = res.map((offer) => ({
-                ...offer,
-                capacity: Math.floor(Math.random() * 100),
-            }));
-            props.setOffers(mockOffers);
-
-            // TODO: Wenn der Endpunkt im Backend fertig ist.
-            // if (res.status === 200) {
-            //     if (res.data.length > 0) {
-            //         const mockOffers = res.data.map((offer) => ({
-            //             ...offer,
-            //             capacity: Math.floor(Math.random() * 100),
-            //         }));
-            //         props.setOffers(mockOffers);
-            //     }
-            // }
+            if (res.status === 200) {
+                if (res.data.length > 0) {
+                    const offers = res.data.map((offer) => ({
+                        ...offer,
+                    }));
+                    props.setOffers(offers);
+                }
+            }
         }
 
         fetchRows();
@@ -134,16 +115,16 @@ const OffersOverview = (props) => {
                     </TableHead>
                     <TableBody>
                         {props.offers
-                            ? props.offers.map((row, index) => (
+                            ? props.offers.map((item, index) => (
                                   <TableRow
-                                      key={row.id}
-                                      onClick={() => handleClickOpen(row.ikId)}
+                                      key={item.id}
+                                      onClick={() => handleClickOpen(item.id)}
                                       hover={true}
                                       className={classes.tableRow}
                                   >
                                       {headCells.map((cell, index) => (
                                           <TableCell key={'tableCell-' + index}>
-                                              {getCellContent(row, cell.id)}
+                                              {getCellContent(item, cell.id)}
                                           </TableCell>
                                       ))}
                                   </TableRow>
@@ -152,34 +133,19 @@ const OffersOverview = (props) => {
                     </TableBody>
                 </Table>
             </TableContainer>
-            {open && 
-            <OfferDetails
-                open={open}
-                row={selectedRow}
-                handleClose={() => {
-                    setOpen(false);
-                }}
-                key={selectedRow}
-            />}
+            {open && (
+                <OfferDetails
+                    open={open}
+                    row={selectedRow}
+                    handleClose={() => {
+                        setOpen(false);
+                    }}
+                    key={selectedRow}
+                />
+            )}
         </PaddingLayout>
     );
 };
-
-// const mapStateToProps = (state) => ({
-//     rawResources: [
-//         //hard coded for debug purposes
-//         {
-//             id: 'handschuhe',
-//             name: 'Handschuhe',
-//             selected: true,
-//         },
-//         {
-//             id: 'atemmasken',
-//             name: 'Atemmasken',
-//             selected: true,
-//         },
-//     ],
-// });
 
 const mapStateToProps = (state) => ({
     offers: state.offers.filteredOffers,

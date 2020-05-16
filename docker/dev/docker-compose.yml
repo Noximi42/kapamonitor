@@ -47,7 +47,7 @@ services:
       POSTGRES_PASSWORD: "Dev123456"
       POSTGRES_DB: "KapaMonitor"
     ports:
-      - "5432"
+      - "5432:5432"
     restart: always
     networks:
       - localdev
