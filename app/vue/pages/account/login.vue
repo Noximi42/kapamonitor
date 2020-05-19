@@ -29,6 +29,14 @@
         </v-form>
       </v-card-text>
       <v-card-actions>
+        <v-btn
+          color="primary"
+          text
+          small
+          to="/account/register"
+        >
+          Registrieren
+        </v-btn>
         <v-spacer />
         <v-btn
           color="primary"

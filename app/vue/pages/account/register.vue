@@ -1,9 +1,13 @@
 <template>
-  <h1>asdf</h1>
+  <h3>regeister</h3>
 </template>
 
 <script>
 export default {
-  components: {}
+
 }
 </script>
+
+<style>
+
+</style>
