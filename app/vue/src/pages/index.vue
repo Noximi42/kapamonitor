@@ -1,5 +1,5 @@
 <template>
-  <h1>asdf</h1>
+  <h1>Angebote</h1>
 </template>
 
 <script>

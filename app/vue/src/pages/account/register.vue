@@ -5,12 +5,13 @@
         <v-icon class="mr-2">
           person
         </v-icon>
-        <v-toolbar-title>Login</v-toolbar-title>
+        <v-toolbar-title>Registrieren</v-toolbar-title>
         <v-spacer />
       </v-toolbar>
       <v-card-text>
         <v-form ref="form" v-model="valid" :lazy-validation="true">
           <v-text-field
+            v-model="email"
             label="E-Mail"
             name="login"
             prepend-icon="email"
@@ -20,11 +21,14 @@
 
           <v-text-field
             id="password"
+            v-model="password"
             label="Passwort"
             name="password"
             prepend-icon="lock"
-            type="password"
             :rules="passwordRules"
+            :type="showPassword ? 'text' : 'password'"
+            :append-icon="showPassword ? 'visibility' : 'visibility_off'"
+            @click:append="showPassword = !showPassword"
           />
         </v-form>
       </v-card-text>
@@ -33,9 +37,9 @@
           color="primary"
           text
           small
-          to="/account/register"
+          to="/account/login"
         >
-          Registrieren
+          Zum Login
         </v-btn>
         <v-spacer />
         <v-btn
@@ -44,7 +48,7 @@
           :loading="loading"
           @click="submit"
         >
-          Login
+          Registrieren
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -53,12 +57,14 @@
 
 <script>
 export default {
+  auth: false,
   data () {
     return {
       valid: false,
       email: '',
       password: '',
       loading: false,
+      showPassword: false,
       emailRules: [
         (v) => {
           const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -75,6 +81,17 @@ export default {
     submit () {
       if (this.$refs.form.validate()) {
         this.loading = true
+
+        const data = {
+          username: this.email,
+          password: this.password
+        }
+
+        this.$axios.post('http://localhost:4000/Auth/Register', data)
+          .then((res) => {
+            // TODO: Call login method
+            this.$router.push('/account/login')
+          })
       }
     }
   }

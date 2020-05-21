@@ -1,10 +1,19 @@
 import colors from 'vuetify/es5/util/colors'
 
+const isDev = process.env.NODE_ENV !== 'production'
+const dotEnvFile = isDev ? '.env.dev' : '.env.prod'
+
+require('dotenv').config({
+  path: dotEnvFile
+})
+
 export default {
   mode: 'universal',
-  /*
-  ** Headers of the page
-  */
+
+  dev: isDev,
+  buildDir: '.build/nuxt',
+  srcDir: 'src',
+
   head: {
     titleTemplate: '%s - ' + process.env.npm_package_name,
     title: process.env.npm_package_name || '',
@@ -17,48 +26,55 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-  /*
-  ** Customize the progress-bar color
-  */
+
+  // Customize the progress-bar color
   loading: { color: '#fff' },
-  /*
-  ** Global CSS
-  */
+
   css: [
   ],
-  /*
-  ** Plugins to load before mounting the App
-  */
+
   plugins: [
   ],
-  /*
-  ** Nuxt.js dev-modules
-  */
+
   buildModules: [
-    // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
     '@nuxtjs/vuetify'
   ],
-  /*
-  ** Nuxt.js modules
-  */
+
   modules: [
-    // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
-    // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv'
+    '@nuxtjs/auth',
+    ['@nuxtjs/dotenv', { filename: dotEnvFile, path: __dirname }]
   ],
-  /*
-  ** Axios module configuration
-  ** See https://axios.nuxtjs.org/options
-  */
-  axios: {
+
+  auth: {
+    redirect: {
+      login: '/account/login'
+    },
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: process.env.AUTH_URL + '/connect/token', method: 'post', propertyName: 'access_token', headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
+          logout: { url: '/api/auth/logout', method: 'post' },
+          user: { url: process.env.AUTH_URL + '/connect/userinfo', method: 'get', propertyName: 'user' }
+        }
+        // tokenRequired: true,
+        // tokenType: 'bearer',
+        // globalToken: true,
+        // autoFetchUser: true
+      }
+    }
   },
-  /*
-  ** vuetify module configuration
-  ** https://github.com/nuxt-community/vuetify-module
-  */
+
+  router: {
+    middleware: ['auth']
+  },
+
+  axios: {
+    baseURL: process.env.API_URL
+  },
+
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
@@ -79,13 +95,8 @@ export default {
       iconfont: 'md'
     }
   },
-  /*
-  ** Build configuration
-  */
+
   build: {
-    /*
-    ** You can extend webpack config here
-    */
     extend (config, ctx) {
     }
   }

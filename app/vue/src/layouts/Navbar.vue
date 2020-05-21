@@ -22,12 +22,22 @@
         </v-list>
       </v-menu>
 
-      <v-btn text color="grey">
-        <span>Sign Out</span>
-        <v-icon right>
-          exit_to_app
-        </v-icon>
-      </v-btn>
+      <div v-if="$auth.loggedIn">
+        <v-btn text color="grey">
+          <span>Ausloggen</span>
+          <v-icon right>
+            exit_to_app
+          </v-icon>
+        </v-btn>
+      </div>
+      <div v-else>
+        <v-btn text color="grey" :to="'/account/login'">
+          <span>Login</span>
+          <v-icon right>
+            exit_to_app
+          </v-icon>
+        </v-btn>
+      </div>
     </v-app-bar>
   </nav>
 </template>
