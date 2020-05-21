@@ -18,7 +18,7 @@ namespace KapaMonitor.Api
 {
     public class Startup
     {
-        private readonly string CorsPolicy = "corspolicy";
+        private const string CORS_POLICY = "corspolicy";
 
         private readonly IWebHostEnvironment _env;
         public IConfiguration Configuration { get; }
@@ -31,23 +31,18 @@ namespace KapaMonitor.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            string authServer = _env.IsDevelopment() ? "http://localhost:4000/" : "auth.kapamonitor.de";
+            string audience = "KapaMonitor_Api";
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
+                .AddJwtBearer(config =>
                 {
-                    string firebaseProject = _env.IsDevelopment() ? "fir-49fb4" : "kapamonitor-4208b";
-                    options.Authority = $"https://securetoken.google.com/{firebaseProject}";
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidIssuer = $"https://securetoken.google.com/{firebaseProject}",
-                        ValidateAudience = true,
-                        ValidAudience = firebaseProject,
-                        ValidateLifetime = true
-                    };
+                    config.Authority = authServer;
+                    config.Audience = audience;
 
                     if (_env.IsDevelopment())
                     {
-                        options.RequireHttpsMetadata = false;
+                        config.RequireHttpsMetadata = false;
                     }
                 });
 
@@ -59,7 +54,7 @@ namespace KapaMonitor.Api
             {
                 if (_env.IsDevelopment())
                 {
-                    options.AddPolicy(CorsPolicy,
+                    options.AddPolicy(CORS_POLICY,
                     builder =>
                     {
                         builder.WithOrigins()
@@ -70,7 +65,7 @@ namespace KapaMonitor.Api
                 } 
                 else
                 {
-                    options.AddPolicy(CorsPolicy,
+                    options.AddPolicy(CORS_POLICY,
                     builder =>
                     {
                         builder.SetIsOriginAllowedToAllowWildcardSubdomains()
@@ -83,6 +78,11 @@ namespace KapaMonitor.Api
 
 
             services.AddControllers();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("UserRole", policy => policy.RequireClaim("km.role", "users"));
+            });
 
             services.AddSwaggerGen(x =>
             {
@@ -139,7 +139,7 @@ namespace KapaMonitor.Api
 
             app.UseRouting();
 
-            app.UseCors(CorsPolicy);
+            app.UseCors(CORS_POLICY);
 
             app.UseAuthentication();
             app.UseAuthorization();
