@@ -38,6 +38,7 @@ namespace KapaMonitor.Auth
                         config.Password.RequiredLength = 6;
                         config.Password.RequireDigit = false;
                         config.Password.RequireNonAlphanumeric = false;
+                        config.Password.RequireLowercase = false;
                         config.Password.RequireUppercase = false;
                     })
                     .AddEntityFrameworkStores<ApplicationDbContext>()
