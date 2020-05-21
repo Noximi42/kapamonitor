@@ -40,7 +40,7 @@ namespace KapaMonitor.Api
                 {
                     config.Authority = authServer;
                     config.Audience = audience;
-                    if (_env.IsDevelopment())
+                    if (_env.IsDevelopment() && IsDockerEnvironment)
                         config.TokenValidationParameters = new TokenValidationParameters
                         {
                             ValidIssuer = "http://localhost:4000",
