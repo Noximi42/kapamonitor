@@ -34,6 +34,7 @@ export default {
   ],
 
   plugins: [
+    '~/plugins/api'
   ],
 
   buildModules: [
@@ -56,8 +57,8 @@ export default {
       local: {
         endpoints: {
           login: { url: process.env.AUTH_URL + '/connect/token', method: 'post', propertyName: 'access_token', headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
-          logout: { url: '/api/auth/logout', method: 'post' },
-          user: { url: process.env.AUTH_URL + '/connect/userinfo', method: 'get', propertyName: 'user' }
+          logout: { url: process.env.AUTH_URL + '/auth/logout', method: 'get' },
+          user: { url: process.env.AUTH_URL + '/connect/userinfo', method: 'get', propertyName: false }
         }
         // tokenRequired: true,
         // tokenType: 'bearer',

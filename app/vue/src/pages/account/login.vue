@@ -84,14 +84,6 @@ export default {
       if (this.$refs.form.validate()) {
         this.loading = true
 
-        // const data = {
-        //   grant_type: 'password',
-        //   username: this.email,
-        //   password: this.password,
-        //   client_id: 'kmclient',
-        //   scope: 'KapaMonitor_Api offline_access openid'
-        // }
-
         const form = new FormData()
 
         form.append('grant_type', 'password')
@@ -104,40 +96,17 @@ export default {
           await this.$auth.loginWith('local', {
             data: form
           })
-          console.log(this.$auth.user)
-          this.$router.push('/account/register')
+          this.$router.back()
         } catch (err) {
           // TODO: Show login failure message
         }
-
-        //   const data = {
-        //     grant_type: 'password',
-        //     username: this.email,
-        //     password: this.password,
-        //     client_id: 'kmclient',
-        //     scope: 'KapaMonitor_Api offline_access openid'
-        //   }
-        //   const config = {
-        //     headers: {
-        //       'Content-Type': 'application/x-www-form-urlencoded'
-        //     }
-        //   }
-
-        //   this.$axios.post(process.env.AUTH_URL + '/connect/token', qs.stringify(data), config)
-        //     .then((resp) => {
-        //       this.$auth.setToken('local', 'Bearer ' + resp.data.access_token)
-        //       this.$auth.setRefreshToken('local', resp.data.refresh_token)
-        //       this.$axios.setHeader('Authorization', 'Bearer ' + resp.data.access_token)
-        //       this.$auth.ctx.app.$axios.setHeader('Authorization', 'Bearer ' + resp.data.access_token)
-        //       this.$axios.get(process.env.AUTH_URL + '/connect/userinfo').then((resp) => { this.$auth.setUser(resp.data); this.$router.push('/') })
-        //     })
       }
     }
   }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .container {
   height: 100%;
 }

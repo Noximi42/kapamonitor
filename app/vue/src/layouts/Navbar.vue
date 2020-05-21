@@ -23,7 +23,7 @@
       </v-menu>
 
       <div v-if="$auth.loggedIn">
-        <v-btn text color="grey">
+        <v-btn text color="grey" @click="logout">
           <span>Ausloggen</span>
           <v-icon right>
             exit_to_app
@@ -53,6 +53,12 @@ export default {
         { text: 'Gesuche', route: '/requirements' }
       ],
       snackbar: false
+    }
+  },
+  methods: {
+    async logout () {
+      await this.$auth.logout()
+      this.$router.push('/account/login')
     }
   }
 }
