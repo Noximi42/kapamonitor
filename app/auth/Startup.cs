@@ -33,7 +33,13 @@ namespace KapaMonitor.Auth
                                                      : (Environment.GetEnvironmentVariable("PostgresKapaMonitorConnection") ?? "");
             services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(dbConnection));
 
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<IdentityUser, IdentityRole>(config =>
+                    {
+                        config.Password.RequiredLength = 6;
+                        config.Password.RequireDigit = false;
+                        config.Password.RequireNonAlphanumeric = false;
+                        config.Password.RequireUppercase = false;
+                    })
                     .AddEntityFrameworkStores<ApplicationDbContext>()
                     .AddDefaultTokenProviders();
 
@@ -77,7 +83,7 @@ namespace KapaMonitor.Auth
                 }
             });
 
-            services.AddControllers();
+            services.AddControllersWithViews();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationDbContext context)

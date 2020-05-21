@@ -23,7 +23,7 @@ namespace KapaMonitor.Auth.Data
                 context.Database.Migrate();
                 if (!context.Clients.Any())
                 {
-                    foreach (var client in AuthConfiguration.GetClients())
+                    foreach (var client in AuthConfiguration.GetClients(true))
                     {
                         context.Clients.Add(client.ToEntity());
                     }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -20,40 +21,29 @@ namespace KapaMonitor.Auth.Controllers
             _userManager = userManager;
         }
 
-        public async Task<IActionResult> Login(string username, string password, string returnUrl)
+
+        [HttpPost]
+        public async Task<IActionResult> Register([FromBody] AuthModel authModel)
         {
-            var result = await _signInManager.PasswordSignInAsync(username, password, false, false);
-
-            if (result.Succeeded)
-            {
-                return Redirect(returnUrl);
-            }
-
-            return Ok();
-        }   
-
-        public async Task<IActionResult> Register(string username, string password, string returnUrl)
-        {
-            if (!IsPasswordValid(password))
+            if (!IsPasswordValid(authModel.Password))
                 return BadRequest();
 
-            var user = new IdentityUser(username);
-            var result = await _userManager.CreateAsync(user, password);
+            var user = new IdentityUser(authModel.Username);
+            var result = await _userManager.CreateAsync(user, authModel.Password);
             await _userManager.AddClaimAsync(user, new Claim("km.role", "user"));
 
             if (result.Succeeded)
             {
                 await _signInManager.SignInAsync(user, false);
-                return Redirect(returnUrl);
+                return Ok();
             }
 
-
-            return Ok();
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }
 
         private bool IsPasswordValid(string password)
         {
-            return password.Length >= 6;
+            return password?.Length >= 6;
         }
     }
 }
