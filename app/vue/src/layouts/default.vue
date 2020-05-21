@@ -5,16 +5,19 @@
     <v-content class="mx-4 mb-4">
       <router-view />
     </v-content>
+    <Footer />
   </v-app>
 </template>
 
 <script>
 import '~/assets/imports'
-import Navbar from './navbar'
+import Navbar from '../components/navbar'
+import Footer from '../components/footer'
 
 export default {
   components: {
-    Navbar
+    Navbar,
+    Footer
   },
   data () {
     return {

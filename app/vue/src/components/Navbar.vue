@@ -1,15 +1,18 @@
 <template>
   <nav>
-    <v-app-bar flat>
-      <v-toolbar-title class="text-uppercase grey--text">
+    <v-app-bar flat class="primary">
+      <v-toolbar-title class="text-uppercase white--text">
         <span>KapaMonitor</span>
       </v-toolbar-title>
       <v-spacer />
 
-      <v-menu offset-y>
+      <v-menu v-if="this.$auth.loggedIn" offset-y>
         <template v-slot:activator="{ on }">
-          <v-btn color="grey" dark text v-on="on">
-            <v-icon left>
+          <v-btn color="white" dark text v-on="on" @click="menuOpen = !menuOpen">
+            <v-icon v-if="menuOpen" left>
+              expand_less
+            </v-icon>
+            <v-icon v-else left>
               expand_more
             </v-icon>
             <span>Menu</span>
@@ -23,7 +26,7 @@
       </v-menu>
 
       <div v-if="$auth.loggedIn">
-        <v-btn text color="grey" @click="logout">
+        <v-btn text color="white" @click="logout">
           <span>Ausloggen</span>
           <v-icon right>
             exit_to_app
@@ -31,7 +34,7 @@
         </v-btn>
       </div>
       <div v-else>
-        <v-btn text color="grey" :to="'/account/login'">
+        <v-btn text color="white" :to="'/account/login'">
           <span>Login</span>
           <v-icon right>
             exit_to_app
@@ -48,6 +51,7 @@ export default {
   data () {
     return {
       drawer: false,
+      menuOpen: false,
       links: [
         { text: 'Angebote', route: '/' },
         { text: 'Gesuche', route: '/requirements' }
