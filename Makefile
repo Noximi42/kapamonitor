@@ -22,11 +22,11 @@ help: .banner
 
 ##@ Docker commands
 up: .banner ## Start Project
-	$(docker-compose) up -d --remove-orphans
+	$(docker-compose) up -d --remove-orphans $(ARGS)
 	@make urls
 
 stop: .banner ## Stop Project
-	$(docker-compose) stop
+	$(docker-compose) stop $(ARGS)
 
 restart: ## Restart all containers
 	$(docker-compose) kill $(ARGS)
