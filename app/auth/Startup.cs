@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Logging;
 
 namespace KapaMonitor.Auth
 {
@@ -20,6 +21,7 @@ namespace KapaMonitor.Auth
 
         private readonly IWebHostEnvironment _env;
         public IConfiguration Configuration { get; }
+        private readonly bool IsDockerEnvironment = Environment.GetEnvironmentVariable("DEPLOYMENT") == "Docker";
 
         public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
@@ -29,9 +31,11 @@ namespace KapaMonitor.Auth
 
         public void ConfigureServices(IServiceCollection services)
         {
-            string dbConnection = _env.IsDevelopment() ? Configuration.GetConnectionString("DefaultConnection")
+            string connection = _env.IsDevelopment() ? Configuration.GetConnectionString("DefaultConnection")
                                                      : (Environment.GetEnvironmentVariable("PostgresKapaMonitorConnection") ?? "");
-            services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(dbConnection));
+            if (_env.IsDevelopment() && IsDockerEnvironment)
+                connection = connection.Replace("host=localhost", "host=db-server");
+            services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connection));
 
             services.AddIdentity<IdentityUser, IdentityRole>(config =>
                     {
@@ -51,11 +55,11 @@ namespace KapaMonitor.Auth
                     .AddAspNetIdentity<IdentityUser>()
                     .AddConfigurationStore(options =>
                     {
-                        options.ConfigureDbContext = b => b.UseNpgsql(dbConnection, sql => sql.MigrationsAssembly(assembly));
+                        options.ConfigureDbContext = b => b.UseNpgsql(connection, sql => sql.MigrationsAssembly(assembly));
                     })
                     .AddOperationalStore(options =>
                     {
-                        options.ConfigureDbContext = b => b.UseNpgsql(dbConnection, sql => sql.MigrationsAssembly(assembly));
+                        options.ConfigureDbContext = b => b.UseNpgsql(connection, sql => sql.MigrationsAssembly(assembly));
                     });
 
             services.AddCors(options =>

@@ -22,6 +22,7 @@ namespace KapaMonitor.Api
 
         private readonly IWebHostEnvironment _env;
         public IConfiguration Configuration { get; }
+        private readonly bool IsDockerEnvironment = Environment.GetEnvironmentVariable("DEPLOYMENT") == "Docker";
 
         public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
@@ -31,7 +32,7 @@ namespace KapaMonitor.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            string authServer = _env.IsDevelopment() ? "http://localhost:4000/" : "auth.kapamonitor.de";
+            string authServer = _env.IsDevelopment() ? (IsDockerEnvironment ? "http://auth/" : "http://localhost:4000/") : "https://auth.kapamonitor.de";
             string audience = "KapaMonitor_Api";
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -39,6 +40,11 @@ namespace KapaMonitor.Api
                 {
                     config.Authority = authServer;
                     config.Audience = audience;
+                    if (_env.IsDevelopment())
+                        config.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidIssuer = "http://localhost:4000",
+                        };
 
                     if (_env.IsDevelopment())
                     {
@@ -48,6 +54,8 @@ namespace KapaMonitor.Api
 
             string connection = _env.IsDevelopment() ? Configuration.GetConnectionString("DefaultConnection") 
                                                      : (Environment.GetEnvironmentVariable("PostgresKapaMonitorConnection") ?? "");
+            if (_env.IsDevelopment() && IsDockerEnvironment)
+                connection = connection.Replace("host=localhost", "host=db-server");
             services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connection));
 
             services.AddCors(options =>
