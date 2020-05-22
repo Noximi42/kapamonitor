@@ -1,8 +1,10 @@
 <template>
   <nav>
     <v-app-bar flat class="primary">
-      <v-toolbar-title class="text-uppercase white--text">
-        <span>KapaMonitor</span>
+      <v-toolbar-title>
+        <nuxt-link to="/" class="text-uppercase white--text" :style="{textDecoration: 'none'}">
+          <span>KapaMonitor</span>
+        </nuxt-link>
       </v-toolbar-title>
       <v-spacer />
 
@@ -37,7 +39,7 @@
             </template>
             <v-list-item to="/angebot">
               <v-list-item-icon>
-                <v-icon>mdi-format-list-bulleted</v-icon>
+                <v-icon>dashboard</v-icon>
               </v-list-item-icon>
               <v-list-item-title>Angebotsübersicht</v-list-item-title>
             </v-list-item>
@@ -59,7 +61,7 @@
             </template>
             <v-list-item to="/bedarf">
               <v-list-item-icon>
-                <v-icon>mdi-format-list-bulleted</v-icon>
+                <v-icon>dashboard</v-icon>
               </v-list-item-icon>
               <v-list-item-title>Bedarfsübersicht</v-list-item-title>
             </v-list-item>
