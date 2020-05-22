@@ -1,10 +1,6 @@
-﻿using IdentityModel;
-using IdentityServer4;
+﻿using IdentityServer4;
 using IdentityServer4.Models;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
 using System.Collections.Generic;
-using System.Security.Permissions;
 
 namespace KapaMonitor.Auth
 {
@@ -33,6 +29,8 @@ namespace KapaMonitor.Auth
                     AllowOfflineAccess = true,
                     RequireClientSecret = false,
                     UpdateAccessTokenClaimsOnRefresh = true,
+
+                    AccessTokenLifetime = 60 * 60 * 24 * 7,
 
                     AllowedScopes =
                     {
