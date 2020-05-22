@@ -1,5 +1,4 @@
 <template>
-  <!-- <div> -->
   <!-- <h1>{{ $route.params }}</h1>
     <p>{{ angebote }}</p> -->
   <AngebotsTabelle :headers="headers" :items="angebote" ueberschrift="Angebote">
@@ -7,7 +6,6 @@
       <AngebotsDetails :item="item" />
     </template>
   </AngebotsTabelle>
-  <!-- </div> -->
 </template>
 
 <script>
@@ -20,8 +18,6 @@ export default {
   },
   asyncData ({ app }) {
     return app.$api.getOffers().then((res) => {
-      console.log(res)
-      console.log(app)
       const items = res.data.map((item) => {
         return {
           menge: item.number + ' ' + item.resource.unitOfMeasure,
@@ -49,5 +45,14 @@ export default {
 </script>
 
 <style>
+
+/* This is for documentation purposes and will not be needed in your application */
+  /* #create .v-speed-dial {
+    position: absolute;
+  }
+
+  #create .v-btn--floating {
+    position: relative;
+  } */
 
 </style>

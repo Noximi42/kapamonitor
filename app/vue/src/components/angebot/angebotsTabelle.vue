@@ -12,6 +12,17 @@
     <template v-slot:top>
       <v-toolbar flat>
         <v-toolbar-title>{{ ueberschrift }}</v-toolbar-title>
+        <v-btn
+          color="accent"
+          class="ml-2"
+          rounded
+          :to="'/neues-angebot'"
+        >
+          <v-icon left>
+            mdi-plus
+          </v-icon>
+          Erstellen
+        </v-btn>
         <v-spacer />
         <v-text-field
           v-model="search"
