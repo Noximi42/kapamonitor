@@ -4,6 +4,15 @@ const apiFactory = axios => ({
   },
   getOffers () {
     return axios.get('/Offer')
+  },
+  getResources () {
+    return axios.get('/Resource')
+  },
+  getContactInfo () {
+    return axios.get('/ContactInfo/1')
+  },
+  postOffer (payload) {
+    return axios.post('/Offer', payload)
   }
 })
 
