@@ -56,8 +56,6 @@
 </template>
 
 <script>
-// const qs = require('querystring')
-
 export default {
   auth: false,
   data () {
@@ -90,7 +88,7 @@ export default {
         form.append('username', this.email)
         form.append('password', this.password)
         form.append('client_id', process.env.AUTH_CLIENT_ID)
-        form.append('scope', 'KapaMonitor_Api offline_access openid')
+        form.append('scope', 'openid offline_access KapaMonitor_Api')
 
         try {
           await this.$auth.loginWith('local', {

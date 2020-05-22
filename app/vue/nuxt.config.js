@@ -59,7 +59,7 @@ export default {
       local: {
         endpoints: {
           login: { url: process.env.AUTH_URL + '/connect/token', method: 'post', propertyName: 'access_token', headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
-          logout: { url: process.env.AUTH_URL + '/auth/logout', method: 'get' },
+          logout: false,
           user: { url: process.env.AUTH_URL + '/connect/userinfo', method: 'get', propertyName: false }
         }
         // tokenRequired: true,
