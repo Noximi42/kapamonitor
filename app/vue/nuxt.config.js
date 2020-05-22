@@ -34,7 +34,8 @@ export default {
   ],
 
   plugins: [
-    '~/plugins/api'
+    '~/plugins/api',
+    '~/plugins/filters.js'
   ],
 
   buildModules: [

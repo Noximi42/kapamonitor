@@ -21,9 +21,11 @@ export default {
   asyncData ({ app }) {
     return app.$api.getOffers().then((res) => {
       console.log(res)
+      console.log(app)
       const items = res.data.map((item) => {
         return {
           menge: item.number + ' ' + item.resource.unitOfMeasure,
+          eurPreis: app.$filters.toEuro(item.price),
           ...item
         }
       })
@@ -36,7 +38,7 @@ export default {
       headers: [
         { text: 'Ressource', value: 'resource.name' },
         { text: 'Menge', value: 'menge' },
-        { text: 'Preis', value: '' },
+        { text: 'Preis pro Stück', value: 'eurPreis' },
         { text: 'Postleitzahl', value: 'location.address.zipCode' },
         { text: 'Ort', value: 'location.address.city' },
         { text: '', value: 'data-table-expand' }

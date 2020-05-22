@@ -47,7 +47,23 @@
             </template>
             <span>Erstellungsdatum</span>
           </v-tooltip>
-          <v-card-subtitle v-if="item.resource.certificates.length > 0">
+          <v-tooltip v-if="item.price" bottom>
+            <template v-slot:activator="{ on }">
+              <v-chip
+                class="ma-2"
+                color="scondary"
+                outlined
+                v-on="on"
+              >
+                {{ item.price |centToEuro }}
+                <v-icon right>
+                  mdi-currency-eur
+                </v-icon>
+              </v-chip>
+            </template>
+            <span>Preis pro Stück</span>
+          </v-tooltip>
+          <v-card-subtitle v-if="item.certificates.length > 0">
             Zertifikate
           </v-card-subtitle>
           <v-chip
@@ -75,7 +91,7 @@
         >
           <v-card-title>Beschreibung</v-card-title>
           <v-card-text>
-            {{ item }}
+            {{ item.description }}
           </v-card-text>
         </v-card>
         <v-card

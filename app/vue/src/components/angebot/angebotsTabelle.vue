@@ -7,7 +7,7 @@
     :search="search"
     item-key="id"
     show-expand
-    class="elevation-1"
+    class="elevation-1 mt-5"
   >
     <template v-slot:top>
       <v-toolbar flat>
@@ -22,7 +22,7 @@
         />
       </v-toolbar>
     </template>
-    <template v-slot:expanded-item="{ headers, item }">
+    <template v-slot:expanded-item="{ item }">
       <td :colspan="headers.length">
         <slot name="details" :item="item" />
       </td>
