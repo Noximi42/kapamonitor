@@ -39,7 +39,8 @@ export default {
 
   buildModules: [
     '@nuxtjs/eslint-module',
-    '@nuxtjs/vuetify'
+    '@nuxtjs/vuetify',
+    '@nuxtjs/moment'
   ],
 
   modules: [
@@ -95,6 +96,11 @@ export default {
     icons: {
       iconfont: 'md'
     }
+  },
+
+  moment: {
+    defaultLocale: 'de',
+    locales: ['de']
   },
 
   build: {

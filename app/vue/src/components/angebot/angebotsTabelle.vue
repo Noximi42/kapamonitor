@@ -24,9 +24,10 @@
     </template>
     <template v-slot:expanded-item="{ headers, item }">
       <td :colspan="headers.length">
-        Weitere Informationen über {{ item.resource.name }}
+        <slot name="details" :item="item" />
       </td>
     </template>
+    <slot />
   </v-data-table>
 </template>
 
