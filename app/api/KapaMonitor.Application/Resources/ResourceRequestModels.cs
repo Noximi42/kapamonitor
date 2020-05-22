@@ -12,19 +12,20 @@ namespace KapaMonitor.Application.Resources
             Id = resource.Id;
             Name = resource.Name;
             UnitOfMeasure = resource.UnitOfMeasureName;
-
-            Certificates = resource.Certificates.Select(c => new CertificatGetModel(c));
         }
 
         public int Id { get; set; }
         public string Name { get; set; }
         public string UnitOfMeasure { get; set; }
-
-        public IEnumerable<CertificatGetModel> Certificates { get; set; }
     }
 
     public class ResourceGetModel : ResourceModel
     {
-        public ResourceGetModel(Resource resource) : base(resource) { }
+        public ResourceGetModel(Resource resource) : base(resource) 
+        {
+            Certificates = resource.Certificates.Select(c => new CertificateGetModel(c));
+        }
+
+        public IEnumerable<CertificateGetModel> Certificates { get; set; }
     }
 }

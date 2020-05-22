@@ -8,7 +8,7 @@ namespace KapaMonitor.Application.Certificates
         {
             Id = certificate.Id;
             Name = certificate.Name;
-            ResourceId = certificate.Resource.Id;
+            ResourceId = certificate.ResourceId;
         }
 
         public int Id { get; set; }
@@ -16,8 +16,8 @@ namespace KapaMonitor.Application.Certificates
         public int ResourceId { get; set; }
     }
 
-    public class CertificatGetModel : CertificateModel
+    public class CertificateGetModel : CertificateModel
     {
-        public CertificatGetModel(Certificate certificate) : base(certificate) { }
+        public CertificateGetModel(Certificate certificate) : base(certificate) { }
     }
 }

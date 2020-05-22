@@ -11,6 +11,8 @@ namespace KapaMonitor.Domain.Models
         [Required]
         [Range(float.Epsilon, float.MaxValue)]
         public float Number { get; set; }
+        public int? Price { get; set; }
+        public string Description { get; set; }
         [Required]
         public DateTime CreationDate { get; set; }
         public DateTime? LastChangedDate { get; set; }

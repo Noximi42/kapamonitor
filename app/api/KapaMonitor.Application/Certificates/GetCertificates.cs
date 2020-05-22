@@ -18,9 +18,9 @@ namespace KapaMonitor.Application.Resources
             _context = context;
         }
 
-        public async Task<IEnumerable<CertificatGetModel>> Do()
+        public async Task<IEnumerable<CertificateGetModel>> Do()
         {
-            return await _context.Certificates.Include(c => c.Resource).Select(c => new CertificatGetModel(c)).ToListAsync();
+            return await _context.Certificates.Select(c => new CertificateGetModel(c)).AsNoTracking().ToListAsync();
         }
     }
 }

@@ -1,9 +1,13 @@
-﻿using KapaMonitor.Application.ContactInfos;
+﻿using KapaMonitor.Application.Certificates;
+using KapaMonitor.Application.ContactInfos;
 using KapaMonitor.Application.Locations;
 using KapaMonitor.Application.Resources;
 using KapaMonitor.Domain.Models;
+using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.ConstrainedExecution;
 
 namespace KapaMonitor.Application.Offers
 {
@@ -14,9 +18,13 @@ namespace KapaMonitor.Application.Offers
         public OfferModel(Offer offer)
         {
             Number = offer.Number;
+            Price = offer.Price;
+            Description = offer.Description;
         }
 
         public float? Number { get; set; }
+        public int? Price { get; set; }
+        public string? Description { get; set; }
 
 
         public virtual (bool isValid, List<string> errors) CheckValidity()
@@ -25,6 +33,10 @@ namespace KapaMonitor.Application.Offers
 
             if (Number == null || Number <= 0)
                 errors.Add("number has to be greater than 0.");
+            if (Price != null && Price <= 0)
+                errors.Add("price should be null or greater than 0.");
+            if (Description != null && Description.Count() == 0)
+                errors.Add("description should be null or not empty.");
 
             return (errors.Count == 0, errors);
         }
@@ -32,26 +44,28 @@ namespace KapaMonitor.Application.Offers
 
     public class OfferGetModel : OfferModel
     {
-        public OfferGetModel(Offer offer) : base(offer)
+        public OfferGetModel(Offer offer, IEnumerable<Certificate> certificates) : base(offer)
         {
             Id = offer.Id;
 
-            ContactInfo = new ContactInfoGetModel(offer.ContactInfo);
-            Location = offer.Location == null ? null : new LocationGetModel(offer.Location);
-            Resource = new ResourceGetModel(offer.Resource);
-
             CreationDate = offer.CreationDate;
             LastChangedDate = offer.LastChangedDate;
+
+            ContactInfo = new ContactInfoGetModel(offer.ContactInfo);
+            Location = offer.Location == null ? null : new LocationGetModel(offer.Location);
+            Resource = new ResourceModel(offer.Resource);
+            Certificates = certificates.Select(c => new CertificateGetModel(c));
         }
 
         public int Id { get; set; }
 
-        public DateTime? CreationDate { get; set; }
+        public DateTime CreationDate { get; set; }
         public DateTime? LastChangedDate { get; set; }
 
         public ContactInfoGetModel ContactInfo { get; set; }
         public LocationGetModel? Location { get; set; }
-        public ResourceGetModel Resource { get; set; }
+        public ResourceModel Resource { get; set; }
+        public IEnumerable<CertificateGetModel> Certificates {get;set;}
     }
 
     public class OfferCreateModel : OfferModel
@@ -59,6 +73,7 @@ namespace KapaMonitor.Application.Offers
         public int? ContactInfoId { get; set; }
         public int? LocationId { get; set; }
         public int? ResourceId { get; set; }
+        public IEnumerable<int>? CertificateIds { get; set; }
 
         public override (bool isValid, List<string> errors) CheckValidity()
         {
@@ -67,9 +82,11 @@ namespace KapaMonitor.Application.Offers
             if (ContactInfoId <= 0)
                 errors.Add("contactInfoId is required.");
             if (LocationId != null && LocationId <= 0)
-                errors.Add("locationId is required.");
+                errors.Add("locationId should be null or greater than 0.");
             if (ResourceId <= 0)
                 errors.Add("resourceId is required.");
+            if (CertificateIds != null && CertificateIds.Any(cId => cId <= 0))
+                errors.Add("certificateIds should be null or only contain values greater than 0.");
 
             return (errors.Count == 0, errors);
         }
