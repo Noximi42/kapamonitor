@@ -15,7 +15,7 @@ namespace KapaMonitor.Application.Locations
 
         public async Task<LocationGetModel?> Do(int id)
         {
-            var location = await _context.Locations.Include(l => l.Address).FirstOrDefaultAsync(c => c.Id == id);
+            var location = await _context.Locations.Include(l => l.Address).AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
 
             if (location == null)
                 return null;

@@ -15,7 +15,7 @@ namespace KapaMonitor.Application.ContactInfos
 
         public async Task<ContactInfoGetModel?> Do(int id)
         {
-            var contactInfo = await _context.ContactInfos.FirstOrDefaultAsync(c => c.Id == id);
+            var contactInfo = await _context.ContactInfos.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
 
             if (contactInfo == null)
                 return null;

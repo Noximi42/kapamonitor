@@ -11,7 +11,7 @@ namespace KapaMonitor.Domain.Models
         public string Name { get; set; }
 
 
-        [Required]
+        public int ResourceId { get; set; }
         public Resource Resource { get; set; }
         public ICollection<OfferCertificate> OfferCertificates { get; set; }
         public ICollection<RequirementCertificate> RequirementCertificates { get; set; }

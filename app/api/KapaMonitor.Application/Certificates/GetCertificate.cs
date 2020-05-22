@@ -13,14 +13,14 @@ namespace KapaMonitor.Application.Certificates
             _context = context;
         }
 
-        public async Task<CertificatGetModel?> Do(int id)
+        public async Task<CertificateGetModel?> Do(int id)
         {
-            var certificate = await _context.Certificates.Include(c => c.Resource).FirstOrDefaultAsync(c => c.Id == id);
+            var certificate = await _context.Certificates.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
 
             if (certificate == null)
                 return null;
 
-            return new CertificatGetModel(certificate);
+            return new CertificateGetModel(certificate);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace KapaMonitor.Application.Resources
 
         public async Task<IEnumerable<ResourceGetModel>> Do()
         {
-            return await _context.Resources.Include(r => r.Certificates).Select(r => new ResourceGetModel(r)).ToListAsync();
+            return await _context.Resources.Include(r => r.Certificates).AsNoTracking().Select(r => new ResourceGetModel(r)).ToListAsync();
         }
     }
 }

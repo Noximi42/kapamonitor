@@ -18,9 +18,11 @@ namespace KapaMonitor.Application.Offers
         public async Task<IEnumerable<OfferGetModel>> Do()
         {
             return await _context.Offers.Include(o => o.ContactInfo)
-                                        .Include(o => o.Resource).ThenInclude(r => r.Certificates)
+                                        .Include(o => o.Resource)
                                         .Include(o => o.Location).ThenInclude(l => l.Address)
-                                        .Select(o => new OfferGetModel(o)).ToListAsync();
+                                        .Include(o => o.OfferCertificates).ThenInclude(oc => oc.Certificate)
+                                        .Select(o => new OfferGetModel(o, o.OfferCertificates.Select(oc => oc.Certificate)))
+                                        .AsNoTracking().ToListAsync();
         }
     }
 }
