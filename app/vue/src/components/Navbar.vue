@@ -6,7 +6,7 @@
       </v-toolbar-title>
       <v-spacer />
 
-      <v-menu v-if="this.$auth.loggedIn" offset-y>
+      <v-menu v-if="this.$auth.loggedIn" offset-y :close-on-content-click="false" min-width="20em">
         <template v-slot:activator="{ on }">
           <v-btn color="white" dark text v-on="on" @click="menuOpen = !menuOpen">
             <v-icon v-if="menuOpen" left>
@@ -19,10 +19,70 @@
           </v-btn>
         </template>
         <v-list>
+          <v-list-item to="/">
+            <v-list-item-icon>
+              <v-icon>mdi-home</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-title>Startseite</v-list-item-title>
+          </v-list-item>
+          <v-divider />
+          <v-list-group
+            prepend-icon="mdi-format-list-bulleted"
+            value="true"
+            subgroup
+          >
+            <template v-slot:activator>
+              <v-list-item-title>Angebote</v-list-item-title>
+            </template>
+            <v-list-item to="/angebot">
+              <v-list-item-icon>
+                <v-icon>mdi-format-list-bulleted</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>Angebotsübersicht</v-list-item-title>
+            </v-list-item>
+            <v-list-item to="/neues-angebot">
+              <v-list-item-icon>
+                <v-icon>mdi-plus</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>Neues Angebot</v-list-item-title>
+            </v-list-item>
+          </v-list-group>
+          <v-divider />
+          <v-list-group
+            prepend-icon="mdi-format-list-bulleted"
+            value="true"
+            subgroup
+          >
+            <template v-slot:activator>
+              <v-list-item-title>Bedarfe</v-list-item-title>
+            </template>
+            <v-list-item to="/bedarf">
+              <v-list-item-icon>
+                <v-icon>mdi-format-list-bulleted</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>Bedarfsübersicht</v-list-item-title>
+            </v-list-item>
+            <v-list-item to="/neuer-bedarf">
+              <v-list-item-icon>
+                <v-icon>mdi-plus</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>Neuen Bedarf melden</v-list-item-title>
+            </v-list-item>
+          </v-list-group>
+          <v-divider />
+          <v-list-item to="/profile">
+            <v-list-item-icon>
+              <v-icon>mdi-account-circle</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Profil</v-list-item-title>
+          </v-list-item>
+        </v-list>
+        <!-- <v-list>
           <v-list-item v-for="link in links" :key="link.text" router :to="link.route">
             <v-list-item-title>{{ link.text }}</v-list-item-title>
           </v-list-item>
-        </v-list>
+        </v-list> -->
       </v-menu>
 
       <div v-if="$auth.loggedIn">
