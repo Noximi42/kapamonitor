@@ -67,7 +67,7 @@
             Zertifikate
           </v-card-subtitle>
           <v-chip
-            v-for="certificate in item.resource.certificates"
+            v-for="certificate in item.certificates"
             :key="certificate.name"
             class="ma-2"
             color="scondary"

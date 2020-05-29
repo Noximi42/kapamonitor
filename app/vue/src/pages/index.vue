@@ -6,11 +6,13 @@
           <v-card-title class="justify-center align-center white--text">
             Angebote
           </v-card-title>
+          <v-divider />
           <v-card-text class="text-center">
             <v-icon x-large class="white--text">
               description
             </v-icon>
           </v-card-text>
+          <v-divider />
           <v-card-actions class="justify-center align-end flex-wrap">
             <v-btn outlined rounded to="/angebot" color="white" class="my-2">
               <v-icon left>
@@ -32,11 +34,13 @@
           <v-card-title class="justify-center align-center white--text">
             Bedarfe
           </v-card-title>
+          <v-divider />
           <v-card-text class="text-center">
             <v-icon x-large class="white--text">
               description
             </v-icon>
           </v-card-text>
+          <v-divider />
           <v-card-actions class="justify-center align-end flex-wrap">
             <v-btn outlined rounded to="/bedarf" color="white" class="my-2">
               <v-icon left>
@@ -66,11 +70,13 @@
           <v-card-title class="justify-center align-center white--text">
             Profil
           </v-card-title>
+          <v-divider />
           <v-card-text class="text-center">
             <v-icon x-large class="white--text">
               person
             </v-icon>
           </v-card-text>
+          <v-divider />
           <v-card-actions class="justify-center align-end flex-wrap">
             <v-btn outlined rounded to="/profile" color="white" class="my-2">
               <v-icon left>
@@ -79,6 +85,7 @@
               Übersicht
             </v-btn>
           </v-card-actions>
+          </v-divider>
         </v-card>
       </v-col>
     </v-row>
