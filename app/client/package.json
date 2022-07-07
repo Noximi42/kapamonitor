@@ -19,7 +19,7 @@
         "i18next": "^19.4.3",
         "leaflet": "1.6.0",
         "leaflet.markercluster": "1.4.1",
-        "moment": "^2.25.3",
+        "moment": "^2.29.4",
         "react": "latest",
         "react-dom": "latest",
         "react-hook-form": "^5.5.3",
